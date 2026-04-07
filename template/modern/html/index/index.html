@@ -1,218 +1,105 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{$maccms.site_name}</title>
-    <meta name="keywords" content="{$maccms.site_key}">
-    <meta name="description" content="{$maccms.site_des}">
-    <link rel="stylesheet" href="/template/modern/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-</head>
-<body>
-    <!-- 头部 -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="{:mac_url('index/index')}" class="logo">{$maccms.site_name}</a>
+{include file="public/head.html"}
+            <div class="container">
+                <div class="banner-section">
+                    <div class="glass-card banner-card">
+                        <div class="banner-content">
+                            <h1>欢迎来到{$maccms.site_name}</h1>
+                            <p>海量高清影视资源，畅享极致观影体验</p>
+                        </div>
+                    </div>
+                </div>
                 
-                <nav>
-                    <ul class="nav-menu">
-                        <li><a href="{:mac_url('index/index')}">首页</a></li>
-                        {volist name="maccms.type.list" id="vo" key="k"}
-                            {if condition="$vo.type_pid eq 0"}
-                                <li><a href="{:mac_url('vod/type',['id'=>$vo.type_id])}">{$vo.type_name}</a></li>
-                            {/if}
-                        {/volist}
-                        <li><a href="{:mac_url('art/type',['id'=>1])}">影评</a></li>
-                    </ul>
-                </nav>
+                <div class="category-nav">
+                    <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
+                    {maccms:type ids="parent" order="asc" by="sort"}
+                    <a href="{:mac_url_type($vo)}" class="category-item">{$vo.type_name}</a>
+                    {/maccms:type}
+                </div>
                 
-                <div class="search-box">
-                    <form action="{:mac_url('vod/search')}" method="get">
-                        <input type="text" name="wd" class="search-input" placeholder="搜索影视资源..." value="{$param.wd|default=''}">
-                        <button type="submit" class="search-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- 分类导航 -->
-    <div class="container">
-        <div class="category-nav">
-            <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
-            {volist name="maccms.type.list" id="vo" key="k"}
-                {if condition="$vo.type_pid eq 0"}
-                    <a href="{:mac_url('vod/type',['id'=>$vo.type_id])}" class="category-item">{$vo.type_name}</a>
-                {/if}
-            {/volist}
-        </div>
-    </div>
-
-    <!-- 热门推荐 -->
-    <div class="container">
-        <div class="glass-card">
-            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">热门推荐</h2>
-            <div class="content-grid">
-                {mac:vod num="12" order="vod_hits_month"}
-                    <div class="content-item fade-in">
-                        <a href="{:mac_url('vod/detail',['id'=>$vo.vod_id])}">
-                            <img src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="content-img">
-                            <div class="content-info">
-                                <h3 class="content-title">{$vo.vod_name}</h3>
-                                <div class="content-meta">
-                                    {$vo.vod_area} | {$vo.vod_year}
-                                </div>
+                <div class="section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">热门推荐</h2>
+                            <a href="{:mac_url('label/rank')}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                        </div>
+                        <div class="content-grid">
+                            {maccms:vod num="12" order="vod_hits_month"}
+                            <div class="content-item">
+                                <a href="{:mac_url_vod_detail($vo)}">
+                                    <div class="item-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <div class="poster-overlay">
+                                            <i class="layui-icon layui-icon-play"></i>
+                                        </div>
+                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                    </div>
+                                    <div class="item-info">
+                                        <h3 class="item-title">{$vo.vod_name}</h3>
+                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                    </div>
+                                </a>
                             </div>
-                        </a>
+                            {/maccms:vod}
+                        </div>
                     </div>
-                {/mac:vod}
-            </div>
-        </div>
-    </div>
-
-    <!-- 最新更新 -->
-    <div class="container" style="margin-top: 20px;">
-        <div class="glass-card">
-            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">最新更新</h2>
-            <div class="content-grid">
-                {mac:vod num="12" order="vod_time_add"}
-                    <div class="content-item fade-in">
-                        <a href="{:mac_url('vod/detail',['id'=>$vo.vod_id])}">
-                            <img src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="content-img">
-                            <div class="content-info">
-                                <h3 class="content-title">{$vo.vod_name}</h3>
-                                <div class="content-meta">
-                                    {$vo.vod_area} | {$vo.vod_year}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {/mac:vod}
-            </div>
-        </div>
-    </div>
-
-    <!-- 电影分类 -->
-    <div class="container" style="margin-top: 20px;">
-        <div class="glass-card">
-            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">电影</h2>
-            <div class="category-nav" style="margin-bottom: 20px;">
-                <a href="{:mac_url('vod/type',['id'=>1])}" class="category-item active">全部</a>
-                {volist name="maccms.type.list" id="vo" key="k"}
-                    {if condition="$vo.type_pid eq 1"}
-                        <a href="{:mac_url('vod/type',['id'=>$vo.type_id])}" class="category-item">{$vo.type_name}</a>
-                    {/if}
-                {/volist}
-            </div>
-            <div class="content-grid">
-                {mac:vod num="12" type="1" order="vod_time_add"}
-                    <div class="content-item fade-in">
-                        <a href="{:mac_url('vod/detail',['id'=>$vo.vod_id])}">
-                            <img src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="content-img">
-                            <div class="content-info">
-                                <h3 class="content-title">{$vo.vod_name}</h3>
-                                <div class="content-meta">
-                                    {$vo.vod_area} | {$vo.vod_year}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {/mac:vod}
-            </div>
-        </div>
-    </div>
-
-    <!-- 电视剧分类 -->
-    <div class="container" style="margin-top: 20px;">
-        <div class="glass-card">
-            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">电视剧</h2>
-            <div class="category-nav" style="margin-bottom: 20px;">
-                <a href="{:mac_url('vod/type',['id'=>2])}" class="category-item active">全部</a>
-                {volist name="maccms.type.list" id="vo" key="k"}
-                    {if condition="$vo.type_pid eq 2"}
-                        <a href="{:mac_url('vod/type',['id'=>$vo.type_id])}" class="category-item">{$vo.type_name}</a>
-                    {/if}
-                {/volist}
-            </div>
-            <div class="content-grid">
-                {mac:vod num="12" type="2" order="vod_time_add"}
-                    <div class="content-item fade-in">
-                        <a href="{:mac_url('vod/detail',['id'=>$vo.vod_id])}">
-                            <img src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="content-img">
-                            <div class="content-info">
-                                <h3 class="content-title">{$vo.vod_name}</h3>
-                                <div class="content-meta">
-                                    {$vo.vod_area} | {$vo.vod_year}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                {/mac:vod}
-            </div>
-        </div>
-    </div>
-
-    <!-- 底部 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>关于我们</h3>
-                    <ul>
-                        <li><a href="#">网站介绍</a></li>
-                        <li><a href="#">联系方式</a></li>
-                        <li><a href="#">加入我们</a></li>
-                    </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>帮助中心</h3>
-                    <ul>
-                        <li><a href="#">常见问题</a></li>
-                        <li><a href="#">使用指南</a></li>
-                        <li><a href="#">意见反馈</a></li>
-                    </ul>
+                
+                <div class="section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">最新更新</h2>
+                            <a href="{:mac_url('map/index')}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                        </div>
+                        <div class="content-grid">
+                            {maccms:vod num="12" order="vod_time_add"}
+                            <div class="content-item">
+                                <a href="{:mac_url_vod_detail($vo)}">
+                                    <div class="item-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <div class="poster-overlay">
+                                            <i class="layui-icon layui-icon-play"></i>
+                                        </div>
+                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                    </div>
+                                    <div class="item-info">
+                                        <h3 class="item-title">{$vo.vod_name}</h3>
+                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {/maccms:vod}
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>法律声明</h3>
-                    <ul>
-                        <li><a href="#">隐私政策</a></li>
-                        <li><a href="#">用户协议</a></li>
-                        <li><a href="#">版权声明</a></li>
-                    </ul>
+                
+                {maccms:type ids="parent" order="asc" by="sort" id="vo"}
+                <div class="section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">{$vo.type_name}</h2>
+                            <a href="{:mac_url_type($vo)}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                        </div>
+                        <div class="content-grid">
+                            {maccms:vod num="8" type="'.$vo['type_id'].'" order="vod_time_add"}
+                            <div class="content-item">
+                                <a href="{:mac_url_vod_detail($vo)}">
+                                    <div class="item-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <div class="poster-overlay">
+                                            <i class="layui-icon layui-icon-play"></i>
+                                        </div>
+                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                    </div>
+                                    <div class="item-info">
+                                        <h3 class="item-title">{$vo.vod_name}</h3>
+                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            {/maccms:vod}
+                        </div>
+                    </div>
                 </div>
+                {/maccms:type}
             </div>
-            <div class="footer-copyright">
-                <p>© {$maccms.site_name} 版权所有 | 本网站仅提供信息存储空间服务</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // 页面加载动画
-        $(document).ready(function() {
-            $('.fade-in').each(function(index) {
-                $(this).css('animation-delay', index * 0.1 + 's');
-            });
-        });
-
-        // 搜索框下拉建议
-        $('.search-input').on('input', function() {
-            var keyword = $(this).val();
-            if (keyword.length > 1) {
-                // 这里可以添加搜索建议功能
-            }
-        });
-
-        // 随机跳转功能
-        function randomVod() {
-            window.location.href = '{:mac_url("vod/detail",["id"=>rand(1,1000)])}';
-        }
-    </script>
-</body>
-</html>
+{include file="public/foot.html"}

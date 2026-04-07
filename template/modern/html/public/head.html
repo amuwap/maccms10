@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" />
+    <title>{$maccms.site_name}{if condition="!empty($obj['vod_name'])} - {$obj.vod_name}{/if}{if condition="!empty($obj['art_name'])} - {$obj.art_name}{/if}</title>
+    <link rel="stylesheet" href="{$maccms.path}static/js/layui/css/layui.css">
+    <link rel="stylesheet" href="{$maccms.path_tpl}css/style.css">
+    <link rel="stylesheet" href="{$maccms.path}static/player/dplayer/DPlayer.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="container">
+                <div class="header-main">
+                    <div class="logo">
+                        <a href="{$maccms.path}">
+                            <img src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}" />
+                        </a>
+                    </div>
+                    <nav class="nav-main">
+                        <ul class="nav-list">
+                            <li class="nav-item {if condition="$maccms.aid eq 1"}active{/if}">
+                                <a href="{$maccms.path}">首页</a>
+                            </li>
+                            {maccms:type ids="parent" order="asc" by="sort"}
+                            <li class="nav-item {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"}active{/if}">
+                                <a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
+                                {maccms:type ids="child" pid="'.$vo['type_id'].'" order="asc" by="sort" id="vo2"}
+                                <ul class="nav-dropdown">
+                                    <li><a href="{:mac_url_type($vo2)}">{$vo2.type_name}</a></li>
+                                </ul>
+                                {/maccms:type}
+                            </li>
+                            {/maccms:type}
+                            <li class="nav-item">
+                                <a href="{:mac_url('live/index')}">直播</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="header-right">
+                        <div class="search-box">
+                            <input type="text" class="search-input" placeholder="搜索影片..." value="{$param.wd}" />
+                            <button class="search-btn"><i class="layui-icon layui-icon-search"></i></button>
+                        </div>
+                        <div class="user-menu">
+                            {maccms:user no}
+                            <a href="{:mac_url('user/login')}" class="btn-login">登录</a>
+                            <a href="{:mac_url('user/reg')}" class="btn-register">注册</a>
+                            {/maccms:user}
+                            {maccms:user}
+                            <div class="user-dropdown">
+                                <div class="user-avatar">
+                                    <img src="{$user.user_portrait|mac_default='__ROOT__/static/images/touxiang.png'|mac_url_img}" alt="{$user.user_name}" />
+                                </div>
+                                <span class="user-name">{$user.user_name}</span>
+                                <div class="user-menu-list">
+                                    <a href="{:mac_url('user/index')}">个人中心</a>
+                                    <a href="{:mac_url('user/favs')}">我的收藏</a>
+                                    <a href="{:mac_url('user/plays')}">播放历史</a>
+                                    <a href="{:mac_url('user/orders')}">我的订单</a>
+                                    <a href="{:mac_url('user/logout')}">退出登录</a>
+                                </div>
+                            </div>
+                            {/maccms:user}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="main-content">

@@ -1,0 +1,158 @@
+{include file="user/head.html"}
+                    <div class="glass-card user-content">
+                        <div class="content-header">
+                            <h2>在线充值</h2>
+                        </div>
+                        <div class="recharge-section">
+                            <div class="balance-info glass-card">
+                                <div class="balance-item">
+                                    <span class="balance-label">账户积分</span>
+                                    <span class="balance-value">{$obj.user_points}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="recharge-tabs">
+                                <div class="tab-header">
+                                    <button class="tab-btn active" data-tab="online">在线充值</button>
+                                    <button class="tab-btn" data-tab="card">充值卡</button>
+                                </div>
+                                
+                                <div class="tab-content">
+                                    <div class="tab-panel active" id="online">
+                                        <div class="recharge-form">
+                                            <div class="form-group">
+                                                <label>充值金额</label>
+                                                <div class="amount-options">
+                                                    <button class="amount-btn" data-amount="10">10元</button>
+                                                    <button class="amount-btn" data-amount="20">20元</button>
+                                                    <button class="amount-btn" data-amount="50">50元</button>
+                                                    <button class="amount-btn" data-amount="100">100元</button>
+                                                    <button class="amount-btn" data-amount="200">200元</button>
+                                                    <button class="amount-btn" data-amount="500">500元</button>
+                                                </div>
+                                                <input type="number" name="price" class="form-input" value="{$config.min}" min="{$config.min}" placeholder="或输入自定义金额" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>支付方式</label>
+                                                <div class="payment-methods">
+                                                    <label class="payment-method">
+                                                        <input type="radio" name="payment" value="yipay" checked />
+                                                        <span>易支付</span>
+                                                    </label>
+                                                    <label class="payment-method">
+                                                        <input type="radio" name="payment" value="paypal" />
+                                                        <span>PayPal</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" id="btn_submit_pay" class="btn btn-primary btn-large">立即充值</button>
+                                            </div>
+                                            <p class="recharge-tip">友情提示：最小充值金额为{$config.min}元，1元可以兑换{$config.scale}个积分</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tab-panel" id="card">
+                                        <div class="recharge-form">
+                                            <div class="form-group">
+                                                <label>充值卡号</label>
+                                                <input type="text" name="card_no" class="form-input" placeholder="请输入充值卡号" />
+                                                {if condition="$GLOBALS['config']['pay']['card']['url'] neq ''"}
+                                                <a href="{$GLOBALS['config']['pay']['card']['url']}" target="_blank" class="buy-card-link">点击购买卡密</a>
+                                                {/if}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>充值密码</label>
+                                                <input type="text" name="card_pwd" class="form-input" placeholder="请输入充值密码" />
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" id="btn_submit_card" class="btn btn-primary btn-large">确认充值</button>
+                                            </div>
+                                            <p class="recharge-tip">友情提示：请到卡密平台购买充值卡</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $('.tab-btn').on('click', function() {
+                            const tab = $(this).data('tab');
+                            $('.tab-btn').removeClass('active');
+                            $(this).addClass('active');
+                            $('.tab-panel').removeClass('active');
+                            $('#' + tab).addClass('active');
+                        });
+                        
+                        $('.amount-btn').on('click', function() {
+                            $('.amount-btn').removeClass('active');
+                            $(this).addClass('active');
+                            $('input[name="price"]').val($(this).data('amount'));
+                        });
+                        
+                        $('#btn_submit_pay').click(function() {
+                            var price = $('input[name="price"]').val();
+                            if (Number(price) < {$config.min}) {
+                                layer.msg('最小充值金额为{$config.min}元', {icon: 2});
+                                return;
+                            }
+                            layer.confirm('确定要在线充值吗？', {icon: 3, title: '提示'}, function(index) {
+                                var payment = $('input[name="payment"]:checked').val();
+                                $.ajax({
+                                    url: "{:mac_url('user/buy')}",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: {price: price, payment: payment, flag: 'pay'},
+                                    beforeSend: function() {
+                                        $('#btn_submit_pay').text('处理中...').attr('disabled', true);
+                                    },
+                                    success: function(r) {
+                                        if (r.code == 1) {
+                                            location.href = "{:mac_url('user/pay')}?order_code=" + r.data.order_code;
+                                        } else {
+                                            layer.msg(r.msg, {icon: 2});
+                                        }
+                                    },
+                                    complete: function() {
+                                        $('#btn_submit_pay').text('立即充值').attr('disabled', false);
+                                    }
+                                });
+                                layer.close(index);
+                            });
+                        });
+                        
+                        $('#btn_submit_card').click(function() {
+                            var no = $('input[name="card_no"]').val();
+                            var pwd = $('input[name="card_pwd"]').val();
+                            if (no == '' || pwd == '') {
+                                layer.msg('请输入充值卡号和密码', {icon: 2});
+                                return;
+                            }
+                            layer.confirm('确定要使用充值卡充值吗？', {icon: 3, title: '提示'}, function(index) {
+                                $.ajax({
+                                    url: "{:mac_url('user/buy')}",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: {card_no: no, card_pwd: pwd, flag: 'card'},
+                                    beforeSend: function() {
+                                        $('#btn_submit_card').text('处理中...').attr('disabled', true);
+                                    },
+                                    success: function(r) {
+                                        if (r.code == 1) {
+                                            layer.msg(r.msg, {icon: 1});
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 1000);
+                                        } else {
+                                            layer.msg(r.msg, {icon: 2});
+                                        }
+                                    },
+                                    complete: function() {
+                                        $('#btn_submit_card').text('确认充值').attr('disabled', false);
+                                    }
+                                });
+                                layer.close(index);
+                            });
+                        });
+                    </script>
+{include file="user/foot.html"}

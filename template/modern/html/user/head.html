@@ -1,0 +1,54 @@
+{include file="public/head.html"}
+            <div class="container user-center">
+                <div class="user-sidebar">
+                    <div class="user-profile glass-card">
+                        <div class="profile-avatar">
+                            <img src="{$obj.user_portrait|mac_default='__ROOT__/static/images/touxiang.png'|mac_url_img}" alt="{$obj.user_name}" />
+                        </div>
+                        <div class="profile-info">
+                            <h3>{$obj.user_name}</h3>
+                            <p class="user-group">{$obj.group.group_name}</p>
+                        </div>
+                    </div>
+                    <nav class="user-nav glass-card">
+                        <ul>
+                            <li class="{if condition="$maccms.action eq 'index'"}active{/if}">
+                                <a href="{:mac_url('user/index')}">
+                                    <i class="layui-icon layui-icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li class="{if condition="$maccms.action eq 'favs'"}active{/if}">
+                                <a href="{:mac_url('user/favs')}">
+                                    <i class="layui-icon layui-icon-star"></i>
+                                    我的收藏
+                                </a>
+                            </li>
+                            <li class="{if condition="$maccms.action eq 'plays'"}active{/if}">
+                                <a href="{:mac_url('user/plays')}">
+                                    <i class="layui-icon layui-icon-play"></i>
+                                    播放历史
+                                </a>
+                            </li>
+                            <li class="{if condition="$maccms.action eq 'orders'"}active{/if}">
+                                <a href="{:mac_url('user/orders')}">
+                                    <i class="layui-icon layui-icon-list"></i>
+                                    充值记录
+                                </a>
+                            </li>
+                            <li class="{if condition="$maccms.action eq 'buy'"}active{/if}">
+                                <a href="{:mac_url('user/buy')}">
+                                    <i class="layui-icon layui-icon-rmb"></i>
+                                    在线充值
+                                </a>
+                            </li>
+                            <li class="{if condition="$maccms.action eq 'upgrade'"}active{/if}">
+                                <a href="{:mac_url('user/upgrade')}">
+                                    <i class="layui-icon layui-icon-diamond"></i>
+                                    升级会员
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="user-main">

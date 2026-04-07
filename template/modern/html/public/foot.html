@@ -1,0 +1,57 @@
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-main">
+                    <div class="footer-section">
+                        <h3>关于我们</h3>
+                        <p>提供最新、最全、最高清的影视资源，让您享受极致观影体验。</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>友情链接</h3>
+                        <ul class="footer-links">
+                            {maccms:link num="10"}
+                            <li><a href="{$vo.link_url}" target="_blank">{$vo.link_name}</a></li>
+                            {/maccms:link}
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>联系方式</h3>
+                        <ul class="footer-contact">
+                            <li>邮箱：{$maccms.site_email}</li>
+                            <li>免责声明：本站不提供任何视听上传服务</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>Copyright © {$maccms.site_name} All Rights Reserved</p>
+                    <p>{$maccms.site_tj}</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <button class="scroll-top"><i class="layui-icon layui-icon-top"></i></button>
+    
+    <div class="modal-overlay"></div>
+    
+    <div class="modal modal-error">
+        <div class="modal-header">
+            <h3>播放报错</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" class="vod-id" />
+            <textarea class="error-content" placeholder="请描述您遇到的错误..."></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary modal-close">取消</button>
+            <button class="btn btn-primary" onclick="submitPlayError()">提交</button>
+        </div>
+    </div>
+    
+    <script src="{$maccms.path}static/js/jquery.js"></script>
+    <script src="{$maccms.path}static/js/layui/layui.js"></script>
+    <script src="{$maccms.path}static/player/dplayer/DPlayer.min.js"></script>
+    <script src="{$maccms.path_tpl}js/main.js"></script>
+</body>
+</html>

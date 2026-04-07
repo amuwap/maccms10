@@ -1,0 +1,69 @@
+{include file="public/head.html"}
+            <div class="container">
+                <div class="page-header">
+                    <h1>{$type.type_name}</h1>
+                    <p>{$type.type_description}</p>
+                </div>
+                
+                <div class="vod-filters glass-card">
+                    <div class="filter-group">
+                        <span class="filter-label">类型：</span>
+                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.class"}active{/if}">全部</a>
+                        {maccms:foreach name=":explode(',',$type.type_extend.class)" id="vo"}
+                        <a href="{:mac_url_type($type,['class'=>$vo])}" class="filter-item {if condition="$param.class eq $vo"}active{/if}">{$vo}</a>
+                        {/maccms:foreach}
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">地区：</span>
+                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.area"}active{/if}">全部</a>
+                        {maccms:foreach name=":explode(',',$type.type_extend.area)" id="vo"}
+                        <a href="{:mac_url_type($type,['area'=>$vo])}" class="filter-item {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
+                        {/maccms:foreach}
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">年份：</span>
+                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.year"}active{/if}">全部</a>
+                        {maccms:foreach name=":explode(',',$type.type_extend.year)" id="vo"}
+                        <a href="{:mac_url_type($type,['year'=>$vo])}" class="filter-item {if condition="$param.year eq $vo"}active{/if}">{$vo}</a>
+                        {/maccms:foreach}
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">排序：</span>
+                        <a href="{:mac_url_type($type,['order'=>'time'])}" class="filter-item {if condition="$param.order eq 'time'"}active{/if}">最新</a>
+                        <a href="{:mac_url_type($type,['order'=>'hits'])}" class="filter-item {if condition="$param.order eq 'hits'"}active{/if}">最热</a>
+                        <a href="{:mac_url_type($type,['order'=>'score'])}" class="filter-item {if condition="$param.order eq 'score'"}active{/if}">评分</a>
+                    </div>
+                </div>
+                
+                <div class="content-grid">
+                    {maccms:vod num="24" type="'.$type['type_id'].'" order="vod_time_add desc"}
+                    <div class="content-item">
+                        <a href="{:mac_url_vod_detail($vo)}">
+                            <div class="item-poster">
+                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                <div class="poster-overlay">
+                                    <i class="layui-icon layui-icon-play"></i>
+                                </div>
+                                <span class="item-remark">{$vo.vod_remarks}</span>
+                            </div>
+                            <div class="item-info">
+                                <h3 class="item-title">{$vo.vod_name}</h3>
+                                <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {/maccms:vod}
+                </div>
+                
+                {if condition="!$list"}
+                <div class="empty-state">
+                    <i class="layui-icon layui-icon-face-cry"></i>
+                    <p>暂无内容</p>
+                </div>
+                {/if}
+                
+                <div class="pagination">
+                    {$__PAGING__.page_content}
+                </div>
+            </div>
+{include file="public/foot.html"}

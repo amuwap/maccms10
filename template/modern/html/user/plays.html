@@ -1,0 +1,87 @@
+{include file="user/head.html"}
+                    <div class="glass-card user-content">
+                        <div class="content-header">
+                            <h2>播放历史</h2>
+                            <div class="header-actions">
+                                <button class="btn btn-secondary" id="btnDel">删除选中</button>
+                                <button class="btn btn-secondary" id="btnClear">清空全部</button>
+                            </div>
+                        </div>
+                        <div class="plays-list">
+                            {volist name="list" id="vo"}
+                            <div class="plays-item glass-card">
+                                <div class="plays-checkbox">
+                                    <input type="checkbox" name="ids[]" value="{$vo.ulog_id}" class="checkbox" />
+                                </div>
+                                <div class="plays-poster">
+                                    <a href="{$vo.data.link}">
+                                        <img src="{$vo.data.pic|mac_url_img}" alt="{$vo.data.name}" />
+                                    </a>
+                                </div>
+                                <div class="plays-info">
+                                    <h3><a href="{$vo.data.link}">{$vo.data.name}</a></h3>
+                                    <p class="plays-meta">
+                                        {$vo.data.type.type_name} · 
+                                        第{$vo.ulog_rid}集 · 
+                                        <span class="plays-time">{$vo.ulog_time|mac_day}</span>
+                                    </p>
+                                </div>
+                                <div class="plays-actions">
+                                    <a href="{$vo.data.link}" class="btn btn-primary btn-small">继续播放</a>
+                                    <a href="javascript:;" onclick="delData({$vo.ulog_id},0)" class="btn btn-danger btn-small">删除</a>
+                                </div>
+                            </div>
+                            {/volist}
+                        </div>
+                        {if condition="!$list"}
+                        <div class="empty-state">
+                            <i class="layui-icon layui-icon-video"></i>
+                            <p>暂无播放记录</p>
+                        </div>
+                        {/if}
+                        <div class="pagination">
+                            {$__PAGING__.page_content}
+                        </div>
+                    </div>
+                    <script>
+                        function delData(ids, all) {
+                            var msg = all == 1 ? '清空' : '删除';
+                            layer.confirm('确定要' + msg + '记录吗？', {
+                                icon: 3,
+                                title: '提示'
+                            }, function(index) {
+                                $.post("{:mac_url('user/ulog_del')}", {
+                                    ids: ids,
+                                    type: 4,
+                                    all: all
+                                }, function(data) {
+                                    if (data.code == '1') {
+                                        layer.msg('删除成功', {icon: 1});
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 1000);
+                                    } else {
+                                        layer.msg('删除失败：' + data.msg, {icon: 2});
+                                    }
+                                }, 'json');
+                                layer.close(index);
+                            });
+                        }
+                        
+                        $('#btnDel').click(function() {
+                            var ids = [];
+                            $('input[name="ids[]"]:checked').each(function() {
+                                ids.push($(this).val());
+                            });
+                            if (ids.length === 0) {
+                                layer.msg('请至少选择一个数据', {icon: 0});
+                                return;
+                            }
+                            delData(ids.join(','), 0);
+                        });
+                        
+                        $('#btnClear').click(function() {
+                            delData('', 1);
+                        });
+                    </script>
+{include file="user/foot.html"}

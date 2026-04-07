@@ -1,0 +1,131 @@
+{include file="public/head.html"}
+            <div class="container art-detail">
+                <article class="glass-card art-detail-card">
+                    <div class="art-detail-header">
+                        <h1 class="art-detail-title">{$obj.art_name}</h1>
+                        <div class="art-detail-meta">
+                            <span class="art-author">
+                                <i class="layui-icon layui-icon-username"></i>
+                                {$obj.art_author}
+                            </span>
+                            <span class="art-time">
+                                <i class="layui-icon layui-icon-time"></i>
+                                {$obj.art_time_add|mac_day}
+                            </span>
+                            <span class="art-type">
+                                <i class="layui-icon layui-icon-list"></i>
+                                {$obj.type.type_name}
+                            </span>
+                            <span class="art-views">
+                                <i class="layui-icon layui-icon-eye"></i>
+                                {$obj.art_hits}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {if condition="!empty($obj.art_pic)"}
+                    <div class="art-detail-poster">
+                        <img src="{$obj.art_pic|mac_url_img}" alt="{$obj.art_name}" />
+                    </div>
+                    {/if}
+                    
+                    <div class="art-detail-content">
+                        {$obj.art_content}
+                    </div>
+                    
+                    <div class="art-detail-footer">
+                        <div class="art-actions">
+                            <button class="btn btn-primary btn-like" data-id="{$obj.art_id}">
+                                <i class="layui-icon layui-icon-praise"></i>
+                                点赞 (<span>{$obj.art_up}</span>)
+                            </button>
+                            <button class="btn btn-secondary btn-share">
+                                <i class="layui-icon layui-icon-share"></i>
+                                分享
+                            </button>
+                        </div>
+                        
+                        <div class="art-tags">
+                            {maccms:foreach name=":explode(',',$obj.art_keywords)" id="vo"}
+                            <a href="{:mac_url('art/search',['wd'=>$vo])}" class="art-tag">{$vo}</a>
+                            {/maccms:foreach}
+                        </div>
+                    </div>
+                </article>
+                
+                <div class="art-relate glass-card">
+                    <h3 class="relate-title">相关文章</h3>
+                    <div class="relate-list">
+                        {maccms:art num="6" type="'.$obj['type_id'].'" not="'.$obj['art_id'].'" order="art_hits desc"}
+                        <a href="{:mac_url_art_detail($vo)}" class="relate-item">
+                            <div class="relate-poster">
+                                <img src="{$vo.art_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$vo.art_name}" />
+                            </div>
+                            <h4 class="relate-title-text">{$vo.art_name}</h4>
+                            <span class="relate-time">{$vo.art_time_add|mac_day}</span>
+                        </a>
+                        {/maccms:art}
+                    </div>
+                </div>
+                
+                <div class="art-comments glass-card">
+                    <h3 class="comments-title">评论区</h3>
+                    
+                    <div class="comment-form">
+                        <textarea class="comment-input" placeholder="发表您的评论..."></textarea>
+                        <div class="comment-form-footer">
+                            <button class="btn btn-primary btn-submit-comment">发表评论</button>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-list">
+                        {maccms:comment num="10" id="'.$obj['art_id'].'" mid="2"}
+                        <div class="comment-item">
+                            <div class="comment-avatar">
+                                <img src="{$vo.user_portrait|mac_default='__ROOT__/static/images/touxiang.png'|mac_url_img}" alt="{$vo.user_name}" />
+                            </div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <span class="comment-user">{$vo.user_name}</span>
+                                    <span class="comment-time">{$vo.comment_time|mac_day}</span>
+                                </div>
+                                <p class="comment-text">{$vo.comment_content}</p>
+                            </div>
+                        </div>
+                        {/maccms:comment}
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    $('.btn-like').on('click', function() {
+                        const artId = $(this).data('id');
+                        $.ajax({
+                            url: '{:mac_url("art/digg")}',
+                            type: 'POST',
+                            data: {id: artId},
+                            dataType: 'json',
+                            success: function(res) {
+                                if (res.code === 1) {
+                                    const count = $('.btn-like span');
+                                    count.text(parseInt(count.text()) + 1);
+                                    layer.msg(res.msg, {icon: 1});
+                                } else {
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }
+                        });
+                    });
+                    
+                    $('.btn-submit-comment').on('click', function() {
+                        const content = $('.comment-input').val().trim();
+                        if (!content) {
+                            layer.msg('请输入评论内容', {icon: 2});
+                            return;
+                        }
+                        layer.msg('评论发表成功', {icon: 1});
+                        $('.comment-input').val('');
+                    });
+                });
+            </script>
+{include file="public/foot.html"}

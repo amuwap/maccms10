@@ -1,0 +1,58 @@
+{include file="public/head.html"}
+            <div class="container">
+                <div class="search-result-header">
+                    <h1>搜索结果</h1>
+                    <p class="search-keyword">关键词：<span>{$param.wd}</span></p>
+                    <p class="search-count">共找到 <span>{$__PAGING__.record_total}</span> 个结果</p>
+                </div>
+                
+                <div class="search-filters glass-card">
+                    <div class="filter-group">
+                        <span class="filter-label">类型：</span>
+                        <a href="{:mac_url('vod/search',['wd'=>$param.wd])}" class="filter-item {if condition="!$param.tid"}active{/if}">全部</a>
+                        {maccms:type ids="parent" order="asc" by="sort"}
+                        <a href="{:mac_url('vod/search',['wd'=>$param.wd,'tid'=>$vo.type_id])}" class="filter-item {if condition="$param.tid eq $vo.type_id"}active{/if}">{$vo.type_name}</a>
+                        {/maccms:type}
+                    </div>
+                </div>
+                
+                <div class="search-results">
+                    {maccms:vod num="20" order="vod_time_add desc"}
+                    <div class="search-item glass-card">
+                        <div class="search-item-poster">
+                            <a href="{:mac_url_vod_detail($vo)}">
+                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" />
+                            </a>
+                        </div>
+                        <div class="search-item-info">
+                            <h3 class="search-item-title">
+                                <a href="{:mac_url_vod_detail($vo)}">{$vo.vod_name}</a>
+                            </h3>
+                            <div class="search-item-meta">
+                                <span class="search-item-type">{$vo.type.type_name}</span>
+                                <span class="search-item-year">{$vo.vod_year}</span>
+                                <span class="search-item-area">{$vo.vod_area}</span>
+                            </div>
+                            <p class="search-item-desc">{$vo.vod_content|mac_filter_html|mac_substring=150}</p>
+                            <div class="search-item-actions">
+                                <a href="{:mac_url_vod_detail($vo)}" class="btn btn-primary btn-small">查看详情</a>
+                                <a href="{:mac_url_vod_play($vo)}" class="btn btn-secondary btn-small">立即播放</a>
+                            </div>
+                        </div>
+                    </div>
+                    {/maccms:vod}
+                </div>
+                
+                {if condition="!$list"}
+                <div class="empty-state">
+                    <i class="layui-icon layui-icon-face-cry"></i>
+                    <p>没有找到相关内容</p>
+                    <p class="empty-hint">试试其他关键词吧</p>
+                </div>
+                {/if}
+                
+                <div class="pagination">
+                    {$__PAGING__.page_content}
+                </div>
+            </div>
+{include file="public/foot.html"}

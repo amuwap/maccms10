@@ -1,0 +1,85 @@
+{include file="user/head.html"}
+                    <div class="glass-card user-content">
+                        <div class="content-header">
+                            <h2>我的收藏</h2>
+                            <div class="header-actions">
+                                <button class="btn btn-secondary" id="btnDel">删除选中</button>
+                                <button class="btn btn-secondary" id="btnClear">清空全部</button>
+                            </div>
+                        </div>
+                        <div class="favs-list">
+                            {volist name="list" id="vo"}
+                            {if condition="$vo.ulog_mid eq 1"}
+                            <div class="favs-item glass-card">
+                                <div class="favs-checkbox">
+                                    <input type="checkbox" name="ids[]" value="{$vo.ulog_id}" class="checkbox" />
+                                </div>
+                                <div class="favs-poster">
+                                    <a href="{$vo.data.link}">
+                                        <img src="{$vo.data.pic|mac_url_img}" alt="{$vo.data.name}" />
+                                    </a>
+                                </div>
+                                <div class="favs-info">
+                                    <h3><a href="{$vo.data.link}">{$vo.data.name}</a></h3>
+                                    <p class="favs-meta">{$vo.data.type.type_name} · {$vo.data.remarks}</p>
+                                </div>
+                                <div class="favs-actions">
+                                    <a href="{$vo.data.link}" class="btn btn-primary btn-small">播放</a>
+                                    <a href="javascript:;" onclick="delData({$vo.ulog_id},0)" class="btn btn-danger btn-small">删除</a>
+                                </div>
+                            </div>
+                            {/if}
+                            {/volist}
+                        </div>
+                        {if condition="!$list"}
+                        <div class="empty-state">
+                            <i class="layui-icon layui-icon-face-cry"></i>
+                            <p>暂无收藏内容</p>
+                        </div>
+                        {/if}
+                        <div class="pagination">
+                            {$__PAGING__.page_content}
+                        </div>
+                    </div>
+                    <script>
+                        function delData(ids, all) {
+                            var msg = all == 1 ? '清空' : '删除';
+                            layer.confirm('确定要' + msg + '记录吗？', {
+                                icon: 3,
+                                title: '提示'
+                            }, function(index) {
+                                $.post("{:mac_url('user/ulog_del')}", {
+                                    ids: ids,
+                                    type: 2,
+                                    all: all
+                                }, function(data) {
+                                    if (data.code == '1') {
+                                        layer.msg('删除成功', {icon: 1});
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 1000);
+                                    } else {
+                                        layer.msg('删除失败：' + data.msg, {icon: 2});
+                                    }
+                                }, 'json');
+                                layer.close(index);
+                            });
+                        }
+                        
+                        $('#btnDel').click(function() {
+                            var ids = [];
+                            $('input[name="ids[]"]:checked').each(function() {
+                                ids.push($(this).val());
+                            });
+                            if (ids.length === 0) {
+                                layer.msg('请至少选择一个数据', {icon: 0});
+                                return;
+                            }
+                            delData(ids.join(','), 0);
+                        });
+                        
+                        $('#btnClear').click(function() {
+                            delData('', 1);
+                        });
+                    </script>
+{include file="user/foot.html"}

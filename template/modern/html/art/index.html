@@ -1,0 +1,66 @@
+{include file="public/head.html"}
+            <div class="container">
+                <div class="page-header">
+                    <h1>影评文章</h1>
+                    <p>专业影评，深度解读</p>
+                </div>
+                
+                <div class="art-filters glass-card">
+                    <div class="filter-group">
+                        <span class="filter-label">分类：</span>
+                        <a href="{:mac_url('art/index')}" class="filter-item {if condition="!$param.tid"}active{/if}">全部</a>
+                        {maccms:type ids="parent" mid="2" order="asc" by="sort"}
+                        <a href="{:mac_url('art/index',['tid'=>$vo.type_id])}" class="filter-item {if condition="$param.tid eq $vo.type_id"}active{/if}">{$vo.type_name}</a>
+                        {/maccms:type}
+                    </div>
+                </div>
+                
+                <div class="art-list">
+                    {maccms:art num="10" order="art_time_add desc"}
+                    <article class="art-item glass-card">
+                        <div class="art-poster">
+                            <a href="{:mac_url_art_detail($vo)}">
+                                <img src="{$vo.art_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$vo.art_name}" />
+                            </a>
+                        </div>
+                        <div class="art-content">
+                            <h2 class="art-title">
+                                <a href="{:mac_url_art_detail($vo)}">{$vo.art_name}</a>
+                            </h2>
+                            <div class="art-meta">
+                                <span class="art-author">
+                                    <i class="layui-icon layui-icon-username"></i>
+                                    {$vo.art_author}
+                                </span>
+                                <span class="art-time">
+                                    <i class="layui-icon layui-icon-time"></i>
+                                    {$vo.art_time_add|mac_day}
+                                </span>
+                                <span class="art-views">
+                                    <i class="layui-icon layui-icon-eye"></i>
+                                    {$vo.art_hits}
+                                </span>
+                                <span class="art-likes">
+                                    <i class="layui-icon layui-icon-praise"></i>
+                                    {$vo.art_up}
+                                </span>
+                            </div>
+                            <p class="art-desc">{$vo.art_content|mac_filter_html|mac_substring=200}</p>
+                            <a href="{:mac_url_art_detail($vo)}" class="art-read-more">阅读全文 <i class="layui-icon layui-icon-right"></i></a>
+                        </div>
+                    </article>
+                    {/maccms:art}
+                </div>
+                
+                {if condition="!$list"}
+                <div class="empty-state">
+                    <i class="layui-icon layui-icon-note"></i>
+                    <p>暂无文章内容</p>
+                </div>
+                {/if}
+                
+                <div class="pagination">
+                    {$__PAGING__.page_content}
+                </div>
+            </div>
+{include file="public/foot.html"}

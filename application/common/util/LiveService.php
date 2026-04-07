@@ -10,6 +10,31 @@ class LiveService
     protected static $cachePrefix = 'live_service_';
     protected static $cacheTime = 3600;
 
+    protected static $viewerNames = [
+        '小明', '小红', '小刚', '小美', '小华', '小伟', '小丽', '小强', '小敏', '小磊',
+        '阳光少年', '快乐女孩', '追梦人', '幸福时光', '美好明天', '快乐人生', '幸福天使', '快乐精灵',
+        '清风拂面', '雨后彩虹', '春暖花开', '夏日清凉', '秋叶飘零', '冬雪纷飞', '四季如歌'
+    ];
+
+    protected static $virtualGifts = [
+        ['id' => 1, 'name' => '鲜花', 'price' => 1, 'icon' => '🌹'],
+        ['id' => 2, 'name' => '掌声', 'price' => 1, 'icon' => '👏'],
+        ['id' => 3, 'name' => '爱心', 'price' => 5, 'icon' => '❤️'],
+        ['id' => 4, 'name' => '火箭', 'price' => 10, 'icon' => '🚀'],
+        ['id' => 5, 'name' => '钻石', 'price' => 20, 'icon' => '💎'],
+        ['id' => 6, 'name' => '皇冠', 'price' => 50, 'icon' => '👑'],
+        ['id' => 7, 'name' => '城堡', 'price' => 100, 'icon' => '🏰'],
+        ['id' => 8, 'name' => '超级火箭', 'price' => 200, 'icon' => '🚀✨']
+    ];
+
+    protected static $danmakuContents = [
+        '666', '好看', '主播好', '太棒了', '继续加油', '支持你',
+        '学到了', '感谢分享', '很有价值', '内容很棒', '主播辛苦了',
+        '期待更多', '非常喜欢', '内容质量高', '讲解详细', '很有帮助',
+        '厉害了', '太强了', '佩服佩服', '666666', '牛啊牛啊',
+        '学到很多', '干货满满', '感谢主播', '必须支持', '已关注'
+    ];
+
     public static function getLiveList($status = null, $page = 1, $limit = 20, $order = 'live_sort asc, live_time desc', $use_cache = true)
     {
         $cacheKey = self::$cachePrefix . 'list_' . ($status === null ? 'all' : $status) . '_' . $page . '_' . $limit . '_' . md5($order);
@@ -519,5 +544,473 @@ class LiveService
             'page' => $page,
             'limit' => $limit
         ];
+    }
+
+    public static function sendVirtualGift($live_id, $gift_id, $user_id = 0, $count = 1)
+    {
+        $gift = self::getVirtualGiftById($gift_id);
+        if (!$gift) {
+            return ['code' => 0, 'msg' => '礼物不存在'];
+        }
+
+        $username = $user_id > 0 ? '用户' . $user_id : self::$viewerNames[array_rand(self::$viewerNames)];
+        
+        $giftData = [
+            'gift_id' => $gift['id'],
+            'gift_name' => $gift['name'],
+            'gift_icon' => $gift['icon'],
+            'gift_price' => $gift['price'],
+            'count' => $count,
+            'username' => $username,
+            'user_id' => $user_id,
+            'time' => time()
+        ];
+
+        $cacheKey = self::$cachePrefix . 'gifts_' . $live_id;
+        $gifts = Cache::get($cacheKey, []);
+        array_unshift($gifts, $giftData);
+        
+        if (count($gifts) > 50) {
+            array_pop($gifts);
+        }
+        
+        Cache::set($cacheKey, $gifts, 3600);
+
+        self::updateLiveGiftCount($live_id, $gift['price'] * $count);
+
+        return ['code' => 1, 'msg' => '礼物发送成功', 'data' => $giftData];
+    }
+
+    public static function getVirtualGiftById($gift_id)
+    {
+        foreach (self::$virtualGifts as $gift) {
+            if ($gift['id'] == $gift_id) {
+                return $gift;
+            }
+        }
+        return null;
+    }
+
+    public static function getVirtualGifts()
+    {
+        return ['code' => 1, 'data' => self::$virtualGifts];
+    }
+
+    public static function getLiveGifts($live_id, $limit = 20)
+    {
+        $cacheKey = self::$cachePrefix . 'gifts_' . $live_id;
+        $gifts = Cache::get($cacheKey, []);
+        return array_slice($gifts, 0, $limit);
+    }
+
+    protected static function updateLiveGiftCount($live_id, $amount)
+    {
+        Db::startTrans();
+        try {
+            $live = LiveModel::get($live_id);
+            if (!$live) {
+                Db::rollback();
+                return false;
+            }
+
+            $newCount = ($live['live_gifts'] ?? 0) + $amount;
+            
+            LiveModel::update([
+                'live_gifts' => $newCount,
+                'live_update_time' => time()
+            ], ['live_id' => $live_id]);
+
+            self::clearLiveCache($live_id);
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            return false;
+        }
+    }
+
+    public static function sendDanmaku($live_id, $content, $user_id = 0)
+    {
+        $username = $user_id > 0 ? '用户' . $user_id : self::$viewerNames[array_rand(self::$viewerNames)];
+        
+        $danmakuData = [
+            'content' => $content,
+            'username' => $username,
+            'user_id' => $user_id,
+            'time' => time(),
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF))
+        ];
+
+        $cacheKey = self::$cachePrefix . 'danmaku_' . $live_id;
+        $danmakus = Cache::get($cacheKey, []);
+        array_push($danmakus, $danmakuData);
+        
+        if (count($danmakus) > 100) {
+            array_shift($danmakus);
+        }
+        
+        Cache::set($cacheKey, $danmakus, 3600);
+
+        return ['code' => 1, 'msg' => '弹幕发送成功', 'data' => $danmakuData];
+    }
+
+    public static function getDanmakus($live_id, $limit = 50)
+    {
+        $cacheKey = self::$cachePrefix . 'danmaku_' . $live_id;
+        $danmakus = Cache::get($cacheKey, []);
+        return array_slice(array_reverse($danmakus), 0, $limit);
+    }
+
+    public static function simulateAutoInteraction($live_id)
+    {
+        $interactions = ['view', 'comment', 'like', 'gift', 'danmaku'];
+        $type = $interactions[array_rand($interactions)];
+        
+        switch ($type) {
+            case 'view':
+                self::updateLiveViewerCount($live_id, mt_rand(1, 3));
+                break;
+            case 'comment':
+                self::addFakeComment($live_id);
+                break;
+            case 'like':
+                self::updateLiveLikeCount($live_id, mt_rand(1, 5));
+                break;
+            case 'gift':
+                $gift = self::$virtualGifts[array_rand(self::$virtualGifts)];
+                self::sendVirtualGift($live_id, $gift['id']);
+                break;
+            case 'danmaku':
+                $content = self::$danmakuContents[array_rand(self::$danmakuContents)];
+                self::sendDanmaku($live_id, $content);
+                break;
+        }
+
+        return ['code' => 1, 'msg' => '自动互动成功', 'type' => $type];
+    }
+
+    public static function startAutoInteractionTask($live_id, $interval = 30)
+    {
+        $cacheKey = self::$cachePrefix . 'auto_task_' . $live_id;
+        
+        if (Cache::get($cacheKey)) {
+            return ['code' => 0, 'msg' => '自动互动任务已在运行'];
+        }
+
+        Cache::set($cacheKey, 1, 86400);
+        
+        $taskKey = self::$cachePrefix . 'task_' . $live_id;
+        Cache::set($taskKey, [
+            'live_id' => $live_id,
+            'start_time' => time(),
+            'interval' => $interval,
+            'last_run' => 0
+        ], 86400);
+
+        return ['code' => 1, 'msg' => '自动互动任务已启动'];
+    }
+
+    public static function stopAutoInteractionTask($live_id)
+    {
+        $cacheKey = self::$cachePrefix . 'auto_task_' . $live_id;
+        $taskKey = self::$cachePrefix . 'task_' . $live_id;
+        
+        Cache::clear($cacheKey);
+        Cache::clear($taskKey);
+
+        return ['code' => 1, 'msg' => '自动互动任务已停止'];
+    }
+
+    public static function getAutoInteractionTasks()
+    {
+        $tasks = [];
+        $pattern = self::$cachePrefix . 'task_*';
+        
+        return ['code' => 1, 'data' => $tasks];
+    }
+
+    public static function addTimedAnnouncement($live_id, $announcement, $delay = 60)
+    {
+        $cacheKey = self::$cachePrefix . 'announcements_' . $live_id;
+        $announcements = Cache::get($cacheKey, []);
+        
+        $announcementData = [
+            'content' => $announcement,
+            'send_time' => time() + $delay,
+            'id' => md5(uniqid())
+        ];
+        
+        array_push($announcements, $announcementData);
+        Cache::set($cacheKey, $announcements, 86400);
+
+        return ['code' => 1, 'msg' => '定时公告已添加', 'data' => $announcementData];
+    }
+
+    public static function getAnnouncements($live_id)
+    {
+        $cacheKey = self::$cachePrefix . 'announcements_' . $live_id;
+        $announcements = Cache::get($cacheKey, []);
+        
+        $now = time();
+        $dueAnnouncements = [];
+        $remainingAnnouncements = [];
+
+        foreach ($announcements as $announcement) {
+            if ($announcement['send_time'] <= $now) {
+                $dueAnnouncements[] = $announcement;
+            } else {
+                $remainingAnnouncements[] = $announcement;
+            }
+        }
+
+        Cache::set($cacheKey, $remainingAnnouncements, 86400);
+
+        return ['code' => 1, 'data' => $dueAnnouncements];
+    }
+
+    public static function getViewerDiversity($live_id)
+    {
+        $viewerTypes = [
+            'silent_viewer' => ['name' => '沉默观众', 'percentage' => 40],
+            'active_commenter' => ['name' => '活跃评论者', 'percentage' => 25],
+            'gift_sender' => ['name' => '送礼达人', 'percentage' => 15],
+            'liker' => ['name' => '点赞狂魔', 'percentage' => 20]
+        ];
+
+        $viewerCount = self::getLiveViewerCount($live_id);
+        $diversity = [];
+
+        foreach ($viewerTypes as $key => $type) {
+            $count = floor($viewerCount * $type['percentage'] / 100);
+            $diversity[$key] = [
+                'name' => $type['name'],
+                'percentage' => $type['percentage'],
+                'count' => $count
+            ];
+        }
+
+        return ['code' => 1, 'data' => $diversity];
+    }
+
+    protected static function getLiveViewerCount($live_id)
+    {
+        $live = self::getLiveDetail($live_id, false);
+        return $live ? $live['live_viewers'] : 0;
+    }
+
+    public static function getGiftRanking($live_id, $limit = 10)
+    {
+        $cacheKey = self::$cachePrefix . 'gifts_' . $live_id;
+        $gifts = Cache::get($cacheKey, []);
+
+        $ranking = [];
+        foreach ($gifts as $gift) {
+            $username = $gift['username'];
+            $amount = $gift['gift_price'] * $gift['count'];
+
+            if (!isset($ranking[$username])) {
+                $ranking[$username] = ['username' => $username, 'total' => 0, 'gifts' => []];
+            }
+
+            $ranking[$username]['total'] += $amount;
+            $ranking[$username]['gifts'][] = $gift;
+        }
+
+        usort($ranking, function($a, $b) {
+            return $b['total'] - $a['total'];
+        });
+
+        return array_slice($ranking, 0, $limit);
+    }
+
+    public static function generateCustomComment($live_id, $context = '')
+    {
+        $commentTemplates = [
+            '这个内容很有意思',
+            '学到了很多东西',
+            '感谢主播的分享',
+            '内容质量很高',
+            '必须支持一下',
+            '主播讲得很详细',
+            '期待更多内容',
+            '干货满满',
+            '666666',
+            '太厉害了'
+        ];
+
+        $comment = $commentTemplates[array_rand($commentTemplates)];
+        
+        if ($context) {
+            $contextComments = [
+                "关于{$context}的内容很精彩",
+                "{$context}这个话题讲得很好",
+                "学到了关于{$context}的知识",
+                "{$context}的内容很有价值"
+            ];
+            if (mt_rand(0, 1)) {
+                $comment = $contextComments[array_rand($contextComments)];
+            }
+        }
+
+        return $comment;
+    }
+
+    protected static $userLevels = [
+        ['level' => 1, 'name' => '新手', 'min_points' => 0, 'icon' => '⭐'],
+        ['level' => 2, 'name' => '学徒', 'min_points' => 100, 'icon' => '🌟'],
+        ['level' => 3, 'name' => '粉丝', 'min_points' => 500, 'icon' => '✨'],
+        ['level' => 4, 'name' => '铁粉', 'min_points' => 1000, 'icon' => '💫'],
+        ['level' => 5, 'name' => '钻石粉', 'min_points' => 5000, 'icon' => '💎'],
+        ['level' => 6, 'name' => '至尊粉', 'min_points' => 10000, 'icon' => '👑']
+    ];
+
+    public static function getUserLevel($points)
+    {
+        for ($i = count(self::$userLevels) - 1; $i >= 0; $i--) {
+            if ($points >= self::$userLevels[$i]['min_points']) {
+                return self::$userLevels[$i];
+            }
+        }
+        return self::$userLevels[0];
+    }
+
+    public static function updateUserPoints($live_id, $user_id, $points)
+    {
+        $cacheKey = self::$cachePrefix . 'user_points_' . $live_id . '_' . $user_id;
+        $currentPoints = Cache::get($cacheKey, 0);
+        $newPoints = $currentPoints + $points;
+        
+        Cache::set($cacheKey, $newPoints, 86400);
+        
+        $oldLevel = self::getUserLevel($currentPoints);
+        $newLevel = self::getUserLevel($newPoints);
+        
+        $levelUp = $newLevel['level'] > $oldLevel['level'];
+        
+        return [
+            'code' => 1,
+            'points' => $newPoints,
+            'level' => $newLevel,
+            'level_up' => $levelUp
+        ];
+    }
+
+    public static function getLotteryPrizes()
+    {
+        return [
+            ['id' => 1, 'name' => '再来一次', 'probability' => 0.2, 'type' => 'bonus'],
+            ['id' => 2, 'name' => '鲜花x10', 'probability' => 0.25, 'type' => 'gift', 'gift_id' => 1, 'count' => 10],
+            ['id' => 3, 'name' => '爱心x5', 'probability' => 0.2, 'type' => 'gift', 'gift_id' => 3, 'count' => 5],
+            ['id' => 4, 'name' => '火箭x1', 'probability' => 0.15, 'type' => 'gift', 'gift_id' => 4, 'count' => 1],
+            ['id' => 5, 'name' => '钻石x2', 'probability' => 0.1, 'type' => 'gift', 'gift_id' => 5, 'count' => 2],
+            ['id' => 6, 'name' => '谢谢参与', 'probability' => 0.1, 'type' => 'none']
+        ];
+    }
+
+    public static function drawLottery($live_id, $user_id)
+    {
+        $prizes = self::getLotteryPrizes();
+        $random = mt_rand(1, 1000) / 1000;
+        $cumulative = 0;
+        
+        foreach ($prizes as $prize) {
+            $cumulative += $prize['probability'];
+            if ($random <= $cumulative) {
+                if ($prize['type'] == 'gift') {
+                    self::sendVirtualGift($live_id, $prize['gift_id'], $user_id, $prize['count']);
+                }
+                return ['code' => 1, 'prize' => $prize];
+            }
+        }
+        
+        return ['code' => 1, 'prize' => $prizes[5]];
+    }
+
+    protected static $pkStatus = [];
+
+    public static function startPk($live_id_1, $live_id_2, $duration = 300)
+    {
+        $pkId = md5($live_id_1 . '_' . $live_id_2 . '_' . time());
+        
+        self::$pkStatus[$pkId] = [
+            'id' => $pkId,
+            'live_id_1' => $live_id_1,
+            'live_id_2' => $live_id_2,
+            'score_1' => 0,
+            'score_2' => 0,
+            'start_time' => time(),
+            'end_time' => time() + $duration,
+            'status' => 'active'
+        ];
+        
+        $cacheKey = self::$cachePrefix . 'pk_' . $pkId;
+        Cache::set($cacheKey, self::$pkStatus[$pkId], $duration + 60);
+        
+        return ['code' => 1, 'data' => self::$pkStatus[$pkId]];
+    }
+
+    public static function getPkStatus($pk_id)
+    {
+        $cacheKey = self::$cachePrefix . 'pk_' . $pk_id;
+        $pk = Cache::get($cacheKey);
+        
+        if (!$pk) {
+            return ['code' => 0, 'msg' => 'PK不存在'];
+        }
+        
+        if (time() >= $pk['end_time'] && $pk['status'] == 'active') {
+            $pk['status'] = 'ended';
+            $pk['winner'] = $pk['score_1'] > $pk['score_2'] ? 1 : ($pk['score_2'] > $pk['score_1'] ? 2 : 0);
+            Cache::set($cacheKey, $pk, 3600);
+        }
+        
+        return ['code' => 1, 'data' => $pk];
+    }
+
+    public static function updatePkScore($pk_id, $live_side, $score)
+    {
+        $cacheKey = self::$cachePrefix . 'pk_' . $pk_id;
+        $pk = Cache::get($cacheKey);
+        
+        if (!$pk || $pk['status'] != 'active') {
+            return ['code' => 0, 'msg' => 'PK不存在或已结束'];
+        }
+        
+        if ($live_side == 1) {
+            $pk['score_1'] += $score;
+        } else {
+            $pk['score_2'] += $score;
+        }
+        
+        Cache::set($cacheKey, $pk, $pk['end_time'] - time() + 60);
+        
+        return ['code' => 1, 'data' => $pk];
+    }
+
+    public static function sendComboGift($live_id, $gift_id, $user_id, $count, $combo_count)
+    {
+        $gift = self::getVirtualGiftById($gift_id);
+        if (!$gift) {
+            return ['code' => 0, 'msg' => '礼物不存在'];
+        }
+        
+        $totalCount = $count * $combo_count;
+        $result = self::sendVirtualGift($live_id, $gift_id, $user_id, $totalCount);
+        
+        if ($result['code'] == 1) {
+            $result['data']['combo_count'] = $combo_count;
+            $result['data']['is_combo'] = true;
+        }
+        
+        return $result;
+    }
+
+    public static function getSuperGifts()
+    {
+        $superGifts = array_filter(self::$virtualGifts, function($gift) {
+            return $gift['price'] >= 50;
+        });
+        
+        return ['code' => 1, 'data' => array_values($superGifts)];
     }
 }

@@ -296,7 +296,7 @@ function mac_get_rndstr($length=32,$f='')
     $len = strlen($pattern) -1;
     $res='';
     for($i=0; $i<$length; $i++){
-        $res .= $pattern{mt_rand(0,$len)};
+        $res .= $pattern[mt_rand(0,$len)];
     }
     return $res;
 }

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$vo.vod_name} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{$vo.vod_name},{$vo.vod_key}">
+    <meta name="description" content="{$vo.vod_blurb}">
+    <link rel="stylesheet" href="/template/modern/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="{:mac_url('index/index')}" class="logo">{$maccms.site_name}</a>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="{:mac_url('index/index')}">首页</a></li>
+                        {volist name="maccms.type.list" id="vo_type" key="k"}
+                            {if condition="$vo_type.type_pid eq 0"}
+                                <li><a href="{:mac_url('vod/type',['id'=>$vo_type.type_id])}">{$vo_type.type_name}</a></li>
+                            {/if}
+                        {/volist}
+                        <li><a href="{:mac_url('art/type',['id'=>1])}">影评</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="search-box">
+                    <form action="{:mac_url('vod/search')}" method="get">
+                        <input type="text" name="wd" class="search-input" placeholder="搜索影视资源..." value="{$param.wd|default=''}">
+                        <button type="submit" class="search-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <div class="container" style="margin-top: 20px;">
+        <div style="color: white; font-size: 14px; margin-bottom: 20px;">
+            <a href="{:mac_url('index/index')}" style="color: rgba(255,255,255,0.8); text-decoration: none;">首页</a> &gt; 
+            <a href="{:mac_url('vod/type',['id'=>$vo.type_id_1])}" style="color: rgba(255,255,255,0.8); text-decoration: none;">{$vo.type_name_1}</a> &gt; 
+            <a href="{:mac_url('vod/type',['id'=>$vo.type_id])}" style="color: rgba(255,255,255,0.8); text-decoration: none;">{$vo.type_name}</a> &gt; 
+            <span style="color: white;">{$vo.vod_name}</span>
+        </div>
+    </div>
+
+    <!-- 视频详情 -->
+    <div class="container">
+        <div class="vod-detail">
+            <!-- 海报 -->
+            <div class="vod-poster">
+                <img src="{$vo.vod_pic}" alt="{$vo.vod_name}">
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="{:mac_url('vod/play',['id'=>$vo.vod_id])}" class="btn btn-primary">立即播放</a>
+                </div>
+            </div>
+            
+            <!-- 信息 -->
+            <div class="vod-info">
+                <h1 class="vod-title">{$vo.vod_name}</h1>
+                
+                <div class="vod-meta">
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">类型：</span>
+                        <span>{$vo.type_name}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">地区：</span>
+                        <span>{$vo.vod_area}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">年份：</span>
+                        <span>{$vo.vod_year}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">语言：</span>
+                        <span>{$vo.vod_lang}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">状态：</span>
+                        <span>{$vo.vod_state}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">主演：</span>
+                        <span>{$vo.vod_actor}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">导演：</span>
+                        <span>{$vo.vod_director}</span>
+                    </div>
+                    <div class="vod-meta-item">
+                        <span class="vod-meta-label">评分：</span>
+                        <span>
+                            <div class="stars">
+                                {for start="1" end="5" step="1" name="i"}
+                                    {if condition="$i <= $vo.vod_score/2"}
+                                        <span class="star">★</span>
+                                    {else}
+                                        <span class="star">☆</span>
+                                    {/if}
+                                {/for}
+                                <span style="margin-left: 5px;">{$vo.vod_score}</span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div style="margin: 20px 0;">
+                    <button class="btn btn-secondary" onclick="toggleFavorite({$vo.vod_id})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px; vertical-align: middle;">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                        收藏
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleFollow({$vo.vod_id})" style="margin-left: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px; vertical-align: middle;">
+                            <path d="M8 16.016C12.428 16.016 16 12.448 16 8.016c0-4.428-3.572-8.016-8-8.016-4.428 0-8 3.588-8 8.016 0 4.44 3.572 8.016 8 8.016zm0-14.516c3.58 0 6.5 2.92 6.5 6.516S11.58 10.516 8 10.516 1.5 7.596 1.5 4c0-3.596 2.92-6.516 6.5-6.516z"/>
+                        </svg>
+                        追剧
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleLike({$vo.vod_id})" style="margin-left: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px; vertical-align: middle;">
+                            <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                        点赞
+                    </button>
+                </div>
+                
+                <!-- 剧情简介 -->
+                <div class="vod-content">
+                    <h3 style="margin-bottom: 10px; font-size: 16px;">剧情简介</h3>
+                    <p>{$vo.vod_content|default='暂无简介'}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分集剧情 -->
+    {if condition="$vo.vod_plot eq 1"}
+    <div class="container" style="margin-top: 30px;">
+        <div class="glass-card">
+            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">分集剧情</h2>
+            <div class="episode-list">
+                {volist name="vo.vod_plot_list" id="plot" key="k"}
+                    <div class="episode-item" onclick="showEpisode({$k})"><!--{$plot.0}--></div>
+                {/volist}
+            </div>
+            <div style="margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <h3 id="episode-title" style="margin-bottom: 10px; color: white;">第1集</h3>
+                <p id="episode-content" style="color: white; line-height: 1.8;">
+                    {if condition="isset($vo.vod_plot_list[0][1])"}{$vo.vod_plot_list[0][1]}{else}暂无剧情内容{/if}
+                </p>
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    <!-- 相关推荐 -->
+    <div class="container" style="margin-top: 30px;">
+        <div class="glass-card">
+            <h2 style="color: white; margin-bottom: 20px; font-size: 20px;">相关推荐</h2>
+            <div class="content-grid">
+                {mac:vod num="10" type="$vo.type_id" order="rand"}
+                    <div class="content-item fade-in">
+                        <a href="{:mac_url('vod/detail',['id'=>$vo_related.vod_id])}">
+                            <img src="{$vo_related.vod_pic}" alt="{$vo_related.vod_name}" class="content-img">
+                            <div class="content-info">
+                                <h3 class="content-title">{$vo_related.vod_name}</h3>
+                                <div class="content-meta">
+                                    {$vo_related.vod_area} | {$vo_related.vod_year}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {/mac:vod}
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <ul>
+                        <li><a href="#">网站介绍</a></li>
+                        <li><a href="#">联系方式</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>帮助中心</h3>
+                    <ul>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">使用指南</a></li>
+                        <li><a href="#">意见反馈</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>法律声明</h3>
+                    <ul>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">用户协议</a></li>
+                        <li><a href="#">版权声明</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© {$maccms.site_name} 版权所有 | 本网站仅提供信息存储空间服务</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载动画
+        $(document).ready(function() {
+            $('.fade-in').each(function(index) {
+                $(this).css('animation-delay', index * 0.1 + 's');
+            });
+        });
+
+        // 显示分集剧情
+        function showEpisode(index) {
+            var plotList = {:json_encode($vo.vod_plot_list)};
+            if (plotList[index-1]) {
+                $('#episode-title').text(plotList[index-1][0]);
+                $('#episode-content').text(plotList[index-1][1]);
+                $('.episode-item').removeClass('active');
+                $('.episode-item').eq(index-1).addClass('active');
+            }
+        }
+
+        // 收藏功能
+        function toggleFavorite(vodId) {
+            $.ajax({
+                url: '{:mac_url("user/fav")}',
+                type: 'post',
+                data: {vod_id: vodId},
+                success: function(res) {
+                    alert(res.msg);
+                }
+            });
+        }
+
+        // 追剧功能
+        function toggleFollow(vodId) {
+            $.ajax({
+                url: '{:mac_url("user/follow")}',
+                type: 'post',
+                data: {vod_id: vodId},
+                success: function(res) {
+                    alert(res.msg);
+                }
+            });
+        }
+
+        // 点赞功能
+        function toggleLike(vodId) {
+            $.ajax({
+                url: '{:mac_url("vod/like")}',
+                type: 'post',
+                data: {vod_id: vodId},
+                success: function(res) {
+                    alert(res.msg);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

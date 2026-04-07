@@ -435,8 +435,119 @@ class Vod extends Base
         $this->assign('vod_down_list',$info['vod_down_list']);
         $this->assign('vod_plot_list',$info['vod_plot_list']);
 
+        //AI配置
+        $ai_configs = model('AiConfig')->where('config_status', 1)->select();
+        $this->assign('ai_configs', $ai_configs);
+
         $this->assign('title','视频信息');
         return $this->fetch('admin@vod/info');
+    }
+
+    public function ai_generate()
+    {
+        if (Request()->isPost()) {
+            $param = input('post.');
+            $vod_id = $param['vod_id'];
+            $ai_config_id = $param['ai_config_id'];
+            $generate_type = $param['generate_type'];
+
+            if (empty($vod_id) || empty($ai_config_id) || empty($generate_type)) {
+                return $this->error('参数错误');
+            }
+
+            $vod_info = model('Vod')->get($vod_id);
+            if (!$vod_info) {
+                return $this->error('视频不存在');
+            }
+
+            $ai_config = model('AiConfig')->get($ai_config_id);
+            if (!$ai_config) {
+                return $this->error('AI配置不存在');
+            }
+
+            // 调用AI服务
+            $ai_service = new \app\common\util\AiService($ai_config);
+            $result = [];
+
+            switch ($generate_type) {
+                case 'intro':
+                    $result = $ai_service->generateIntro($vod_info['vod_name'], $vod_info['type_id']);
+                    break;
+                case 'actors':
+                    $result = $ai_service->generateActors($vod_info['vod_name'], $vod_info['vod_actor']);
+                    break;
+                case 'reviews':
+                    $result = $ai_service->generateReviews($vod_info['vod_name']);
+                    break;
+                case 'episodes':
+                    $result = $ai_service->generateEpisodes($vod_info['vod_name']);
+                    break;
+                case 'all':
+                    $result['intro'] = $ai_service->generateIntro($vod_info['vod_name'], $vod_info['type_id']);
+                    $result['actors'] = $ai_service->generateActors($vod_info['vod_name'], $vod_info['vod_actor']);
+                    $result['reviews'] = $ai_service->generateReviews($vod_info['vod_name']);
+                    $result['episodes'] = $ai_service->generateEpisodes($vod_info['vod_name']);
+                    break;
+                default:
+                    return $this->error('生成类型错误');
+            }
+
+            // 保存生成结果
+            if (isset($result['code']) && $result['code'] == 1) {
+                switch ($generate_type) {
+                    case 'intro':
+                        if (!empty($result['content'])) {
+                            model('Vod')->update(['vod_content' => $result['content']], ['vod_id' => $vod_id]);
+                        }
+                        break;
+                    case 'actors':
+                        if (!empty($result['actors'])) {
+                            // 处理演员信息
+                            $actor_names = [];
+                            foreach ($result['actors'] as $actor) {
+                                $actor_names[] = $actor['name'];
+                                // 保存演员信息
+                                $actor_data = [
+                                    'actor_name' => $actor['name'],
+                                    'actor_content' => $actor['bio'],
+                                    'actor_pic' => $actor['image'] ?? '',
+                                    'actor_time' => time()
+                                ];
+                                model('Actor')->saveData($actor_data);
+                            }
+                            model('Vod')->update(['vod_actor' => implode(',', $actor_names)], ['vod_id' => $vod_id]);
+                        }
+                        break;
+                    case 'reviews':
+                        if (!empty($result['reviews'])) {
+                            foreach ($result['reviews'] as $review) {
+                                $art_data = [
+                                    'type_id' => 1, // 影评分类
+                                    'art_name' => $review['title'],
+                                    'art_content' => $review['content'],
+                                    'art_rel_vod' => $vod_id,
+                                    'art_time' => time()
+                                ];
+                                model('Art')->saveData($art_data);
+                            }
+                        }
+                        break;
+                    case 'episodes':
+                        if (!empty($result['episodes'])) {
+                            $plots = [];
+                            foreach ($result['episodes'] as $episode) {
+                                $plots[] = $episode['title'] . '$$$' . $episode['content'];
+                            }
+                            model('Vod')->update(['vod_plot' => 1, 'vod_plot_list' => implode('$$$', $plots)], ['vod_id' => $vod_id]);
+                        }
+                        break;
+                }
+                return $this->success('AI生成成功');
+            } else {
+                return $this->error('AI生成失败：' . (isset($result['msg']) ? $result['msg'] : '未知错误'));
+            }
+        }
+        return $this->error('非法访问');
     }
 
     public function del()

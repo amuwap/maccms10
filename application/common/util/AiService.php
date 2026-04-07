@@ -195,4 +195,82 @@ class AiService
 }";
         return $prompt;
     }
+
+    public function generateIntro($vod_name, $type_id)
+    {
+        $type_info = model('Type')->get($type_id);
+        $type_name = $type_info ? $type_info['type_name'] : '视频';
+        
+        $prompt = $this->buildVodBlurbPrompt($vod_name, $type_name);
+        $result = $this->generateContent($prompt, 'intro');
+        if ($result['code'] == 1) {
+            return ['code' => 1, 'content' => $result['data']];
+        }
+        return $result;
+    }
+
+    public function generateActors($vod_name, $actor_names = '')
+    {
+        $actors = explode(',', $actor_names);
+        $actor_list = [];
+        
+        foreach ($actors as $actor_name) {
+            $actor_name = trim($actor_name);
+            if (!empty($actor_name)) {
+                $prompt = $this->buildActorInfoPrompt($actor_name, $vod_name);
+                $result = $this->generateContent($prompt, 'actor');
+                if ($result['code'] == 1) {
+                    $actor_data = json_decode($result['data'], true);
+                    if (is_array($actor_data)) {
+                        $actor_list[] = [
+                            'name' => $actor_data['name'] ?? $actor_name,
+                            'bio' => $actor_data['content'] ?? '',
+                            'image' => '' // 暂时不处理图片
+                        ];
+                    }
+                }
+            }
+        }
+        
+        if (!empty($actor_list)) {
+            return ['code' => 1, 'actors' => $actor_list];
+        }
+        return ['code' => 0, 'msg' => '未生成演员信息'];
+    }
+
+    public function generateReviews($vod_name)
+    {
+        $prompt = $this->buildReviewPrompt($vod_name);
+        $result = $this->generateContent($prompt, 'review');
+        if ($result['code'] == 1) {
+            // 简单处理，将生成的影评作为一篇
+            return ['code' => 1, 'reviews' => [
+                [
+                    'title' => "《{$vod_name}》影评",
+                    'content' => $result['data']
+                ]
+            ]];
+        }
+        return $result;
+    }
+
+    public function generateEpisodes($vod_name)
+    {
+        $prompt = $this->buildPlotPrompt($vod_name, 10);
+        $result = $this->generateContent($prompt, 'plot');
+        if ($result['code'] == 1) {
+            $episodes = json_decode($result['data'], true);
+            if (is_array($episodes)) {
+                $formatted_episodes = [];
+                foreach ($episodes as $episode) {
+                    $formatted_episodes[] = [
+                        'title' => $episode['name'] ?? '',
+                        'content' => $episode['detail'] ?? ''
+                    ];
+                }
+                return ['code' => 1, 'episodes' => $formatted_episodes];
+            }
+        }
+        return $result;
+    }
 }

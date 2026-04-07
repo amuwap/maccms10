@@ -399,12 +399,22 @@ class Vod extends Base
         $res = model('Vod')->infoData($where);
 
 
-        $info = $res['info'];
+        $info = $res['info'] ?? [];
+        // 确保播放列表、下载列表和剧情列表存在
+        $info['vod_play_list'] = $info['vod_play_list'] ?? [];
+        $info['vod_down_list'] = $info['vod_down_list'] ?? [];
+        $info['vod_plot_list'] = $info['vod_plot_list'] ?? [];
         $this->assign('info',$info);
 
         //分类
-        $type_tree = model('Type')->getCache('type_tree');
-        $this->assign('type_tree',$type_tree);
+        try {
+            // 直接从数据库查询并生成type_tree，使用tree格式
+            $typeModel = new \app\common\model\Type();
+            $typeList = $typeModel->listData(['type_mid' => 1],'type_id asc','tree');
+            $this->assign('type_tree',$typeList['list']);
+        } catch (Exception $e) {
+            $this->assign('type_tree',[]);
+        }
 
         //地区、语言
         $config = config('maccms.app');

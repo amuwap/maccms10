@@ -17,7 +17,7 @@ return array (
   ),
   'site' => 
   array (
-    'site_name' => '免费短视频分享大全 - 大中国',
+    'site_name' => '苹果CMS测试网站苹果CMS测试网站免费短视频分享大全 - 大中国',
     'site_url' => 'www.test.cn',
     'site_wapurl' => 'wap.test.cn',
     'site_keywords' => '短视频,搞笑视频,视频分享,免费视频,在线视频,预告片',

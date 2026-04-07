@@ -44,7 +44,7 @@ class Collection {
 
                 //对自定义数据进行采集
                 $config['customize_config'] = json_decode($config['customize_config'],true);
-                if($config['customize_config']){
+                if($config['customize_config']){ 
                     foreach ($config['customize_config'] as $k=>$v) {
                         if (empty($v['rule'])) continue;
                         if(strpos($config['rule'],'[内容]')===false){
@@ -78,7 +78,7 @@ class Collection {
                 $page_html = self::cut_html($html, $config['content_page_start'], $config['content_page_end']);
                 //上下页模式
                 if ($config['content_page_rule'] == 2 && in_array($page, array(0,2)) && $page_html) {
-                    preg_match_all('/<a [^>]*href=[\'"]?([^>\'" ]*)[\'"]?[^>]*>([^<\/]*)<\/a>/i', $page_html, $out);
+                    preg_match_all('/<a [^>]*href=[\'"]([^"]*)[\'"]/i', $page_html, $out);
                     if (!empty($out[1]) && !empty($out[2])) {
                         foreach ($out[2] as $k=>$v) {
                             if (strpos($v, $config['content_nextpage']) === false) continue;
@@ -94,7 +94,7 @@ class Collection {
 
                 //全部罗列模式
                 if ($config['content_page_rule'] == 1 && $page == 0 && $page_html) {
-                    preg_match_all('/<a [^>]*href=[\'"]?([^>\'" ]*)[\'"]?/i', $page_html, $out);
+                    preg_match_all('/<a [^>]*href=[\'"]([^"]*)[\'"]/i', $page_html, $out);
                     if (is_array($out[1]) && !empty($out[1])) {
 
                         $out = array_unique($out[1]);
@@ -113,7 +113,9 @@ class Collection {
             if ($page == 0) {
                 self::$url = $url;
                 self::$config = $config;
-                $data['content'] = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', array('collection','download_img_callback'), $data['content']);
+                if (!empty($data['content'])) {
+                    $data['content'] = preg_replace_callback('/<img[^>]*src=[\'"]([^"]*)[\'"]/i', array('Collection','download_img_callback'), $data['content']);
+                }
                 //下载内容中的图片到本地
                 if (empty($page) && !empty($data['content']) && $config['down_attachment'] == 1) {
 
@@ -194,7 +196,7 @@ class Collection {
 
                 $data = array();
                 foreach ($out[1] as $k=>$v) {
-                    if (preg_match('/href=[\'"]?([^\'" ]*)[\'"]?/i', $v, $match_out)) {
+                    if (preg_match('/href=[\'"]([^"]*)[\'"]/i', $v, $match_out)) {
                         if ($config['url_contain']) {
                             if (strpos($match_out[1], $config['url_contain']) === false) {
                                 continue;

@@ -719,6 +719,7 @@ class Template
      */
     private function parseTag(&$content)
     {
+        if (empty($content)) return;
         $regex = $this->getRegex('tag');
         if (preg_match_all($regex, $content, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {

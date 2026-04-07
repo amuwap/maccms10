@@ -205,7 +205,9 @@ class Art extends Base
         $where['art_id'] = ['eq',$id];
         $res = model('Art')->infoData($where);
 
-        $info = $res['info'];
+        $info = $res['info'] ?? [];
+        // 确保文章页面列表存在
+        $info['art_page_list'] = $info['art_page_list'] ?? [];
         $this->assign('info',$info);
         $this->assign('art_page_list',$info['art_page_list']);
 

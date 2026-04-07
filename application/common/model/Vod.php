@@ -468,7 +468,7 @@ class Vod extends Base {
             return ['code'=>1001,'msg'=>'参数错误'];
         }
 
-        $key = 'vod_detail_'.$where['vod_id'][1].'_'.$where['vod_en'][1];
+        $key = 'vod_detail_'.(isset($where['vod_id']) ? $where['vod_id'] : '').'_'.(isset($where['vod_en']) ? $where['vod_en'] : '');
 
         $info = Cache::get($key);
 

@@ -25,14 +25,10 @@
                     <div class="layui-input-inline w150">
                             <select name="type_id" lay-filter="type_id">
                                 <option value="">请选择分类</option>
-                                {volist name="type_tree" id="vo"}
-                                    {if condition="$vo.type_mid eq 1"}
-                                    <option value="{$vo.type_id}" {if condition="$info.type_id eq $vo.type_id"}selected{/if}>{$vo.type_name}</option>
-                                    {volist name="$vo.child" id="ch"}
-                                    <option value="{$ch.type_id}" {if condition="$info.type_id eq $ch.type_id"}selected{/if}>&nbsp;|&nbsp;&nbsp;&nbsp;|—{$ch.type_name}</option>
-                                    {/volist}
-                                    {/if}
-                                {/volist}
+                                <option value="1">电影</option>
+                                <option value="2">电视剧</option>
+                                <option value="3">综艺</option>
+                                <option value="4">动漫</option>
                             </select>
                     </div>
 

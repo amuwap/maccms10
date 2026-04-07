@@ -179,17 +179,24 @@ class Index extends Controller
 		
         // 导入系统初始数据库结构
         // 导入SQL
-        $sql_file = APP_PATH.'install/sql/install.sql';
-        if (file_exists($sql_file)) {
-            $sql = file_get_contents($sql_file);
-            $sql_list = mac_parse_sql($sql, 0, ['mac_' => $config['prefix']]);
-            if ($sql_list) {
-                $sql_list = array_filter($sql_list);
-                foreach ($sql_list as $v) {
-                    try {
-                        Db::execute($v);
-                    } catch(\Exception $e) {
-                        return $this->error('导入SQL失败，请检查install.sql的语句是否正确。'. $e);
+        $sql_files = [
+            APP_PATH.'install/sql/install.sql',
+            APP_PATH.'install/sql/extend.sql',
+            APP_PATH.'install/sql/new_types.sql'
+        ];
+        
+        foreach ($sql_files as $sql_file) {
+            if (file_exists($sql_file)) {
+                $sql = file_get_contents($sql_file);
+                $sql_list = mac_parse_sql($sql, 0, ['mac_' => $config['prefix']]);
+                if ($sql_list) {
+                    $sql_list = array_filter($sql_list);
+                    foreach ($sql_list as $v) {
+                        try {
+                            Db::execute($v);
+                        } catch(\Exception $e) {
+                            return $this->error('导入SQL失败，请检查'.basename($sql_file).'的语句是否正确。'. $e);
+                        }
                     }
                 }
             }

@@ -1,0 +1,214 @@
+{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container">
+    <form class="layui-form layui-form-pane" action="{:url('templateSetting/save')}" method="post">
+        <div class="layui-tab" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="setting_1">前端设置</li>
+                <li lay-id="setting_2">APP设置</li>
+                <li lay-id="setting_3">筛选设置</li>
+                <li lay-id="setting_4">排序设置</li>
+            </ul>
+            <div class="layui-tab-content">
+                <!-- 前端设置 -->
+                <div class="layui-tab-item layui-show">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>基本设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[site_title]" value="{$config['frontend']['site_title']|default=''}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[site_description]" class="layui-textarea">{$config['frontend']['site_description']|default=''}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[site_keywords]" value="{$config['frontend']['site_keywords']|default=''}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>文字设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">按钮文字：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[btn_text][play]" placeholder="播放" value="{$config['frontend']['btn_text']['play']|default='播放'}" class="layui-input w150">
+                            <input type="text" name="frontend[btn_text][download]" placeholder="下载" value="{$config['frontend']['btn_text']['download']|default='下载'}" class="layui-input w150">
+                            <input type="text" name="frontend[btn_text][collect]" placeholder="收藏" value="{$config['frontend']['btn_text']['collect']|default='收藏'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态文字：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[status_text][vip]" placeholder="VIP" value="{$config['frontend']['status_text']['vip']|default='VIP'}" class="layui-input w150">
+                            <input type="text" name="frontend[status_text][hot]" placeholder="热门" value="{$config['frontend']['status_text']['hot']|default='热门'}" class="layui-input w150">
+                            <input type="text" name="frontend[status_text][new]" placeholder="最新" value="{$config['frontend']['status_text']['new']|default='最新'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>样式设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主题颜色：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[theme_color][primary]" placeholder="#3b82f6" value="{$config['frontend']['theme_color']['primary']|default='#3b82f6'}" class="layui-input w150">
+                            <input type="text" name="frontend[theme_color][secondary]" placeholder="#8b5cf6" value="{$config['frontend']['theme_color']['secondary']|default='#8b5cf6'}" class="layui-input w150">
+                            <input type="text" name="frontend[theme_color][accent]" placeholder="#fbbf24" value="{$config['frontend']['theme_color']['accent']|default='#fbbf24'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">字体设置：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[font][family]" placeholder="字体家族" value="{$config['frontend']['font']['family']|default='Microsoft YaHei, sans-serif'}" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- APP设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>APP基本设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">APP名称：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[app_name]" value="{$config['app']['app_name']|default=''}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">APP版本：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[app_version]" value="{$config['app']['app_version']|default='1.0.0'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">更新说明：</label>
+                        <div class="layui-input-block">
+                            <textarea name="app[update_desc]" class="layui-textarea">{$config['app']['update_desc']|default=''}</textarea>
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>APP调用设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">API地址：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[api_url]" value="{$config['app']['api_url']|default=''}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">APP密钥：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="app[app_key]" value="{$config['app']['app_key']|default=''}" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 筛选设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>筛选选项</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">启用筛选：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="filter[enabled]" value="1" title="开启" {if condition="$config['filter']['enabled'] eq 1"}checked{/if}>
+                            <input type="radio" name="filter[enabled]" value="0" title="关闭" {if condition="$config['filter']['enabled'] neq 1"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">筛选选项：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="filter[options][]" value="type" title="分类" {if condition="in_array('type', $config['filter']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="area" title="地区" {if condition="in_array('area', $config['filter']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="year" title="年份" {if condition="in_array('year', $config['filter']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="lang" title="语言" {if condition="in_array('lang', $config['filter']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="state" title="状态" {if condition="in_array('state', $config['filter']['options'] ?? [])"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">筛选方式：</label>
+                        <div class="layui-input-inline">
+                            <select name="filter[method]">
+                                <option value="ajax" {if condition="$config['filter']['method'] eq 'ajax'"}selected{/if}>AJAX筛选</option>
+                                <option value="link" {if condition="$config['filter']['method'] eq 'link'"}selected{/if}>链接筛选</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 排序设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>智能排序</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">默认排序：</label>
+                        <div class="layui-input-inline">
+                            <select name="sort[default]">
+                                <option value="time" {if condition="$config['sort']['default'] eq 'time'"}selected{/if}>最新发布</option>
+                                <option value="hits" {if condition="$config['sort']['default'] eq 'hits'"}selected{/if}>最多点击</option>
+                                <option value="score" {if condition="$config['sort']['default'] eq 'score'"}selected{/if}>最高评分</option>
+                                <option value="rand" {if condition="$config['sort']['default'] eq 'rand'"}selected{/if}>随机推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序选项：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="sort[options][]" value="time" title="最新发布" {if condition="in_array('time', $config['sort']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="hits" title="最多点击" {if condition="in_array('hits', $config['sort']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="score" title="最高评分" {if condition="in_array('score', $config['sort']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="rand" title="随机推荐" {if condition="in_array('rand', $config['sort']['options'] ?? [])"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">智能推荐：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="sort[smart]" value="1" title="开启" {if condition="$config['sort']['smart'] eq 1"}checked{/if}>
+                            <input type="radio" name="sort[smart]" value="0" title="关闭" {if condition="$config['sort']['smart'] neq 1"}checked{/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">根据用户行为推荐内容</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">保 存</button>
+                <button class="layui-btn layui-btn-warm" type="reset">还 原</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view/public/foot" /}

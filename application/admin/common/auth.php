@@ -178,6 +178,7 @@ return array(
 
         '72' => array("show"=>1,'name' => '广告位管理', 'controller' => 'template',		'action' => 'ads',  'param'=>''),
         '73' => array("show"=>1,'name' => '标签向导', 'controller' => 'template',		'action' => 'wizard'),
+        '74' => array("show"=>1,'name' => '模板设置', 'controller' => 'templateSetting',		'action' => 'index'),
     )),
 
     '8' => array('name' => '生成', 'icon' => 'xe63e', 'sub' => array(

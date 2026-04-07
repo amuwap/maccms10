@@ -9,6 +9,51 @@
     <link rel="stylesheet" href="{$maccms.path}static/js/layui/css/layui.css">
     <link rel="stylesheet" href="{$maccms.path_tpl}css/style.css">
     <link rel="stylesheet" href="{$maccms.path}static/player/dplayer/DPlayer.min.css">
+    <script>
+        // 模板设置
+        window.templateConfig = {
+            frontend: {},
+            app: {},
+            filter: {},
+            sort: {}
+        };
+        
+        // 加载模板设置
+        (function() {
+            fetch('/api/template/frontend')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 1) {
+                        window.templateConfig.frontend = data.data;
+                        // 应用主题颜色
+                        const colors = data.data.theme_color || {};
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            :root {
+                                --primary-color: ${colors.primary || '#3b82f6'};
+                                --secondary-color: ${colors.secondary || '#8b5cf6'};
+                                --accent-color: ${colors.accent || '#fbbf24'};
+                                --success-color: ${colors.success || '#10b981'};
+                                --danger-color: ${colors.danger || '#ef4444'};
+                                --warning-color: ${colors.warning || '#f59e0b'};
+                                --info-color: ${colors.info || '#3b82f6'};
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        // 应用字体
+                        if (data.data.font?.family) {
+                            document.body.style.fontFamily = data.data.font.family;
+                        }
+                        // 更新网站标题
+                        if (data.data.site_title) {
+                            const title = document.title;
+                            const siteName = '{$maccms.site_name}';
+                            document.title = title.replace(siteName, data.data.site_title);
+                        }
+                    }
+                });
+        })();
+    </script>
 </head>
 <body>
     <div class="app-container">

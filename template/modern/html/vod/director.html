@@ -1,0 +1,73 @@
+{include file="public/head.html"}
+            <div class="container">
+                <nav class="breadcrumb">
+                    <a href="{:mac_url('index/index')}" class="breadcrumb-item">首页</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item active">导演列表</span>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="page-header">
+                    <h1>导演列表</h1>
+                    <p>探索电影背后的创意大师</p>
+                </div>
+                
+                <div class="director-filters glass-card">
+                    <div class="filter-group">
+                        <span class="filter-label">地区：</span>
+                        <a href="{:mac_url('vod/director')}" class="filter-chip {if condition="!$param.area"}active{/if}">全部</a>
+                        {maccms:foreach name=":explode(',',$GLOBALS['type']['type_extend']['area'] ?? '')" id="vo"}
+                        <a href="{:mac_url('vod/director',['area'=>$vo])}" class="filter-chip {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
+                        {/maccms:foreach}
+                    </div>
+                </div>
+                
+                <div class="director-grid">
+                    {maccms:vod num="20" order="vod_time_add desc"}
+                    {if condition="$vo.vod_director"}
+                    <div class="director-card glass-card">
+                        <div class="director-avatar">
+                            <img src="{$vo.vod_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$vo.vod_director}" />
+                        </div>
+                        <div class="director-info">
+                            <h3 class="director-name">{$vo.vod_director}</h3>
+                            <div class="director-meta">
+                                <span class="meta-info">{$vo.vod_area}</span>
+                                <span class="meta-separator">·</span>
+                                <span class="meta-info">{$vo.vod_year}</span>
+                            </div>
+                            <div class="director-works">
+                                <a href="{:mac_url_vod_detail($vo)}" class="work-item">{$vo.vod_name}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {/if}
+                    {/maccms:vod}
+                </div>
+                
+                {if condition="!$list"}
+                <div class="empty-container">
+                    <div class="empty-state-card glass-card">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <h3>暂无导演数据</h3>
+                        <p>导演数据将从影片信息中自动提取</p>
+                        <a href="{:mac_url('index/index')}" class="btn btn-primary">返回首页</a>
+                    </div>
+                </div>
+                {/if}
+                
+                <div class="pagination-container">
+                    <div class="pagination-wrapper">
+                        {$__PAGING__.page_content}
+                    </div>
+                </div>
+            </div>
+{include file="public/foot.html"}

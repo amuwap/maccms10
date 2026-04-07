@@ -1,10 +1,11 @@
 {include file="public/head.html"}
             <div class="container">
                 <div class="banner-section">
-                    <div class="glass-card banner-card">
-                        <div class="banner-content">
-                            <h1 class="banner-title animate-fade-in">欢迎来到{$maccms.site_name}</h1>
-                            <p class="banner-subtitle animate-fade-in-delay-1">海量高清影视资源，畅享极致观影体验</p>
+                    <div class="img-text-overlay">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cinema%20movie%20theater%20background%20with%20movie%20posters%20and%20neon%20lights&image_size=landscape_16_9" alt="{$maccms.site_name}" />
+                        <div class="img-text-content">
+                            <h1 class="img-text-title animate-fade-in">欢迎来到{$maccms.site_name}</h1>
+                            <p class="img-text-desc animate-fade-in-delay-1">海量高清影视资源，畅享极致观影体验</p>
                             <div class="banner-actions animate-fade-in-delay-2">
                                 <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg">立即观影</a>
                                 <a href="{:mac_url('label/rank')}" class="btn btn-outline btn-lg">热门榜单</a>

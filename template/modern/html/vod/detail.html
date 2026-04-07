@@ -153,6 +153,52 @@
             </div>
             {/if}
 
+            {if condition="$vo.vod_director"}
+            <div class="container">
+                <div class="section cast-section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">导演</h2>
+                        </div>
+                        <div class="cast-grid">
+                            {maccms:foreach name=":explode(' ',$vo.vod_director)" id="director"}
+                            <div class="cast-card">
+                                <div class="cast-avatar">
+                                    <img src="{$vo.vod_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$director}" loading="lazy" />
+                                </div>
+                                <div class="cast-name">{$director}</div>
+                                <div class="cast-role">导演</div>
+                            </div>
+                            {/maccms:foreach}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/if}
+
+            {if condition="$vo.vod_actor"}
+            <div class="container">
+                <div class="section cast-section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 class="section-title">主演</h2>
+                        </div>
+                        <div class="cast-grid">
+                            {maccms:foreach name=":explode(' ',$vo.vod_actor)" id="actor"}
+                            <div class="cast-card">
+                                <div class="cast-avatar">
+                                    <img src="{$vo.vod_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$actor}" loading="lazy" />
+                                </div>
+                                <div class="cast-name">{$actor}</div>
+                                <div class="cast-role">主演</div>
+                            </div>
+                            {/maccms:foreach}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/if}
+
             <div class="container">
                 <div class="section">
                     <div class="glass-card">

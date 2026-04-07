@@ -8,38 +8,80 @@
             </div>
 
             <div class="container">
-                <div class="page-header">
-                    <h1>演员列表</h1>
-                    <p>探索影视作品中的明星艺人</p>
-                </div>
-                
-                <div class="actor-filters glass-card">
-                    <div class="filter-group">
-                        <span class="filter-label">地区：</span>
-                        <a href="{:mac_url('vod/actor')}" class="filter-chip {if condition="!$param.area"}active{/if}">全部</a>
-                        {maccms:foreach name=":explode(',',$GLOBALS['type']['type_extend']['area'] ?? '')" id="vo"}
-                        <a href="{:mac_url('vod/actor',['area'=>$vo])}" class="filter-chip {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
-                        {/maccms:foreach}
+                <div class="person-page-header">
+                    <div class="person-header-content">
+                        <div class="person-icon-wrapper">
+                            <svg class="person-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="person-header-text">
+                            <h1>演员列表</h1>
+                            <p>探索影视作品中的明星艺人</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="actor-grid">
-                    {maccms:vod num="20" order="vod_time_add desc"}
+                <div class="person-filters glass-card">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">类型</span>
+                            <div class="filter-group-items">
+                                <a href="{:mac_url('vod/actor')}" class="filter-chip {if condition="!$param.tid"}active{/if}">全部</a>
+                                {maccms:type ids="parent" order="asc" by="sort"}
+                                <a href="{:mac_url('vod/actor',['tid'=>$vo.type_id])}" class="filter-chip {if condition="$param.tid eq $vo.type_id"}active{/if}">{$vo.type_name}</a>
+                                {/maccms:type}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">地区</span>
+                            <div class="filter-group-items">
+                                <a href="{:mac_url('vod/actor')}" class="filter-chip {if condition="!$param.area"}active{/if}">全部</a>
+                                {maccms:foreach name=":explode(',',$GLOBALS['type']['type_extend']['area'] ?? '')" id="vo"}
+                                <a href="{:mac_url('vod/actor',['area'=>$vo])}" class="filter-chip {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
+                                {/maccms:foreach}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="person-grid">
+                    {maccms:vod num="24" order="vod_time_add desc"}
                     {if condition="$vo.vod_actor"}
                     {maccms:foreach name=":explode(' ',$vo.vod_actor)" id="actor"}
-                    <div class="actor-card glass-card">
-                        <div class="actor-avatar">
-                            <img src="{$vo.vod_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$actor}" />
-                        </div>
-                        <div class="actor-info">
-                            <h3 class="actor-name">{$actor}</h3>
-                            <div class="actor-meta">
-                                <span class="meta-info">{$vo.vod_area}</span>
-                                <span class="meta-separator">·</span>
-                                <span class="meta-info">{$vo.vod_year}</span>
+                    <div class="person-card glass-card animate-scale-in">
+                        <div class="person-avatar-wrapper">
+                            <div class="person-avatar">
+                                <img src="{$vo.vod_pic|mac_default='__ROOT__/static/images/nopic.gif'|mac_url_img}" alt="{$actor}" loading="lazy" />
+                                <div class="person-avatar-overlay">
+                                    <div class="person-play-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="actor-works">
-                                <a href="{:mac_url_vod_detail($vo)}" class="work-item">{$vo.vod_name}</a>
+                            {if condition="$vo.vod_remarks"}
+                            <span class="person-badge">{$vo.vod_remarks}</span>
+                            {/if}
+                        </div>
+                        <div class="person-info">
+                            <h3 class="person-name">{$actor}</h3>
+                            <div class="person-works">
+                                <a href="{:mac_url_vod_detail($vo)}" class="work-chip">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5 3 19 12 5 21 5 3"/>
+                                    </svg>
+                                    {$vo.vod_name}
+                                </a>
+                            </div>
+                            <div class="person-meta">
+                                <span class="meta-pill">{$vo.vod_area}</span>
+                                <span class="meta-pill">{$vo.vod_year}</span>
                             </div>
                         </div>
                     </div>

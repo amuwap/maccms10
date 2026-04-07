@@ -3871,3 +3871,316 @@ img:hover {
         font-size: 24px;
     }
 }
+
+/* ========================================
+   人物页面通用样式
+   ======================================== */
+.person-page-header {
+    margin: 32px 0;
+}
+
+.person-header-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 40px;
+}
+
+.person-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.person-icon-wrapper.director-icon {
+    background: linear-gradient(135deg, #10b981, #06b6d4);
+}
+
+.person-icon-wrapper.character-icon {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+}
+
+.person-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.person-header-text h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.person-header-text p {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.person-filters {
+    margin-bottom: 32px;
+}
+
+.person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+}
+
+.person-card {
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.person-card:hover {
+    transform: translateY(-8px);
+}
+
+.person-avatar-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.person-avatar {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 3/4;
+}
+
+.person-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.person-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all var(--transition-normal);
+}
+
+.person-avatar:hover .person-avatar-overlay {
+    opacity: 1;
+}
+
+.person-play-btn {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transform: scale(0.8);
+    transition: all var(--transition-normal);
+}
+
+.person-avatar:hover .person-play-btn {
+    transform: scale(1);
+}
+
+.person-play-btn svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 2px;
+}
+
+.person-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--radius-xl);
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.person-info {
+    padding: 0 4px;
+}
+
+.person-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+}
+
+.person-card:hover .person-name {
+    color: var(--primary-color);
+}
+
+.person-works {
+    margin-bottom: 12px;
+}
+
+.work-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.work-chip:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-color: transparent;
+}
+
+.work-chip svg {
+    width: 16px;
+    height: 16px;
+}
+
+.person-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.meta-pill {
+    padding: 4px 12px;
+    background: var(--glass-bg);
+    border-radius: var(--radius-xl);
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   视频详情页人物展示
+   ======================================== */
+.cast-section {
+    margin-top: 40px;
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cast-card {
+    text-align: center;
+    padding: 16px;
+    background: var(--glass-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-normal);
+}
+
+.cast-card:hover {
+    transform: translateY(-4px);
+    background: var(--glass-bg-hover);
+}
+
+.cast-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 12px;
+    border: 3px solid var(--glass-border);
+}
+
+.cast-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cast-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.cast-role {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   响应式设计 - 人物页面
+   ======================================== */
+@media (max-width: 992px) {
+    .person-header-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+    }
+    
+    .person-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .cast-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .person-header-text h1 {
+        font-size: 28px;
+    }
+    
+    .person-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+    
+    .person-icon-wrapper {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .person-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .cast-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .person-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .cast-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

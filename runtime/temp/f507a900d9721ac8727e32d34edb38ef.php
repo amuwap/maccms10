@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:52:"/workspace/application/install/view/index/step3.html";i:1775560449;s:51:"/workspace/application/install/view/index/head.html";i:1775560112;s:51:"/workspace/application/install/view/index/foot.html";i:1775560112;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:52:"/workspace/application/install/view/index/step3.html";i:1775564874;s:51:"/workspace/application/install/view/index/head.html";i:1775560112;s:51:"/workspace/application/install/view/index/foot.html";i:1775560112;}*/ ?>
 <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -29,14 +29,58 @@
     </fieldset>
     <form class="layui-form layui-form-pane" action="?step=4" method="post">
         <div class="layui-form-item">
-            <div class="layui-form-mid">
-                <p>系统将使用SQLite数据库，无需手动配置数据库连接信息。</p>
-                <p>数据库文件将存储在：application/data/maccms10.db</p>
+            <label class="layui-form-label">服务器地址</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostname" lay-verify="title" value="127.0.0.1">
             </div>
+            <div class="layui-form-mid layui-word-aux">数据库服务器地址，一般为127.0.0.1</div>
         </div>
         <div class="layui-form-item">
-            <button type="submit" class="layui-btn fl" style="margin-left:120px;" lay-submit="" lay-filter="formTest">配置数据库</button>
-            <div class="layui-form-mid layui-word-aux">点击配置数据库</div>
+            <label class="layui-form-label">数据库端口</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="hostport" lay-verify="title" value="3306">
+            </div>
+            <div class="layui-form-mid layui-word-aux">系统数据库端口，一般为3306</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库名称</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="database" lay-verify="title" value="maccms10">
+            </div>
+            <div class="layui-form-mid layui-word-aux">系统数据库名,必须包含字母</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库账号</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="username" lay-verify="title" value="root">
+            </div>
+            <div class="layui-form-mid layui-word-aux">连接数据库的用户名</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库密码</label>
+            <div class="layui-input-inline w200">
+                <input type="password" class="layui-input" name="password" lay-verify="title" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">连接数据库的密码</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据库前缀</label>
+            <div class="layui-input-inline w200">
+                <input type="text" class="layui-input" name="prefix" lay-verify="title" value="mac_">
+            </div>
+            <div class="layui-form-mid layui-word-aux">建议使用默认,数据库前缀必须带 '_'</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">覆盖数据库</label>
+            <div class="layui-input-inline w200">
+                <input type="radio" name="cover" value="1" title="覆盖" checked>
+                <input type="radio" name="cover" value="0" title="不覆盖">
+            </div>
+            <div class="layui-form-mid layui-word-aux">建议使用默认,数据库前缀必须带 '_'</div>
+        </div>
+        <div class="layui-form-item">
+            <button type="submit" class="layui-btn fl" style="margin-left:120px;" lay-submit="" lay-filter="formTest">测试数据连接</button>
+            <div class="layui-form-mid layui-word-aux">请先点击 【测试数据连接】 再安装</div>
         </div>
     </form>
     <form class="layui-form layui-form-pane" action="?step=5" method="post">
@@ -101,11 +145,12 @@ layui.define(['element', 'form'], function(exports) {
     });
     form.on('submit(formSubmit)', function(data) {
         if(test==0){
-            layer.msg('请先点击配置数据库！');
+            layer.msg('请先点击并通过测试数据连接！');
             return false;
         }
 
     });
+
 
 
 

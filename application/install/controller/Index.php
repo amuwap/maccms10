@@ -74,23 +74,59 @@ class Index extends Controller
             if (!is_writable(APP_PATH.'database.php')) {
                 return $this->error('[app/database.php]无读写权限！');
             }
-            
-            // 简化SQLite安装流程
-        $data = [
-            'type' => 'sqlite',
-            'database' => APP_PATH . 'data/maccms10.db',
-            'prefix' => 'mac_'
-        ];
-            
-            // 生成数据库配置文件
-            self::mkDatabase($data);
-            
-            // 确保数据目录存在
-            if (!is_dir(APP_PATH . 'data')) {
-                mkdir(APP_PATH . 'data', 0755, true);
+            $data = input('post.');
+            $data['type'] = 'mysql';
+            $rule = [
+                'hostname|服务器地址' => 'require',
+                'hostport|数据库端口' => 'require|number',
+                'database|数据库名称' => 'require',
+                'username|数据库账号' => 'require',
+                'prefix|数据库前缀' => 'require|regex:^[a-z0-9]{1,20}[_]{1}',
+                'cover|覆盖数据库' => 'require|in:0,1',
+            ];
+            $validate = $this->validate($data, $rule);
+            if (true !== $validate) {
+                return $this->error($validate);
             }
-            
-            return json(['code' => 1, 'msg' => '数据库配置成功']);
+            $cover = $data['cover'];
+            unset($data['cover']);
+            $config = include APP_PATH.'database.php';
+            foreach ($data as $k => $v) {
+                if (array_key_exists($k, $config) === false) {
+                    return $this->error('参数'.$k.'不存在！');
+                }
+            }
+            // 不存在的数据库会导致连接失败
+            $database = $data['database'];
+            unset($data['database']);
+            // 创建数据库连接
+            $db_connect = Db::connect($data);
+            // 检测数据库连接
+            try{
+                $db_connect->execute('select version()');
+            }catch(\Exception $e){
+                $this->error('数据库连接失败，请检查数据库配置！');
+            }
+
+            // 生成数据库配置文件
+            $data['database'] = $database;
+            self::mkDatabase($data);
+
+
+            // 不覆盖检测是否已存在数据库
+            if (!$cover) {
+                $check = $db_connect->execute('SELECT * FROM information_schema.schemata WHERE schema_name="'.$database.'"');
+                if ($check) {
+                    $this->success('该数据库已存在，可直接安装。如需覆盖，请选择覆盖数据库！','');
+                }
+            }
+            // 创建数据库
+            if (!$db_connect->execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8")) {
+                return $this->error($db_connect->getError());
+            }
+
+
+            return $this->success('数据库连接成功', '');
         } else {
             return $this->error('非法访问');
         }
@@ -107,7 +143,7 @@ class Index extends Controller
         $install_dir = input('post.install_dir');
 
         $config = include APP_PATH.'database.php';
-        if (empty($config['database'])) {
+        if (empty($config['hostname']) || empty($config['database']) || empty($config['username'])) {
             return $this->error('请先点击测试数据库连接！');
         }
         if (empty($account) || empty($password)) {
@@ -291,53 +327,7 @@ class Index extends Controller
      */
     private function mkDatabase(array $data)
     {
-        if ($data['type'] == 'sqlite') {
-            $code = <<<INFO
-<?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-return [
-    // 数据库类型
-    'type'            => 'sqlite',
-    // 数据库文件
-    'database'        => '{$data['database']}',
-    // 数据库表前缀
-    'prefix'          => '{$data['prefix']}',
-    // 数据库调试模式
-    'debug'           => false,
-    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
-    'deploy'          => 0,
-    // 数据库读写是否分离 主从式有效
-    'rw_separate'     => false,
-    // 读写分离后 主服务器数量
-    'master_num'      => 1,
-    // 指定从服务器序号
-    'slave_no'        => '',
-    // 是否严格检查字段是否存在
-    'fields_strict'   => false,
-    // 数据集返回类型
-    'resultset_type'  => 'array',
-    // 自动写入时间戳字段
-    'auto_timestamp'  => false,
-    // 时间字段取出后的默认时间格式
-    'datetime_format' => 'Y-m-d H:i:s',
-    // 是否需要进行SQL性能分析
-    'sql_explain'     => false,
-    // Builder类
-    'builder'         => '',
-    // Query类
-    'query'           => '\\think\\db\\Query',
-];
-INFO;
-        } else {
-            $code = <<<INFO
+        $code = <<<INFO
 <?php
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
@@ -395,7 +385,6 @@ return [
     'query'           => '\\think\\db\\Query',
 ];
 INFO;
-        }
         file_put_contents(APP_PATH.'database.php', $code);
         // 判断写入是否成功
         $config = include APP_PATH.'database.php';

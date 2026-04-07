@@ -314,4 +314,210 @@ class LiveService
             return false;
         }
     }
+
+    public static function createFakeLive($data)
+    {
+        Db::startTrans();
+        try {
+            $data['live_time'] = time();
+            $data['live_update_time'] = time();
+            $data['live_is_fake'] = 1;
+            $data['live_status'] = 1;
+            
+            $live = LiveModel::create($data);
+            
+            Db::commit();
+            self::clearCache();
+            return ['code' => 1, 'msg' => '创建成功', 'data' => $live];
+        } catch (\Exception $e) {
+            Db::rollback();
+            return ['code' => 0, 'msg' => '创建失败: ' . $e->getMessage()];
+        }
+    }
+
+    public static function getFakeLiveStreamUrl($live_id)
+    {
+        $live = self::getLiveDetail($live_id, false);
+        if (!$live) {
+            return ['code' => 0, 'msg' => '直播不存在'];
+        }
+
+        if (empty($live['live_video_url'])) {
+            return ['code' => 0, 'msg' => '视频地址为空'];
+        }
+
+        $streamUrl = self::generateFakeStreamUrl($live['live_video_url'], $live_id);
+        
+        return ['code' => 1, 'url' => $streamUrl];
+    }
+
+    protected static function generateFakeStreamUrl($videoUrl, $liveId)
+    {
+        $encodedUrl = urlencode($videoUrl);
+        return '/live/stream?live_id=' . $liveId . '&video_url=' . $encodedUrl;
+    }
+
+    public static function simulateViewerInteraction($live_id, $interaction_type = 'view')
+    {
+        switch ($interaction_type) {
+            case 'view':
+                self::updateLiveViewerCount($live_id, 1);
+                break;
+            case 'comment':
+                self::addFakeComment($live_id);
+                break;
+            case 'like':
+                self::updateLiveLikeCount($live_id, 1);
+                break;
+        }
+        return ['code' => 1, 'msg' => '互动模拟成功'];
+    }
+
+    protected static function addFakeComment($live_id)
+    {
+        $comments = [
+            '这个直播真好看！',
+            '主播好厉害',
+            '太精彩了',
+            '支持支持',
+            '这个内容很有价值',
+            '主播辛苦了',
+            '期待更多内容',
+            '非常喜欢这个直播',
+            '内容质量很高',
+            '主播讲解得很详细'
+        ];
+
+        $comment = $comments[array_rand($comments)];
+        $username = '观众' . mt_rand(1000, 9999);
+
+        $cacheKey = self::$cachePrefix . 'comments_' . $live_id;
+        $comments = Cache::get($cacheKey, []);
+        
+        $comments[] = [
+            'username' => $username,
+            'content' => $comment,
+            'time' => time()
+        ];
+
+        if (count($comments) > 50) {
+            array_shift($comments);
+        }
+
+        Cache::set($cacheKey, $comments, 3600);
+    }
+
+    public static function getFakeComments($live_id, $limit = 20)
+    {
+        $cacheKey = self::$cachePrefix . 'comments_' . $live_id;
+        $comments = Cache::get($cacheKey, []);
+        
+        return array_slice(array_reverse($comments), 0, $limit);
+    }
+
+    public static function updateLiveLikeCount($live_id, $delta = 1)
+    {
+        Db::startTrans();
+        try {
+            $live = LiveModel::get($live_id);
+            if (!$live) {
+                Db::rollback();
+                return false;
+            }
+
+            $newCount = max(0, $live['live_likes'] + $delta);
+            
+            LiveModel::update([
+                'live_likes' => $newCount,
+                'live_update_time' => time()
+            ], ['live_id' => $live_id]);
+
+            self::clearLiveCache($live_id);
+            Db::commit();
+            return $newCount;
+        } catch (\Exception $e) {
+            Db::rollback();
+            return false;
+        }
+    }
+
+    public static function getFakeLiveStatistics($live_id)
+    {
+        $live = self::getLiveDetail($live_id, false);
+        if (!$live) {
+            return ['code' => 0, 'msg' => '直播不存在'];
+        }
+
+        $cacheKey = self::$cachePrefix . 'stats_' . $live_id;
+        $stats = Cache::get($cacheKey, [
+            'viewers' => mt_rand(50, 200),
+            'likes' => mt_rand(20, 100),
+            'comments' => mt_rand(5, 30)
+        ]);
+
+        $stats['viewers'] += mt_rand(0, 5);
+        $stats['likes'] += mt_rand(0, 2);
+
+        Cache::set($cacheKey, $stats, 300);
+
+        return [
+            'code' => 1,
+            'data' => [
+                'viewers' => $stats['viewers'],
+                'likes' => $stats['likes'],
+                'comments' => $stats['comments'],
+                'live_time' => $live['live_time']
+            ]
+        ];
+    }
+
+    public static function startFakeLive($live_id)
+    {
+        $live = self::getLiveDetail($live_id, false);
+        if (!$live) {
+            return ['code' => 0, 'msg' => '直播不存在'];
+        }
+
+        if (empty($live['live_video_url'])) {
+            return ['code' => 0, 'msg' => '视频地址为空'];
+        }
+
+        $result = self::updateLiveStatus($live_id, 1);
+        if ($result['code'] == 1) {
+            self::startAutoInteraction($live_id);
+        }
+
+        return $result;
+    }
+
+    public static function stopFakeLive($live_id)
+    {
+        return self::updateLiveStatus($live_id, 0);
+    }
+
+    protected static function startAutoInteraction($live_id)
+    {
+        $cacheKey = self::$cachePrefix . 'auto_interaction_' . $live_id;
+        
+        if (!Cache::get($cacheKey)) {
+            Cache::set($cacheKey, 1, 86400);
+            
+            orkerman\Worker::runAll();
+        }
+    }
+
+    public static function getFakeLives($page = 1, $limit = 20)
+    {
+        $query = LiveModel::where('live_is_fake', 1);
+        $list = $query->order('live_time desc')->page($page, $limit)->select();
+        $total = $query->count();
+
+        return [
+            'code' => 1,
+            'list' => $list,
+            'total' => $total,
+            'page' => $page,
+            'limit' => $limit
+        ];
+    }
 }

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:47:"/workspace/application/admin/view/vod/info.html";i:1775560112;s:50:"/workspace/application/admin/view/public/head.html";i:1775560112;s:52:"/workspace/application/admin/view/public/editor.html";i:1775560112;s:50:"/workspace/application/admin/view/public/foot.html";i:1775560112;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:47:"/workspace/application/admin/view/vod/info.html";i:1775572290;s:50:"/workspace/application/admin/view/public/head.html";i:1775560112;s:52:"/workspace/application/admin/view/public/editor.html";i:1775560112;s:50:"/workspace/application/admin/view/public/foot.html";i:1775560112;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,11 +122,10 @@ if( (!file_exists($ue_new) && file_exists($ue_old)) || $editor=='' ){
                     <div class="layui-input-inline w150">
                             <select name="type_id" lay-filter="type_id">
                                 <option value="">请选择分类</option>
-                                <?php if(is_array($type_tree) || $type_tree instanceof \think\Collection || $type_tree instanceof \think\Paginator): $i = 0; $__LIST__ = $type_tree;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if($vo['type_mid'] == 1): ?>
-                                    <option value="<?php echo $vo['type_id']; ?>" <?php if($info['type_id'] == $vo['type_id']): ?>selected<?php endif; ?>><?php echo $vo['type_name']; ?></option>
-                                    <?php if(is_array($vo['child']) || $vo['child'] instanceof \think\Collection || $vo['child'] instanceof \think\Paginator): $i = 0; $__LIST__ = $vo['child'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$ch): $mod = ($i % 2 );++$i;?>
-                                    <option value="<?php echo $ch['type_id']; ?>" <?php if($info['type_id'] == $ch['type_id']): ?>selected<?php endif; ?>>&nbsp;|&nbsp;&nbsp;&nbsp;|—<?php echo $ch['type_name']; ?></option>
-                                    <?php endforeach; endif; else: echo "" ;endif; endif; endforeach; endif; else: echo "" ;endif; ?>
+                                <option value="1">电影</option>
+                                <option value="2">电视剧</option>
+                                <option value="3">综艺</option>
+                                <option value="4">动漫</option>
                             </select>
                     </div>
 

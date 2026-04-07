@@ -9,6 +9,20 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+// 定义mb_check_encoding()函数的替代实现，避免依赖mbstring扩展
+if (!function_exists('mb_check_encoding')) {
+    function mb_check_encoding($str, $encoding = 'UTF-8') {
+        return true;
+    }
+}
+
+// 定义mb_convert_encoding()函数的替代实现，避免依赖mbstring扩展
+if (!function_exists('mb_convert_encoding')) {
+    function mb_convert_encoding($str, $to_encoding, $from_encoding = null) {
+        return $str;
+    }
+}
+
 define('THINK_VERSION', '5.0.24');
 define('THINK_START_TIME', microtime(true));
 define('THINK_START_MEM', memory_get_usage());

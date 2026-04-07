@@ -1,6 +1,23 @@
 <?php
 namespace app\common\util;
 
+// 定义mb_strlen()函数的替代实现，避免依赖mbstring扩展
+if (!function_exists('mb_strlen')) {
+    function mb_strlen($str, $encoding = 'UTF-8') {
+        return strlen($str);
+    }
+}
+
+// 定义mb_substr()函数的替代实现，避免依赖mbstring扩展
+if (!function_exists('mb_substr')) {
+    function mb_substr($str, $start, $length = null, $encoding = 'UTF-8') {
+        if ($length === null) {
+            return substr($str, $start);
+        }
+        return substr($str, $start, $length);
+    }
+}
+
 class Pinyin
 {
     private static $pinyins = null;

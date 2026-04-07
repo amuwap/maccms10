@@ -522,9 +522,13 @@ class Vod extends Base {
         $key = 'vod_detail_'.$data['vod_id'].'_'.$data['vod_en'];
         Cache::rm($key);
 
-        $type_list = model('Type')->getCache('type_list');
-        $type_info = $type_list[$data['type_id']];
-        $data['type_id_1'] = $type_info['type_pid'];
+        if (!empty($data['type_id'])) {
+            $type_list = model('Type')->getCache('type_list');
+            $type_info = $type_list[$data['type_id']] ?? [];
+            $data['type_id_1'] = $type_info['type_pid'] ?? 0;
+        } else {
+            $data['type_id_1'] = 0;
+        }
 
         if(empty($data['vod_en'])){
             $data['vod_en'] = Pinyin::get($data['vod_name']);

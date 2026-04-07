@@ -546,7 +546,33 @@ class System extends Base
         }
 
 
-        $this->assign('config', config('maccms'));
+        $config = config('maccms');
+        // 确保inrule和uprule字段是字符串
+        if(is_array($config['collect']['vod']['inrule'])) {
+            $config['collect']['vod']['inrule'] = ',' . join(',', $config['collect']['vod']['inrule']);
+        }
+        if(is_array($config['collect']['vod']['uprule'])) {
+            $config['collect']['vod']['uprule'] = ',' . join(',', $config['collect']['vod']['uprule']);
+        }
+        if(is_array($config['collect']['art']['inrule'])) {
+            $config['collect']['art']['inrule'] = ',' . join(',', $config['collect']['art']['inrule']);
+        }
+        if(is_array($config['collect']['art']['uprule'])) {
+            $config['collect']['art']['uprule'] = ',' . join(',', $config['collect']['art']['uprule']);
+        }
+        if(is_array($config['collect']['actor']['inrule'])) {
+            $config['collect']['actor']['inrule'] = ',' . join(',', $config['collect']['actor']['inrule']);
+        }
+        if(is_array($config['collect']['actor']['uprule'])) {
+            $config['collect']['actor']['uprule'] = ',' . join(',', $config['collect']['actor']['uprule']);
+        }
+        if(is_array($config['collect']['role']['inrule'])) {
+            $config['collect']['role']['inrule'] = ',' . join(',', $config['collect']['role']['inrule']);
+        }
+        if(is_array($config['collect']['role']['uprule'])) {
+            $config['collect']['role']['uprule'] = ',' . join(',', $config['collect']['role']['uprule']);
+        }
+        $this->assign('config', $config);
         $this->assign('title', '采集参数配置');
         return $this->fetch('admin@system/configcollect');
     }

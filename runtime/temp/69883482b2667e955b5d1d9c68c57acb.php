@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:58:"/workspace/application/admin/view/extend/upload/weibo.html";i:1775560112;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:58:"/workspace/application/admin/view/extend/upload/weibo.html";i:1775567714;}*/ ?>
 <div class="layui-form-item upload_mode mode_Weibo" <?php if($config['upload']['mode'] != 'Weibo'): ?>style="display:none;" <?php endif; ?>>
 <label class="layui-form-label">新浪微博：</label>
 <div class="layui-input-block">
@@ -17,16 +17,16 @@
 <label class="layui-form-label">获取尺寸：</label>
 <div class="layui-input-inline">
     <select class="w150" name="upload[api][weibo][size]">
-        <option value="large" <?php if($config['upload'][api][weibo][size] == 'large'): ?>selected <?php endif; ?>>large</option>
-        <option value="bmiddle" <?php if($config['upload'][api][weibo][size] == 'bmiddle'): ?>selected <?php endif; ?>>bmiddle</option>
-        <option value="small" <?php if($config['upload'][api][weibo][size] == 'small'): ?>selected <?php endif; ?>>small</option>
-        <option value="mw2048" <?php if($config['upload'][api][weibo][size] == 'mw2048'): ?>selected <?php endif; ?>>mw2048</option>
-        <option value="mw1024" <?php if($config['upload'][api][weibo][size] == 'mw1024'): ?>selected <?php endif; ?>>mw1024</option>
-        <option value="mw690" <?php if($config['upload'][api][weibo][size] == 'mw690'): ?>selected <?php endif; ?>>mw690</option>
-        <option value="orj480" <?php if($config['upload'][api][weibo][size] == 'orj480'): ?>selected <?php endif; ?>>orj480</option>
-        <option value="orj360" <?php if($config['upload'][api][weibo][size] == 'orj360'): ?>selected <?php endif; ?>>orj360</option>
-        <option value="thumb150" <?php if($config['upload'][api][weibo][size] == 'thumb150'): ?>selected <?php endif; ?>>thumb150</option>
-        <option value="square" <?php if($config['upload'][api][weibo][size] == 'square'): ?>selected <?php endif; ?>>square</option>
+        <option value="large" <?php if($config['upload']['api']['weibo']['size'] == 'large'): ?>selected <?php endif; ?>>large</option>
+        <option value="bmiddle" <?php if($config['upload']['api']['weibo']['size'] == 'bmiddle'): ?>selected <?php endif; ?>>bmiddle</option>
+        <option value="small" <?php if($config['upload']['api']['weibo']['size'] == 'small'): ?>selected <?php endif; ?>>small</option>
+        <option value="mw2048" <?php if($config['upload']['api']['weibo']['size'] == 'mw2048'): ?>selected <?php endif; ?>>mw2048</option>
+        <option value="mw1024" <?php if($config['upload']['api']['weibo']['size'] == 'mw1024'): ?>selected <?php endif; ?>>mw1024</option>
+        <option value="mw690" <?php if($config['upload']['api']['weibo']['size'] == 'mw690'): ?>selected <?php endif; ?>>mw690</option>
+        <option value="orj480" <?php if($config['upload']['api']['weibo']['size'] == 'orj480'): ?>selected <?php endif; ?>>orj480</option>
+        <option value="orj360" <?php if($config['upload']['api']['weibo']['size'] == 'orj360'): ?>selected <?php endif; ?>>orj360</option>
+        <option value="thumb150" <?php if($config['upload']['api']['weibo']['size'] == 'thumb150'): ?>selected <?php endif; ?>>thumb150</option>
+        <option value="square" <?php if($config['upload']['api']['weibo']['size'] == 'square'): ?>selected <?php endif; ?>>square</option>
     </select>
 </div>
 <label class="layui-form-label">cookie：</label>

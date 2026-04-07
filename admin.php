@@ -30,6 +30,9 @@ if(substr($in_file,strlen($in_file)-4)!=='.php'){
 }
 define('IN_FILE',$in_file);
 
+// 定义api常量，避免未定义错误
+define('api', 'api');
+
 if(!is_file('./application/data/install/install.lock')) {
     header("Location: ./install.php");
     exit;

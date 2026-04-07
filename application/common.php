@@ -10,6 +10,9 @@
 */
 error_reporting(E_ERROR | E_PARSE );
 
+// 定义api常量，避免未定义错误
+define('api', 'api');
+
 // 应用公共文件
 function mac_return($msg,$code=1,$data=''){
     if(is_array($msg)){
@@ -121,6 +124,12 @@ function mac_arr2file($f,$arr='')
 
 function mac_replace_text($txt,$type=1)
 {
+    if(is_array($txt)) {
+        foreach($txt as &$value) {
+            $value = mac_replace_text($value, $type);
+        }
+        return $txt;
+    }
     if($type==1){
         return str_replace('#',Chr(13),$txt);
     }

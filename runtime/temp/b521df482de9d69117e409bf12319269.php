@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:50:"/workspace/application/admin/view/index/login.html";i:1775567277;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>后台管理中心 - 苹果CMS内容管理系统</title>
-    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
-    <link rel="stylesheet" href="__STATIC__/css/admin_style.css">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/admin_style.css">
     <style type="text/css">
         body {
             color:#999;
-            background:url('{$background}');
+            background:url('<?php echo $background; ?>');
             background-size:cover;
         }
     </style>
@@ -39,14 +40,14 @@
         </div>
         <!-- 暂时移除验证码 -->
         <!--
-        {if condition="$GLOBALS['config']['app']['admin_login_verify'] neq '0'"}
+        <?php if($GLOBALS['config']['app']['admin_login_verify'] != '0'): ?>
         <div class="layui-form-item">
             <label class="layui-form-label">验证码：</label>
             <div class="layui-input-block">
-                <input type="number" name="verify" class="layui-input" lay-verify="verify" placeholder="验证码" maxlength="4"  max="9999"/><img id="verify_img" src="__ROOT__/index.php/verify/index.html" onclick="this.src = this.src+'?'">
+                <input type="number" name="verify" class="layui-input" lay-verify="verify" placeholder="验证码" maxlength="4"  max="9999"/><img id="verify_img" src="/index.php/verify/index.html" onclick="this.src = this.src+'?'">
             </div>
         </div>
-        {/if}
+        <?php endif; ?>
         -->
         <button type="button" class="layui-btn btn-submit" lay-submit="" lay-filter="sub">立即登录</button>
     </form>
@@ -55,8 +56,8 @@
     </div>
 </div>
 
-<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
-<script type="text/javascript" src="__STATIC__/js/admin_common.js"></script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/admin_common.js"></script>
 <script type="text/javascript">
     layui.use(['form', 'layer'], function () {
         // 操作对象
@@ -81,9 +82,9 @@
         // 提交监听
         form.on('submit(sub)', function (data) {
             layer.msg('数据提交中...',{time:500000});
-            $.post("{:url('index/login')}",data.field,function(r){
+            $.post("<?php echo url('index/login'); ?>",data.field,function(r){
                 if(r.code==1){
-                    location.href="{:url('index/index')}";
+                    location.href="<?php echo url('index/index'); ?>";
                 }
                 else{
                     layer.msg(r.msg,{time:1800});

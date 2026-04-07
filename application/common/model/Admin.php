@@ -112,11 +112,14 @@ class Admin extends Base {
             return ['code'=>1001,'msg'=>'参数错误'];
         }
 
+        // 暂时禁用验证码验证
+        /*
         if($GLOBALS['config']['app']['admin_login_verify'] !='0'){
             if(!captcha_check($data['verify'])){
                 return ['code'=>1002,'msg'=>'验证码错误'];
             }
         }
+        */
 
 
         $where=[];

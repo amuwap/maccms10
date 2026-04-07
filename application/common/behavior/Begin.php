@@ -5,9 +5,8 @@ class Begin
 {
     public function run(&$params)
     {
-        $module = '';
         $dispatch = request()->dispatch();
-
+        $module = '';
         if (isset($dispatch['module'])) {
             $module = $dispatch['module'][0];
         }
@@ -28,6 +27,5 @@ class Begin
                 exit;
             }
         }
-
     }
 }

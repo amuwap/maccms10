@@ -11,7 +11,7 @@ class Index extends Base
 
     public function login()
     {
-        if(Request()->isPost()) {
+        if(request()->isPost()) {
             $data = input('post.');
             $res = model('Admin')->login($data);
             if ($res['code'] > 1) {
@@ -98,7 +98,7 @@ class Index extends Base
 
     public function quickmenu()
     {
-        if(Request()->isPost()){
+        if(request()->isPost()){
             $quickmenu = input('post.quickmenu');
             @fwrite(fopen(APP_PATH.'data/config/quickmenu.txt','wb'),$quickmenu);
             $this->success('保存成功，跳转中!');

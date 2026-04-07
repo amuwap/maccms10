@@ -1,54 +1,111 @@
 {include file="public/head.html"}
             <div class="container">
-                <div class="page-header">
-                    <h1>{$type.type_name}</h1>
-                    <p>{$type.type_description}</p>
+                <div class="category-page-header">
+                    <div class="category-header-content">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h1 class="category-title">{$type.type_name}</h1>
+                            <p class="category-description">{$type.type_description|default='精彩内容等你来发现'}</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="vod-filters glass-card">
-                    <div class="filter-group">
-                        <span class="filter-label">类型：</span>
-                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.class"}active{/if}">全部</a>
-                        {maccms:foreach name=":explode(',',$type.type_extend.class)" id="vo"}
-                        <a href="{:mac_url_type($type,['class'=>$vo])}" class="filter-item {if condition="$param.class eq $vo"}active{/if}">{$vo}</a>
-                        {/maccms:foreach}
+                <div class="category-filters glass-card">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">类型</span>
+                            <div class="filter-group-items">
+                                <a href="{:mac_url_type($type)}" class="filter-chip {if condition="!$param.class"}active{/if}">全部</a>
+                                {maccms:foreach name=":explode(',',$type.type_extend.class)" id="vo"}
+                                <a href="{:mac_url_type($type,['class'=>$vo])}" class="filter-chip {if condition="$param.class eq $vo"}active{/if}">{$vo}</a>
+                                {/maccms:foreach}
+                            </div>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <span class="filter-label">地区：</span>
-                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.area"}active{/if}">全部</a>
-                        {maccms:foreach name=":explode(',',$type.type_extend.area)" id="vo"}
-                        <a href="{:mac_url_type($type,['area'=>$vo])}" class="filter-item {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
-                        {/maccms:foreach}
+                    
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">地区</span>
+                            <div class="filter-group-items">
+                                <a href="{:mac_url_type($type)}" class="filter-chip {if condition="!$param.area"}active{/if}">全部</a>
+                                {maccms:foreach name=":explode(',',$type.type_extend.area)" id="vo"}
+                                <a href="{:mac_url_type($type,['area'=>$vo])}" class="filter-chip {if condition="$param.area eq $vo"}active{/if}">{$vo}</a>
+                                {/maccms:foreach}
+                            </div>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <span class="filter-label">年份：</span>
-                        <a href="{:mac_url_type($type)}" class="filter-item {if condition="!$param.year"}active{/if}">全部</a>
-                        {maccms:foreach name=":explode(',',$type.type_extend.year)" id="vo"}
-                        <a href="{:mac_url_type($type,['year'=>$vo])}" class="filter-item {if condition="$param.year eq $vo"}active{/if}">{$vo}</a>
-                        {/maccms:foreach}
+                    
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">年份</span>
+                            <div class="filter-group-items">
+                                <a href="{:mac_url_type($type)}" class="filter-chip {if condition="!$param.year"}active{/if}">全部</a>
+                                {maccms:foreach name=":explode(',',$type.type_extend.year)" id="vo"}
+                                <a href="{:mac_url_type($type,['year'=>$vo])}" class="filter-chip {if condition="$param.year eq $vo"}active{/if}">{$vo}</a>
+                                {/maccms:foreach}
+                            </div>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <span class="filter-label">排序：</span>
-                        <a href="{:mac_url_type($type,['order'=>'time'])}" class="filter-item {if condition="$param.order eq 'time'"}active{/if}">最新</a>
-                        <a href="{:mac_url_type($type,['order'=>'hits'])}" class="filter-item {if condition="$param.order eq 'hits'"}active{/if}">最热</a>
-                        <a href="{:mac_url_type($type,['order'=>'score'])}" class="filter-item {if condition="$param.order eq 'score'"}active{/if}">评分</a>
+                    
+                    <div class="filter-row sort-row">
+                        <div class="filter-group">
+                            <span class="filter-group-label">排序</span>
+                            <div class="filter-group-items sort-items">
+                                <a href="{:mac_url_type($type,['order'=>'time'])}" class="sort-chip {if condition="$param.order eq 'time' || !$param.order"}active{/if}">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12 6 12 12 16 14"/>
+                                    </svg>
+                                    最新
+                                </a>
+                                <a href="{:mac_url_type($type,['order'=>'hits'])}" class="sort-chip {if condition="$param.order eq 'hits'"}active{/if}">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    最热
+                                </a>
+                                <a href="{:mac_url_type($type,['order'=>'score'])}" class="sort-chip {if condition="$param.order eq 'score'"}active{/if}">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                    评分
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="content-grid">
                     {maccms:vod num="24" type="'.$type['type_id'].'" order="vod_time_add desc"}
-                    <div class="content-item">
+                    <div class="content-item animate-scale-in">
                         <a href="{:mac_url_vod_detail($vo)}">
                             <div class="item-poster">
-                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
                                 <div class="poster-overlay">
-                                    <i class="layui-icon layui-icon-play"></i>
+                                    <div class="play-btn">
+                                        <i class="layui-icon layui-icon-play"></i>
+                                    </div>
                                 </div>
                                 <span class="item-remark">{$vo.vod_remarks}</span>
+                                {if condition="$vo.vod_score"}
+                                <div class="item-score-badge">{$vo.vod_score}</div>
+                                {/if}
                             </div>
                             <div class="item-info">
                                 <h3 class="item-title">{$vo.vod_name}</h3>
-                                <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                <div class="item-meta-wrap">
+                                    <span class="item-meta">{$vo.vod_area}</span>
+                                    <span class="item-dot">·</span>
+                                    <span class="item-meta">{$vo.vod_year}</span>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -56,14 +113,25 @@
                 </div>
                 
                 {if condition="!$list"}
-                <div class="empty-state">
-                    <i class="layui-icon layui-icon-face-cry"></i>
-                    <p>暂无内容</p>
+                <div class="empty-container">
+                    <div class="empty-state-card glass-card">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 3 15 3 21 9 21 21 3 21 3 3"/>
+                                <polyline points="15 3 15 9 21 9"/>
+                            </svg>
+                        </div>
+                        <h3>暂无内容</h3>
+                        <p>该分类下还没有内容</p>
+                        <a href="{:mac_url('index/index')}" class="btn btn-primary">返回首页</a>
+                    </div>
                 </div>
                 {/if}
                 
-                <div class="pagination">
-                    {$__PAGING__.page_content}
+                <div class="pagination-container">
+                    <div class="pagination-wrapper">
+                        {$__PAGING__.page_content}
+                    </div>
                 </div>
             </div>
 {include file="public/foot.html"}

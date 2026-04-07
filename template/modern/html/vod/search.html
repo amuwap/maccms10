@@ -1,42 +1,99 @@
 {include file="public/head.html"}
             <div class="container">
-                <div class="search-result-header">
-                    <h1>搜索结果</h1>
-                    <p class="search-keyword">关键词：<span>{$param.wd}</span></p>
-                    <p class="search-count">共找到 <span>{$__PAGING__.record_total}</span> 个结果</p>
-                </div>
-                
-                <div class="search-filters glass-card">
-                    <div class="filter-group">
-                        <span class="filter-label">类型：</span>
-                        <a href="{:mac_url('vod/search',['wd'=>$param.wd])}" class="filter-item {if condition="!$param.tid"}active{/if}">全部</a>
-                        {maccms:type ids="parent" order="asc" by="sort"}
-                        <a href="{:mac_url('vod/search',['wd'=>$param.wd,'tid'=>$vo.type_id])}" class="filter-item {if condition="$param.tid eq $vo.type_id"}active{/if}">{$vo.type_name}</a>
-                        {/maccms:type}
+                <div class="search-page-header">
+                    <div class="search-header-content">
+                        <h1 class="search-page-title">搜索结果</h1>
+                        <div class="search-keyword-display">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            <span>关键词：</span>
+                            <strong>{$param.wd}</strong>
+                        </div>
+                        <div class="search-result-count">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            共找到 <strong>{$__PAGING__.record_total}</strong> 个结果
+                        </div>
                     </div>
                 </div>
                 
-                <div class="search-results">
+                <div class="search-filters glass-card">
+                    <div class="filter-section">
+                        <div class="filter-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                            </svg>
+                            类型筛选
+                        </div>
+                        <div class="filter-items">
+                            <a href="{:mac_url('vod/search',['wd'=>$param.wd])}" class="filter-tag {if condition="!$param.tid"}active{/if}">全部</a>
+                            {maccms:type ids="parent" order="asc" by="sort"}
+                            <a href="{:mac_url('vod/search',['wd'=>$param.wd,'tid'=>$vo.type_id])}" class="filter-tag {if condition="$param.tid eq $vo.type_id"}active{/if}">{$vo.type_name}</a>
+                            {/maccms:type}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-results-list">
                     {maccms:vod num="20" order="vod_time_add desc"}
-                    <div class="search-item glass-card">
-                        <div class="search-item-poster">
+                    <div class="search-result-card glass-card animate-scale-in">
+                        <div class="result-card-poster">
                             <a href="{:mac_url_vod_detail($vo)}">
-                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" />
+                                <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" loading="lazy" />
+                                <div class="poster-play-overlay">
+                                    <div class="play-circle">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </a>
                         </div>
-                        <div class="search-item-info">
-                            <h3 class="search-item-title">
-                                <a href="{:mac_url_vod_detail($vo)}">{$vo.vod_name}</a>
-                            </h3>
-                            <div class="search-item-meta">
-                                <span class="search-item-type">{$vo.type.type_name}</span>
-                                <span class="search-item-year">{$vo.vod_year}</span>
-                                <span class="search-item-area">{$vo.vod_area}</span>
+                        <div class="result-card-content">
+                            <div class="result-card-header">
+                                <h3 class="result-card-title">
+                                    <a href="{:mac_url_vod_detail($vo)}">{$vo.vod_name}</a>
+                                </h3>
+                                {if condition="$vo.vod_remarks"}
+                                <span class="result-remark">{$vo.vod_remarks}</span>
+                                {/if}
                             </div>
-                            <p class="search-item-desc">{$vo.vod_content|mac_filter_html|mac_substring=150}</p>
-                            <div class="search-item-actions">
-                                <a href="{:mac_url_vod_detail($vo)}" class="btn btn-primary btn-small">查看详情</a>
-                                <a href="{:mac_url_vod_play($vo)}" class="btn btn-secondary btn-small">立即播放</a>
+                            <div class="result-card-meta">
+                                <span class="meta-tag">{$vo.type.type_name}</span>
+                                <span class="meta-separator">·</span>
+                                <span class="meta-info">{$vo.vod_area}</span>
+                                <span class="meta-separator">·</span>
+                                <span class="meta-info">{$vo.vod_year}</span>
+                                {if condition="$vo.vod_score"}
+                                <span class="meta-rating">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                    {$vo.vod_score}
+                                </span>
+                                {/if}
+                            </div>
+                            <div class="result-card-desc">
+                                {$vo.vod_content|mac_filter_html|mac_substring=200}
+                            </div>
+                            <div class="result-card-actions">
+                                <a href="{:mac_url_vod_detail($vo)}" class="action-link primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    查看详情
+                                </a>
+                                <a href="{:mac_url_vod_play($vo)}" class="action-link accent">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="5 3 19 12 5 21 5 3"/>
+                                    </svg>
+                                    立即播放
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -44,15 +101,26 @@
                 </div>
                 
                 {if condition="!$list"}
-                <div class="empty-state">
-                    <i class="layui-icon layui-icon-face-cry"></i>
-                    <p>没有找到相关内容</p>
-                    <p class="empty-hint">试试其他关键词吧</p>
+                <div class="empty-container">
+                    <div class="empty-state-card glass-card">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <h3>没有找到相关内容</h3>
+                        <p>试试其他关键词吧</p>
+                        <a href="{:mac_url('index/index')}" class="btn btn-primary">返回首页</a>
+                    </div>
                 </div>
                 {/if}
                 
-                <div class="pagination">
-                    {$__PAGING__.page_content}
+                <div class="pagination-container">
+                    <div class="pagination-wrapper">
+                        {$__PAGING__.page_content}
+                    </div>
                 </div>
             </div>
 {include file="public/foot.html"}

@@ -3,39 +3,69 @@
                 <div class="banner-section">
                     <div class="glass-card banner-card">
                         <div class="banner-content">
-                            <h1>欢迎来到{$maccms.site_name}</h1>
-                            <p>海量高清影视资源，畅享极致观影体验</p>
+                            <h1 class="banner-title animate-fade-in">欢迎来到{$maccms.site_name}</h1>
+                            <p class="banner-subtitle animate-fade-in-delay-1">海量高清影视资源，畅享极致观影体验</p>
+                            <div class="banner-actions animate-fade-in-delay-2">
+                                <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg">立即观影</a>
+                                <a href="{:mac_url('label/rank')}" class="btn btn-outline btn-lg">热门榜单</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="category-nav">
-                    <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
-                    {maccms:type ids="parent" order="asc" by="sort"}
-                    <a href="{:mac_url_type($vo)}" class="category-item">{$vo.type_name}</a>
-                    {/maccms:type}
+                    <div class="category-scroll">
+                        <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
+                        {maccms:type ids="parent" order="asc" by="sort"}
+                        <a href="{:mac_url_type($vo)}" class="category-item">{$vo.type_name}</a>
+                        {/maccms:type}
+                    </div>
                 </div>
                 
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
-                            <h2 class="section-title">热门推荐</h2>
-                            <a href="{:mac_url('label/rank')}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">热门推荐</h2>
+                            </div>
+                            <a href="{:mac_url('label/rank')}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
                             {maccms:vod num="12" order="vod_hits_month"}
-                            <div class="content-item">
+                            <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
                                         <div class="poster-overlay">
-                                            <i class="layui-icon layui-icon-play"></i>
+                                            <div class="play-btn">
+                                                <i class="layui-icon layui-icon-play"></i>
+                                            </div>
                                         </div>
                                         <span class="item-remark">{$vo.vod_remarks}</span>
+                                        <div class="item-hot-badge">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                                            </svg>
+                                        </div>
                                     </div>
                                     <div class="item-info">
                                         <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                        <div class="item-meta-wrap">
+                                            <span class="item-meta">{$vo.vod_area}</span>
+                                            <span class="item-dot">·</span>
+                                            <span class="item-meta">{$vo.vod_year}</span>
+                                            <div class="item-rating">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                                </svg>
+                                                <span>{$vo.vod_score|default='8.0'}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
@@ -47,23 +77,38 @@
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
-                            <h2 class="section-title">最新更新</h2>
-                            <a href="{:mac_url('map/index')}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">最新更新</h2>
+                            </div>
+                            <a href="{:mac_url('map/index')}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
                             {maccms:vod num="12" order="vod_time_add"}
-                            <div class="content-item">
+                            <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
                                         <div class="poster-overlay">
-                                            <i class="layui-icon layui-icon-play"></i>
+                                            <div class="play-btn">
+                                                <i class="layui-icon layui-icon-play"></i>
+                                            </div>
                                         </div>
                                         <span class="item-remark">{$vo.vod_remarks}</span>
+                                        <div class="item-new-badge">NEW</div>
                                     </div>
                                     <div class="item-info">
                                         <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                        <div class="item-meta-wrap">
+                                            <span class="item-meta">{$vo.vod_area}</span>
+                                            <span class="item-dot">·</span>
+                                            <span class="item-meta">{$vo.vod_year}</span>
+                                        </div>
                                     </div>
                                 </a>
                             </div>
@@ -76,23 +121,39 @@
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
-                            <h2 class="section-title">{$vo.type_name}</h2>
-                            <a href="{:mac_url_type($vo)}" class="more-link">更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">{$vo.type_name}</h2>
+                            </div>
+                            <a href="{:mac_url_type($vo)}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
                             {maccms:vod num="8" type="'.$vo['type_id'].'" order="vod_time_add"}
-                            <div class="content-item">
+                            <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" />
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
                                         <div class="poster-overlay">
-                                            <i class="layui-icon layui-icon-play"></i>
+                                            <div class="play-btn">
+                                                <i class="layui-icon layui-icon-play"></i>
+                                            </div>
                                         </div>
                                         <span class="item-remark">{$vo.vod_remarks}</span>
                                     </div>
                                     <div class="item-info">
                                         <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <p class="item-meta">{$vo.vod_area} · {$vo.vod_year}</p>
+                                        <div class="item-meta-wrap">
+                                            <span class="item-meta">{$vo.vod_area}</span>
+                                            <span class="item-dot">·</span>
+                                            <span class="item-meta">{$vo.vod_year}</span>
+                                        </div>
                                     </div>
                                 </a>
                             </div>

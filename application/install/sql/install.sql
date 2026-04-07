@@ -3,7 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_actor`;
 CREATE TABLE `mac_actor` (
-  `actor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `actor_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `actor_name` varchar(255) NOT NULL DEFAULT '',
   `actor_en` varchar(255) NOT NULL DEFAULT '',
   `actor_alias` varchar(255) NOT NULL DEFAULT '' ,
@@ -55,14 +55,14 @@ CREATE TABLE `mac_actor` (
   KEY `actor_score` (`actor_score`),
   KEY `actor_score_all` (`actor_score_all`),
   KEY `actor_score_num` (`actor_score_num`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_admin
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_admin`;
 CREATE TABLE `mac_admin` (
-  `admin_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `admin_id` smallint(6) unsigned NOT NULL AUTOINCREMENT,
   `admin_name` varchar(30) NOT NULL DEFAULT '',
   `admin_pwd` char(32) NOT NULL DEFAULT '',
   `admin_random` char(32) NOT NULL DEFAULT '',
@@ -75,14 +75,14 @@ CREATE TABLE `mac_admin` (
   `admin_last_login_ip` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`admin_id`),
   KEY `admin_name` (`admin_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_art
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_art`;
 CREATE TABLE `mac_art` (
-  `art_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `art_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `type_id` smallint(6) unsigned NOT NULL DEFAULT '0' ,
   `type_id_1` smallint(6) unsigned NOT NULL DEFAULT '0' ,
   `group_id` smallint(6) unsigned NOT NULL DEFAULT '0' ,
@@ -148,14 +148,14 @@ CREATE TABLE `mac_art` (
   KEY `art_score` (`art_score`),
   KEY `art_score_all` (`art_score_all`),
   KEY `art_score_num` (`art_score_num`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_card
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_card`;
 CREATE TABLE `mac_card` (
-  `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `card_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `card_no` varchar(16) NOT NULL DEFAULT '' ,
   `card_pwd` varchar(8) NOT NULL DEFAULT '' ,
   `card_money` smallint(6) unsigned NOT NULL DEFAULT '0' ,
@@ -171,14 +171,14 @@ CREATE TABLE `mac_card` (
   KEY `card_use_time` (`card_use_time`) USING BTREE,
   KEY `card_no` (`card_no`),
   KEY `card_pwd` (`card_pwd`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_cash
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_cash`;
 CREATE TABLE `mac_cash` (
-  `cash_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cash_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cash_status` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   `cash_points` smallint(6) unsigned NOT NULL DEFAULT '0',
@@ -191,14 +191,14 @@ CREATE TABLE `mac_cash` (
   PRIMARY KEY (`cash_id`),
   KEY `user_id` (`user_id`),
   KEY `cash_status` (`cash_status`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_cj_content
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_cj_content`;
 CREATE TABLE `mac_cj_content` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `nodeid` int(10) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `url` char(255) NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE `mac_cj_content` (
   PRIMARY KEY (`id`),
   KEY `nodeid` (`nodeid`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
 
 -- ----------------------------
 -- Table structure for mac_cj_history
@@ -224,7 +224,7 @@ CREATE TABLE `mac_cj_history` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_cj_node`;
 CREATE TABLE `mac_cj_node` (
-  `nodeid` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `nodeid` smallint(6) unsigned NOT NULL AUTOINCREMENT,
   `name` varchar(20) NOT NULL,
   `lastdate` int(10) unsigned NOT NULL DEFAULT '0',
   `sourcecharset` varchar(8) NOT NULL,
@@ -256,14 +256,14 @@ CREATE TABLE `mac_cj_node` (
   `program_config` text NOT NULL,
   `mid` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
   PRIMARY KEY (`nodeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC ;
 
 -- ----------------------------
 -- Table structure for mac_collect
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_collect`;
 CREATE TABLE `mac_collect` (
-  `collect_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `collect_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `collect_name` varchar(30) NOT NULL DEFAULT '' ,
   `collect_url` varchar(255) NOT NULL DEFAULT '' ,
   `collect_type` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
@@ -275,14 +275,14 @@ CREATE TABLE `mac_collect` (
   `collect_filter_from` varchar(255) NOT NULL DEFAULT '' ,
   `collect_opt` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`collect_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_comment`;
 CREATE TABLE `mac_comment` (
-  `comment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `comment_mid` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
   `comment_rid` int(10) unsigned NOT NULL DEFAULT '0' ,
   `comment_pid` int(10) unsigned NOT NULL DEFAULT '0' ,
@@ -303,14 +303,14 @@ CREATE TABLE `mac_comment` (
   KEY `comment_pid` (`comment_pid`),
   KEY `user_id` (`user_id`),
   KEY `comment_reply` (`comment_reply`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_gbook
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_gbook`;
 CREATE TABLE `mac_gbook` (
-  `gbook_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `gbook_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `gbook_rid` int(10) unsigned NOT NULL DEFAULT '0' ,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' ,
   `gbook_status` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
@@ -326,14 +326,14 @@ CREATE TABLE `mac_gbook` (
   KEY `gbook_reply_time` (`gbook_reply_time`) USING BTREE,
   KEY `user_id` (`user_id`),
   KEY `gbook_reply` (`gbook_reply`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_group
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_group`;
 CREATE TABLE `mac_group` (
-  `group_id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `group_id` smallint(6) NOT NULL AUTOINCREMENT,
   `group_name` varchar(30) NOT NULL DEFAULT '' ,
   `group_status` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
   `group_type` text NOT NULL,
@@ -345,7 +345,7 @@ CREATE TABLE `mac_group` (
   `group_points_free` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   PRIMARY KEY (`group_id`),
   KEY `group_status` (`group_status`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=4 DEFAULT CHARSET=utf8 ;
 
 INSERT INTO `mac_group` VALUES ('1', '游客', '1', ',1,6,7,8,9,10,11,12,2,13,14,15,16,3,4,5,17,18,', '{\"1\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"6\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"7\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"8\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"9\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"10\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"11\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"12\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"2\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"13\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"14\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"15\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"16\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"3\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"4\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"5\":{\"1\":\"1\",\"2\":\"2\"},\"17\":{\"1\":\"1\",\"2\":\"2\"},\"18\":{\"1\":\"1\",\"2\":\"2\"}}', '0', '0', '0', '0', '0');
 INSERT INTO `mac_group` VALUES ('2', '默认会员', '1', ',1,6,7,8,9,10,11,12,2,13,14,15,16,3,4,5,17,18,', '{\"1\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"6\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"7\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"8\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"9\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"10\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"11\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"12\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"2\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"13\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"14\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"15\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"16\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"3\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"4\":{\"1\":\"1\",\"2\":\"2\",\"3\":\"3\",\"4\":\"4\",\"5\":\"5\"},\"5\":{\"1\":\"1\",\"2\":\"2\"},\"17\":{\"1\":\"1\",\"2\":\"2\"},\"18\":{\"1\":\"1\",\"2\":\"2\"}}', '0', '0', '0', '0', '0');
@@ -358,7 +358,7 @@ INSERT INTO `mac_group` VALUES ('3', 'VIP会员', '1', ',1,6,7,8,9,10,11,12,2,13
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_link`;
 CREATE TABLE `mac_link` (
-  `link_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `link_id` smallint(6) unsigned NOT NULL AUTOINCREMENT,
   `link_type` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   `link_name` varchar(60) NOT NULL DEFAULT '' ,
   `link_sort` smallint(6) NOT NULL DEFAULT '0' ,
@@ -371,14 +371,14 @@ CREATE TABLE `mac_link` (
   KEY `link_type` (`link_type`) USING BTREE,
   KEY `link_add_time` (`link_add_time`),
   KEY `link_time` (`link_time`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_msg
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_msg`;
 CREATE TABLE `mac_msg` (
-  `msg_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `msg_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `msg_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `msg_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -390,14 +390,14 @@ CREATE TABLE `mac_msg` (
   KEY `msg_code` (`msg_code`),
   KEY `msg_time` (`msg_time`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_order
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_order`;
 CREATE TABLE `mac_order` (
-  `order_id` int(10) unsigned NOT NULL AUTO_INCREMENT ,
+  `order_id` int(10) unsigned NOT NULL AUTOINCREMENT ,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' ,
   `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   `order_code` varchar(30) NOT NULL DEFAULT '' ,
@@ -411,14 +411,14 @@ CREATE TABLE `mac_order` (
   KEY `order_code` (`order_code`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `order_time` (`order_time`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_plog
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_plog`;
 CREATE TABLE `mac_plog` (
-  `plog_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `plog_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `user_id_1` int(10) NOT NULL DEFAULT '0',
   `plog_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -428,14 +428,14 @@ CREATE TABLE `mac_plog` (
   PRIMARY KEY (`plog_id`),
   KEY `user_id` (`user_id`),
   KEY `plog_type` (`plog_type`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_role
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_role`;
 CREATE TABLE `mac_role` (
-  `role_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `role_rid` int(10) unsigned NOT NULL DEFAULT '0' ,
   `role_name` varchar(255) NOT NULL DEFAULT '' ,
   `role_en` varchar(255) NOT NULL DEFAULT '' ,
@@ -478,14 +478,14 @@ CREATE TABLE `mac_role` (
   KEY `role_score_num` (`role_score_num`),
   KEY `role_up` (`role_up`),
   KEY `role_down` (`role_down`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_topic
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_topic`;
 CREATE TABLE `mac_topic` (
-  `topic_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `topic_id` smallint(6) unsigned NOT NULL AUTOINCREMENT,
   `topic_name` varchar(255) NOT NULL DEFAULT '' ,
   `topic_en` varchar(255) NOT NULL DEFAULT '' ,
   `topic_sub` varchar(255) NOT NULL DEFAULT '' ,
@@ -539,14 +539,14 @@ CREATE TABLE `mac_topic` (
   KEY `topic_en` (`topic_en`),
   KEY `topic_up` (`topic_up`),
   KEY `topic_down` (`topic_down`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_type
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_type`;
 CREATE TABLE `mac_type` (
-  `type_id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `type_id` smallint(6) unsigned NOT NULL AUTOINCREMENT,
   `type_name` varchar(60) NOT NULL DEFAULT '' ,
   `type_en` varchar(60) NOT NULL DEFAULT '' ,
   `type_sort` smallint(6) unsigned NOT NULL DEFAULT '0' ,
@@ -569,7 +569,7 @@ CREATE TABLE `mac_type` (
   KEY `type_name` (`type_name`),
   KEY `type_en` (`type_en`),
   KEY `type_mid` (`type_mid`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=20 DEFAULT CHARSET=utf8 ;
 
 
 INSERT INTO `mac_type` VALUES ('1', '电影', 'dianying', '1', '1', '0', '1', 'type.html', 'show.html', 'detail.html', 'play.html', 'down.html', '电影,电影大全,电影天堂,最新电影,好看的电影,电影排行榜', '为您提供更新电影、好看的电影排行榜及电影迅雷下载，免费在线观看伦理电影、动作片、喜剧片、爱情片、搞笑片等全新电影。', '电影', '', '{\"class\":\"\\u559c\\u5267,\\u7231\\u60c5,\\u6050\\u6016,\\u52a8\\u4f5c,\\u79d1\\u5e7b,\\u5267\\u60c5,\\u6218\\u4e89,\\u8b66\\u532a,\\u72af\\u7f6a,\\u52a8\\u753b,\\u5947\\u5e7b,\\u6b66\\u4fa0,\\u5192\\u9669,\\u67aa\\u6218,\\u6050\\u6016,\\u60ac\\u7591,\\u60ca\\u609a,\\u7ecf\\u5178,\\u9752\\u6625,\\u6587\\u827a,\\u5fae\\u7535\\u5f71,\\u53e4\\u88c5,\\u5386\\u53f2,\\u8fd0\\u52a8,\\u519c\\u6751,\\u513f\\u7ae5,\\u7f51\\u7edc\\u7535\\u5f71\",\"area\":\"\\u5927\\u9646,\\u9999\\u6e2f,\\u53f0\\u6e7e,\\u7f8e\\u56fd,\\u6cd5\\u56fd,\\u82f1\\u56fd,\\u65e5\\u672c,\\u97e9\\u56fd,\\u5fb7\\u56fd,\\u6cf0\\u56fd,\\u5370\\u5ea6,\\u610f\\u5927\\u5229,\\u897f\\u73ed\\u7259,\\u52a0\\u62ff\\u5927,\\u5176\\u4ed6\",\"lang\":\"\\u56fd\\u8bed,\\u82f1\\u8bed,\\u7ca4\\u8bed,\\u95fd\\u5357\\u8bed,\\u97e9\\u8bed,\\u65e5\\u8bed,\\u6cd5\\u8bed,\\u5fb7\\u8bed,\\u5176\\u5b83\",\"year\":\"2018,2017,2016,2015,2014,2013,2012,2011,2010\",\"star\":\"\\u738b\\u5b9d\\u5f3a,\\u9ec4\\u6e24,\\u5468\\u8fc5,\\u5468\\u51ac\\u96e8,\\u8303\\u51b0\\u51b0,\\u9648\\u5b66\\u51ac,\\u9648\\u4f1f\\u9706,\\u90ed\\u91c7\\u6d01,\\u9093\\u8d85,\\u6210\\u9f99,\\u845b\\u4f18,\\u6797\\u6b63\\u82f1,\\u5f20\\u5bb6\\u8f89,\\u6881\\u671d\\u4f1f,\\u5f90\\u5ce5,\\u90d1\\u607a,\\u5434\\u5f66\\u7956,\\u5218\\u5fb7\\u534e,\\u5468\\u661f\\u9a70,\\u6797\\u9752\\u971e,\\u5468\\u6da6\\u53d1,\\u674e\\u8fde\\u6770,\\u7504\\u5b50\\u4e39,\\u53e4\\u5929\\u4e50,\\u6d2a\\u91d1\\u5b9d,\\u59da\\u6668,\\u502a\\u59ae,\\u9ec4\\u6653\\u660e,\\u5f6d\\u4e8e\\u664f,\\u6c64\\u552f,\\u9648\\u5c0f\\u6625\",\"director\":\"\\u51af\\u5c0f\\u521a,\\u5f20\\u827a\\u8c0b,\\u5434\\u5b87\\u68ee,\\u9648\\u51ef\\u6b4c,\\u5f90\\u514b,\\u738b\\u5bb6\\u536b,\\u59dc\\u6587,\\u5468\\u661f\\u9a70,\\u674e\\u5b89\",\"state\":\"\\u6b63\\u7247,\\u9884\\u544a\\u7247,\\u82b1\\u7d6e\",\"version\":\"\\u9ad8\\u6e05\\u7248,\\u5267\\u573a\\u7248,\\u62a2\\u5148\\u7248,OVA,TV,\\u5f71\\u9662\\u7248\"}');
@@ -597,7 +597,7 @@ INSERT INTO `mac_type` VALUES ('18', '头条', 'toutiao', '2', '2', '5', '1', 't
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_ulog`;
 CREATE TABLE `mac_ulog` (
-  `ulog_id` int(10) unsigned NOT NULL AUTO_INCREMENT ,
+  `ulog_id` int(10) unsigned NOT NULL AUTOINCREMENT ,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0' ,
   `ulog_mid` tinyint(1) unsigned NOT NULL DEFAULT '0' ,
   `ulog_type` tinyint(1) unsigned NOT NULL DEFAULT '1' ,
@@ -611,14 +611,14 @@ CREATE TABLE `mac_ulog` (
   KEY `ulog_mid` (`ulog_mid`),
   KEY `ulog_type` (`ulog_type`),
   KEY `ulog_rid` (`ulog_rid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_user
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_user`;
 CREATE TABLE `mac_user` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL AUTOINCREMENT,
   `group_id` smallint(6) unsigned NOT NULL DEFAULT '0' ,
   `user_name` varchar(30) NOT NULL DEFAULT '' ,
   `user_pwd` varchar(32) NOT NULL DEFAULT '' ,
@@ -652,14 +652,14 @@ CREATE TABLE `mac_user` (
   KEY `type_id` (`group_id`) USING BTREE,
   KEY `user_name` (`user_name`),
   KEY `user_reg_time` (`user_reg_time`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_visit
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_visit`;
 CREATE TABLE `mac_visit` (
-  `visit_id` int(10) unsigned NOT NULL AUTO_INCREMENT ,
+  `visit_id` int(10) unsigned NOT NULL AUTOINCREMENT ,
   `user_id` int(10) unsigned DEFAULT '0',
   `visit_ip` int(10) unsigned NOT NULL DEFAULT '0' ,
   `visit_ly` varchar(100) NOT NULL DEFAULT '',
@@ -667,14 +667,14 @@ CREATE TABLE `mac_visit` (
   PRIMARY KEY (`visit_id`),
   KEY `user_id` (`user_id`),
   KEY `visit_time` (`visit_time`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Table structure for mac_vod
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_vod`;
 CREATE TABLE `mac_vod` (
-  `vod_id` int(10) unsigned NOT NULL AUTO_INCREMENT ,
+  `vod_id` int(10) unsigned NOT NULL AUTOINCREMENT ,
   `type_id` smallint(6) NOT NULL DEFAULT '0' ,
   `type_id_1` smallint(6) unsigned NOT NULL DEFAULT '0' ,
   `group_id` smallint(6) unsigned NOT NULL DEFAULT '0' ,
@@ -790,5 +790,5 @@ CREATE TABLE `mac_vod` (
   KEY `vod_version` (`vod_version`),
   KEY `vod_state` (`vod_state`),
   KEY `vod_isend` (`vod_isend`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8 ;
 

@@ -69,7 +69,7 @@ class Admin extends Base {
             $res = $this->where($where)->update($data);
         }
         else{
-            if(!$validate->scene('edit')->check($data)){
+            if(!$validate->scene('add')->check($data)){
                 return ['code'=>1002,'msg'=>'参数错误：'.$validate->getError() ];
             }
 

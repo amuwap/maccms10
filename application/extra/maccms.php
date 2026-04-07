@@ -25,7 +25,7 @@ return array (
     'site_icp' => 'icp123',
     'site_qq' => '123456',
     'site_email' => '123456@test.cn',
-    'install_dir' => '/v10/',
+    'install_dir' => '/',
     'site_logo' => 'static/images/logo.jpg',
     'site_waplogo' => 'static/images/logo.jpg',
     'template_dir' => 'default_pc',
@@ -49,7 +49,7 @@ return array (
     'cache_port' => '11211',
     'cache_username' => '',
     'cache_password' => '',
-    'cache_flag' => 'a6bcf9aa58',
+    'cache_flag' => 'f1f4b87b9b',
     'cache_core' => '0',
     'cache_time' => '3600',
     'cache_page' => '0',
@@ -178,8 +178,8 @@ return array (
   ),
   'interface' => 
   array (
-    'status' => '1',
-    'pass' => 'TBAKOMRQBCCQCBLK',
+    'status' => 0,
+    'pass' => 'VR9J3GV6MLUXEMRB',
     'vodtype' => '动作片=动作',
     'arttype' => '头条=头条',
   ),

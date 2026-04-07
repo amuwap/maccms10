@@ -1,4 +1,24 @@
-{include file="../../../application/install/view/index/head" /}
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:52:"/workspace/application/install/view/index/step3.html";i:1775560449;s:51:"/workspace/application/install/view/index/head.html";i:1775560112;s:51:"/workspace/application/install/view/index/foot.html";i:1775560112;}*/ ?>
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>苹果CMS-V10系统安装</title>
+        <link rel="stylesheet" href="/static/layui/css/layui.css">
+        <link rel="stylesheet" href="/static/css/admin_style.css">
+        <link rel="stylesheet" href="/static/css/install.css">
+        <script type="text/javascript" src="/static/layui/layui.js"></script>
+        <script>
+            var ROOT_PATH = "", ADMIN_PATH="<?php echo $_SERVER['SCRIPT_NAME']; ?>";
+        </script>
+    </head>
+<body>
+<div class="header">
+    <h1>感谢您选择苹果CMS-V10系统建站</h1>
+</div>
 <style type="text/css">
 .layui-table td, .layui-table th{text-align:left;}
 .layui-table tbody tr.no{background-color:#f00;color:#fff;}
@@ -20,7 +40,7 @@
         </div>
     </form>
     <form class="layui-form layui-form-pane" action="?step=5" method="post">
-        <input type="hidden" name="install_dir" value="{$install_dir}">
+        <input type="hidden" name="install_dir" value="<?php echo $install_dir; ?>">
         <fieldset class="layui-elem-field layui-field-title">
             <legend>管理账号设置</legend>
         </fieldset>
@@ -47,7 +67,11 @@
 <span style="display: none">
 <iframe src="//www.maccms.com/tongji.html?v10-php" MARGINWIDTH="0" MARGINHEIGHT="0" HSPACE="0" VSPACE="0" FRAMEBORDER="0" SCROLLING="no" width="0" height="0"></iframe>
 </span>
-{include file="../../../application/install/view/index/foot" /}
+<div class="copyright">
+    © 2008-2018 <a href="http://www.maccms.com/?v10" target="_blank">MacCMS.COM</a> All Rights Reserved.
+</div>
+</body>
+</html>
 <script type="text/javascript">
     var test=0;
 layui.define(['element', 'form'], function(exports) {

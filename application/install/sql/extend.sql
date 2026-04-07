@@ -7,7 +7,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_ai_config`;
 CREATE TABLE `mac_ai_config` (
-  `config_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `config_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `config_name` varchar(100) NOT NULL DEFAULT '',
   `config_provider` varchar(50) NOT NULL DEFAULT 'openai',
   `config_api_key` varchar(255) NOT NULL DEFAULT '',
@@ -21,14 +21,14 @@ CREATE TABLE `mac_ai_config` (
   PRIMARY KEY (`config_id`),
   KEY `config_provider` (`config_provider`),
   KEY `config_status` (`config_status`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_ai_task - AI任务表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_ai_task`;
 CREATE TABLE `mac_ai_task` (
-  `task_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `task_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `task_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `task_mid` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `task_rid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -45,14 +45,14 @@ CREATE TABLE `mac_ai_task` (
   KEY `task_mid` (`task_mid`),
   KEY `task_rid` (`task_rid`),
   KEY `task_status` (`task_status`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_live - 直播表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_live`;
 CREATE TABLE `mac_live` (
-  `live_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `live_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `live_name` varchar(255) NOT NULL DEFAULT '',
   `live_anchor` varchar(100) NOT NULL DEFAULT '',
   `live_cover` varchar(255) NOT NULL DEFAULT '',
@@ -76,14 +76,14 @@ CREATE TABLE `mac_live` (
   KEY `live_status` (`live_status`),
   KEY `live_sort` (`live_sort`),
   KEY `live_time` (`live_time`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_live_gift - 直播礼物表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_live_gift`;
 CREATE TABLE `mac_live_gift` (
-  `gift_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `gift_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gift_name` varchar(100) NOT NULL DEFAULT '',
   `gift_pic` varchar(255) NOT NULL DEFAULT '',
   `gift_price` int(10) unsigned NOT NULL DEFAULT '0',
@@ -95,14 +95,14 @@ CREATE TABLE `mac_live_gift` (
   PRIMARY KEY (`gift_id`),
   KEY `gift_status` (`gift_status`),
   KEY `gift_sort` (`gift_sort`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_live_record - 直播观看记录和打赏记录
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_live_record`;
 CREATE TABLE `mac_live_record` (
-  `record_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `record_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `record_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `live_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -116,14 +116,14 @@ CREATE TABLE `mac_live_record` (
   KEY `user_id` (`user_id`),
   KEY `live_id` (`live_id`),
   KEY `record_time` (`record_time`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_payment - 支付配置表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_payment`;
 CREATE TABLE `mac_payment` (
-  `pay_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `pay_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pay_code` varchar(50) NOT NULL DEFAULT '',
   `pay_name` varchar(100) NOT NULL DEFAULT '',
   `pay_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -136,14 +136,14 @@ CREATE TABLE `mac_payment` (
   KEY `pay_code` (`pay_code`),
   KEY `pay_status` (`pay_status`),
   KEY `pay_sort` (`pay_sort`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_hot_keywords - 热门关键词表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_hot_keywords`;
 CREATE TABLE `mac_hot_keywords` (
-  `kw_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `kw_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `kw_name` varchar(255) NOT NULL DEFAULT '',
   `kw_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `kw_hits` int(10) unsigned NOT NULL DEFAULT '0',
@@ -156,14 +156,14 @@ CREATE TABLE `mac_hot_keywords` (
   KEY `kw_status` (`kw_status`),
   KEY `kw_sort` (`kw_sort`),
   KEY `kw_hits` (`kw_hits`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_user_behavior - 用户行为表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_user_behavior`;
 CREATE TABLE `mac_user_behavior` (
-  `bh_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `bh_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `bh_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `bh_mid` tinyint(1) unsigned NOT NULL DEFAULT '1',
@@ -180,14 +180,14 @@ CREATE TABLE `mac_user_behavior` (
   KEY `bh_rid` (`bh_rid`),
   KEY `bh_time` (`bh_time`),
   UNIQUE KEY `uk_user_behavior` (`user_id`, `bh_type`, `bh_mid`, `bh_rid`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_play_error - 播放报错表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_play_error`;
 CREATE TABLE `mac_play_error` (
-  `error_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `error_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `vod_id` int(10) unsigned NOT NULL DEFAULT '0',
   `error_sid` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -203,14 +203,14 @@ CREATE TABLE `mac_play_error` (
   KEY `vod_id` (`vod_id`),
   KEY `error_status` (`error_status`),
   KEY `error_time` (`error_time`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_request - 求片表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_request`;
 CREATE TABLE `mac_request` (
-  `req_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `req_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `req_name` varchar(255) NOT NULL DEFAULT '',
   `req_content` text NOT NULL,
@@ -224,14 +224,14 @@ CREATE TABLE `mac_request` (
   KEY `user_id` (`user_id`),
   KEY `req_status` (`req_status`),
   KEY `req_time` (`req_time`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_reward_log - 分享奖励日志
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_reward_log`;
 CREATE TABLE `mac_reward_log` (
-  `log_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `log_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `log_points` int(10) unsigned NOT NULL DEFAULT '0',
@@ -243,14 +243,14 @@ CREATE TABLE `mac_reward_log` (
   KEY `user_id` (`user_id`),
   KEY `log_type` (`log_type`),
   KEY `log_time` (`log_time`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for mac_template_config - 模板配置表
 -- ----------------------------
 DROP TABLE IF EXISTS `mac_template_config`;
 CREATE TABLE `mac_template_config` (
-  `tc_id` int(10) unsigned NOT NULL AUTOINCREMENT,
+  `tc_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tc_template` varchar(50) NOT NULL DEFAULT '',
   `tc_name` varchar(100) NOT NULL DEFAULT '',
   `tc_key` varchar(100) NOT NULL DEFAULT '',
@@ -265,7 +265,7 @@ CREATE TABLE `mac_template_config` (
   KEY `tc_template` (`tc_template`),
   KEY `tc_key` (`tc_key`),
   KEY `tc_group` (`tc_group`)
-) ENGINE=MyISAM AUTOINCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- 插入默认礼物数据

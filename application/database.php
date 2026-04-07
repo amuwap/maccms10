@@ -8,7 +8,7 @@ return [
     'hostport'        => '3306',
     'dsn'             => '',
     'params'          => [],
-    'charset'         => 'utf8',
+    'charset'         => 'utf8mb4',
     'prefix'          => 'mac_',
     'debug'           => false,
     'deploy'          => 0,

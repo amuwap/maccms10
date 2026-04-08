@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775659732;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775659662;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775659745;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775659761;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775662116;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775659662;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775659745;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775659761;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -48,143 +48,291 @@
 </header>
 
 <!-- 英雄区 -->
+<?php $__TAG__ = '{"num":"1","level":"9","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
 <section class="hero">
+    <img src="<?php echo mac_url_img($vo['vod_pic_slide']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="hero-background"/>
     <div class="hero-content fade-in">
-        <h1 class="hero-title"><?php echo $maccms['site_name']; ?></h1>
-        <p class="hero-subtitle">海量高清影视资源，畅享极致观影体验</p>
-        <div class="search-bar mt-4">
-            <input type="text" class="search-input" placeholder="搜索电影、电视剧、综艺..." id="search-input">
-            <button class="search-button" id="search-button">搜索</button>
+        <div class="hero-badges">
+            <span class="hero-badge"><?php echo $vo['vod_year']; ?></span>
+            <span class="hero-badge"><?php echo $vo['vod_area']; ?></span>
+            <span class="hero-badge"><?php echo $vo['vod_lang']; ?></span>
+            <span class="hero-badge"><?php echo $vo['vod_remarks']; ?></span>
+        </div>
+        <h1 class="hero-title"><?php echo $vo['vod_name']; ?></h1>
+        <p class="hero-subtitle"><?php echo mb_substr($vo['vod_blurb'],0,150); ?>...</p>
+        <div class="hero-actions">
+            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn hero-btn-primary">
+                <i class="fas fa-play"></i>
+                立即观看
+            </a>
+            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn hero-btn-secondary">
+                <i class="fas fa-info-circle"></i>
+                了解详情
+            </a>
+        </div>
+        <div class="hero-search mt-6">
+            <div class="relative">
+                <input type="text" class="search-input" placeholder="搜索电影、电视剧、综艺..." id="search-input">
+                <button class="search-button" id="search-button">搜索</button>
+            </div>
         </div>
     </div>
-    <ul class="51buypic" style="display: none;">
-        <?php $__TAG__ = '{"num":"5","level":"9","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <li><a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>  <?php echo $vo['vod_remarks']; ?>"><img src="<?php echo mac_url_img($vo['vod_pic_slide']); ?>" alt="<?php echo $vo['vod_name']; ?> <?php echo $vo['vod_remarks']; ?>" class="hero-background"/></a></li>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
-    </ul>
 </section>
+<?php endforeach; endif; else: echo "" ;endif; ?>
 
 <!-- 分类导航 -->
-<section class="container mt-5">
-    <div class="grid grid-cols-5 gap-4 mb-6">
+<section class="container mt-8">
+    <div class="grid grid-cols-5 gap-6 mb-12">
         <?php $__TAG__ = '{"ids":"1,2,3,4","order":"asc","by":"sort","id":"vo1","key":"key1"}';$__LIST__ = model("Type")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key1 = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo1): $mod = ($key1 % 2 );++$key1;?>
-        <a href="<?php echo mac_url_type($vo1); ?>" class="card p-4 text-center hover:shadow-md transition-all">
-            <h3 class="card-title mb-2"><?php echo $vo1['type_name']; ?></h3>
-            <p class="card-text text-sm">浏览全部<?php echo $vo1['type_name']; ?></p>
+        <a href="<?php echo mac_url_type($vo1); ?>" class="category-card">
+            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=<?php echo $vo1['type_name']; ?>%20category%20banner%20cinema%20dark%20theme&image_size=landscape_16_9" alt="<?php echo $vo1['type_name']; ?>" class="w-full h-full object-cover">
+            <div class="category-overlay">
+                <h3 class="category-title"><?php echo $vo1['type_name']; ?></h3>
+                <p class="category-subtitle">浏览全部<?php echo $vo1['type_name']; ?></p>
+            </div>
         </a>
         <?php endforeach; endif; else: echo "" ;endif; ?>
-        <a href="<?php echo mac_url('label/rank'); ?>" class="card p-4 text-center hover:shadow-md transition-all">
-            <h3 class="card-title mb-2">影视排行榜</h3>
-            <p class="card-text text-sm">查看热门排行</p>
+        <a href="<?php echo mac_url('label/rank'); ?>" class="category-card">
+            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20ranking%20leaderboard%20cinema%20dark%20theme&image_size=landscape_16_9" alt="影视排行榜" class="w-full h-full object-cover">
+            <div class="category-overlay">
+                <h3 class="category-title">影视排行榜</h3>
+                <p class="category-subtitle">查看热门排行</p>
+            </div>
         </a>
     </div>
 </section>
 
 <!-- 热门推荐 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">热门推荐</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <?php $__TAG__ = '{"num":"8","level":"1,2,3,4,5,6,7,8,9","order":"desc","by":"hits_month","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <div class="card">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
-                <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
-                    <p class="card-text"><?php echo mb_substr($vo['vod_actor'],0,20); ?>...</p>
-                    <span class="text-sm font-medium text-accent-color"><?php echo $vo['vod_version']; ?></span>
+<section class="container mb-12">
+    <h2 class="section-title">
+        热门推荐
+        <a href="<?php echo mac_url('vod/type'); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="scroll-list">
+        <button class="scroll-control scroll-control-left" onclick="scrollList(this, -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="scroll-container" id="scroll-container-1">
+            <?php $__TAG__ = '{"num":"12","level":"1,2,3,4,5,6,7,8,9","order":"desc","by":"hits_month","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+            <div class="scroll-item">
+                <div class="card">
+                    <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
+                        <div class="relative">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
+                            <div class="card-overlay">
+                                <div class="flex items-center gap-2">
+                                    <span class="card-badge"><?php echo $vo['vod_score']; ?>分</span>
+                                    <span class="card-badge card-badge-secondary"><?php echo $vo['vod_hits_month']; ?>次观看</span>
+                                </div>
+                            </div>
+                            <span class="card-badge"><?php echo $vo['vod_remarks']; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
+                            <div class="card-meta">
+                                <span><?php echo $vo['vod_year']; ?></span>
+                                <span><?php echo $vo['vod_area']; ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
+        <button class="scroll-control scroll-control-right" onclick="scrollList(this, 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </section>
 
 <!-- 最新电影 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">最新电影</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <?php $__TAG__ = '{"num":"8","type":"1","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <div class="card">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
-                <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
-                    <p class="card-text"><?php echo mb_substr($vo['vod_actor'],0,20); ?>...</p>
-                    <span class="text-sm font-medium text-accent-color"><?php echo $vo['vod_version']; ?></span>
+<section class="container mb-12">
+    <h2 class="section-title">
+        最新电影
+        <a href="<?php echo mac_url_type(['id'=>1]); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="scroll-list">
+        <button class="scroll-control scroll-control-left" onclick="scrollList(this, -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="scroll-container" id="scroll-container-2">
+            <?php $__TAG__ = '{"num":"12","type":"1","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+            <div class="scroll-item">
+                <div class="card">
+                    <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
+                        <div class="relative">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
+                            <div class="card-overlay">
+                                <div class="flex items-center gap-2">
+                                    <span class="card-badge"><?php echo $vo['vod_score']; ?>分</span>
+                                    <span class="card-badge card-badge-secondary"><?php echo $vo['vod_hits']; ?>次观看</span>
+                                </div>
+                            </div>
+                            <span class="card-badge"><?php echo $vo['vod_remarks']; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
+                            <div class="card-meta">
+                                <span><?php echo $vo['vod_year']; ?></span>
+                                <span><?php echo $vo['vod_area']; ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
+        <button class="scroll-control scroll-control-right" onclick="scrollList(this, 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </section>
 
 <!-- 最新电视剧 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">最新电视剧</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <?php $__TAG__ = '{"num":"8","type":"2","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <div class="card">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
-                <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
-                    <p class="card-text"><?php echo mb_substr($vo['vod_actor'],0,20); ?>...</p>
-                    <span class="text-sm font-medium text-accent-color">连载<?php echo $vo['vod_serial']; ?>集 / 共<?php echo $vo['vod_total']; ?>集</span>
+<section class="container mb-12">
+    <h2 class="section-title">
+        最新电视剧
+        <a href="<?php echo mac_url_type(['id'=>2]); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="scroll-list">
+        <button class="scroll-control scroll-control-left" onclick="scrollList(this, -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="scroll-container" id="scroll-container-3">
+            <?php $__TAG__ = '{"num":"12","type":"2","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+            <div class="scroll-item">
+                <div class="card">
+                    <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
+                        <div class="relative">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
+                            <div class="card-overlay">
+                                <div class="flex items-center gap-2">
+                                    <span class="card-badge"><?php echo $vo['vod_score']; ?>分</span>
+                                    <span class="card-badge card-badge-secondary">连载<?php echo $vo['vod_serial']; ?>集</span>
+                                </div>
+                            </div>
+                            <span class="card-badge"><?php echo $vo['vod_remarks']; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
+                            <div class="card-meta">
+                                <span><?php echo $vo['vod_year']; ?></span>
+                                <span><?php echo $vo['vod_area']; ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
+        <button class="scroll-control scroll-control-right" onclick="scrollList(this, 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </section>
 
 <!-- 最新综艺 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">最新综艺</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <?php $__TAG__ = '{"num":"8","type":"3","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <div class="card">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
-                <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
-                    <p class="card-text"><?php echo mb_substr($vo['vod_actor'],0,20); ?>...</p>
-                    <span class="text-sm font-medium text-accent-color">连载<?php echo $vo['vod_serial']; ?>期</span>
+<section class="container mb-12">
+    <h2 class="section-title">
+        最新综艺
+        <a href="<?php echo mac_url_type(['id'=>3]); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="scroll-list">
+        <button class="scroll-control scroll-control-left" onclick="scrollList(this, -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="scroll-container" id="scroll-container-4">
+            <?php $__TAG__ = '{"num":"12","type":"3","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+            <div class="scroll-item">
+                <div class="card">
+                    <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
+                        <div class="relative">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
+                            <div class="card-overlay">
+                                <div class="flex items-center gap-2">
+                                    <span class="card-badge"><?php echo $vo['vod_score']; ?>分</span>
+                                    <span class="card-badge card-badge-secondary">连载<?php echo $vo['vod_serial']; ?>期</span>
+                                </div>
+                            </div>
+                            <span class="card-badge"><?php echo $vo['vod_remarks']; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
+                            <div class="card-meta">
+                                <span><?php echo $vo['vod_year']; ?></span>
+                                <span><?php echo $vo['vod_area']; ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
+        <button class="scroll-control scroll-control-right" onclick="scrollList(this, 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </section>
 
 <!-- 最新动漫 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">最新动漫</h2>
-    <div class="grid grid-cols-4 gap-4">
-        <?php $__TAG__ = '{"num":"8","type":"4","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <div class="card">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
-                <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
-                    <p class="card-text"><?php echo mb_substr($vo['vod_actor'],0,20); ?>...</p>
-                    <span class="text-sm font-medium text-accent-color">连载<?php echo $vo['vod_serial']; ?>集 / 共<?php echo $vo['vod_total']; ?>集</span>
+<section class="container mb-12">
+    <h2 class="section-title">
+        最新动漫
+        <a href="<?php echo mac_url_type(['id'=>4]); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="scroll-list">
+        <button class="scroll-control scroll-control-left" onclick="scrollList(this, -1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="scroll-container" id="scroll-container-5">
+            <?php $__TAG__ = '{"num":"12","type":"4","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
+            <div class="scroll-item">
+                <div class="card">
+                    <a href="<?php echo mac_url_vod_detail($vo); ?>" title="<?php echo $vo['vod_name']; ?>">
+                        <div class="relative">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="card-image">
+                            <div class="card-overlay">
+                                <div class="flex items-center gap-2">
+                                    <span class="card-badge"><?php echo $vo['vod_score']; ?>分</span>
+                                    <span class="card-badge card-badge-secondary">连载<?php echo $vo['vod_serial']; ?>集</span>
+                                </div>
+                            </div>
+                            <span class="card-badge"><?php echo $vo['vod_remarks']; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title"><?php echo $vo['vod_name']; ?></h3>
+                            <div class="card-meta">
+                                <span><?php echo $vo['vod_year']; ?></span>
+                                <span><?php echo $vo['vod_area']; ?></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
-        <?php endforeach; endif; else: echo "" ;endif; ?>
+        <button class="scroll-control scroll-control-right" onclick="scrollList(this, 1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </section>
 
 <!-- 最新资讯 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">最新资讯</h2>
-    <div class="grid grid-cols-2 gap-4">
+<section class="container mb-12">
+    <h2 class="section-title">
+        最新资讯
+        <a href="<?php echo mac_url('art/type'); ?>">查看全部 <i class="fas fa-chevron-right text-xs"></i></a>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <?php $__TAG__ = '{"num":"8","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Art")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <a href="<?php echo mac_url_art_detail($vo); ?>" class="flex items-center p-4 border border-border-color rounded-lg hover:bg-background-dark transition-all">
-            <div class="w-24 h-16 bg-background-dark rounded mr-4 flex-shrink-0"></div>
-            <div>
-                <h3 class="font-medium mb-1"><?php echo $vo['art_name']; ?></h3>
-                <p class="text-sm text-text-light"><?php echo date('Y-m-d',$vo['art_time']); ?></p>
+        <a href="<?php echo mac_url_art_detail($vo); ?>" class="news-card">
+            <div class="news-image">
+                <img src="<?php echo mac_url_img($vo['art_pic']); ?>" alt="<?php echo $vo['art_name']; ?>" class="w-full h-full object-cover">
+            </div>
+            <div class="news-content">
+                <h3 class="news-title"><?php echo $vo['art_name']; ?></h3>
+                <p class="news-excerpt"><?php echo mb_substr(strip_tags($vo['art_content']),0,80); ?>...</p>
+                <p class="news-date"><?php echo date('Y-m-d H:i',$vo['art_time']); ?></p>
             </div>
         </a>
         <?php endforeach; endif; else: echo "" ;endif; ?>
@@ -192,13 +340,15 @@
 </section>
 
 <!-- 友情链接 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">友情链接</h2>
+<section class="container mb-12">
+    <h2 class="section-title">
+        友情链接
+    </h2>
     <div class="flex flex-wrap gap-4">
-        <a href="//www.maccms.com" target="_blank" class="px-4 py-2 border border-border-color rounded-md hover:bg-accent-color hover:text-white transition-all">苹果CMS-官网</a>
-        <a href="//bbs.maccms.com" target="_blank" class="px-4 py-2 border border-border-color rounded-md hover:bg-accent-color hover:text-white transition-all">苹果CMS-论坛</a>
+        <a href="//www.maccms.com" target="_blank" class="px-6 py-2 bg-background-dark rounded-full hover:bg-accent-color hover:text-white transition-all border border-border-color/50">苹果CMS-官网</a>
+        <a href="//bbs.maccms.com" target="_blank" class="px-6 py-2 bg-background-dark rounded-full hover:bg-accent-color hover:text-white transition-all border border-border-color/50">苹果CMS-论坛</a>
         <?php $__TAG__ = '{"num":"10","type":"all","order":"desc","by":"id","id":"vo","key":"key"}';$__LIST__ = model("Link")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-        <a href="<?php echo $vo['link_url']; ?>" target="_blank" class="px-4 py-2 border border-border-color rounded-md hover:bg-accent-color hover:text-white transition-all"><?php echo $vo['link_name']; ?></a>
+        <a href="<?php echo $vo['link_url']; ?>" target="_blank" class="px-6 py-2 bg-background-dark rounded-full hover:bg-accent-color hover:text-white transition-all border border-border-color/50"><?php echo $vo['link_name']; ?></a>
         <?php endforeach; endif; else: echo "" ;endif; ?>
     </div>
 </section>
@@ -254,21 +404,146 @@
         }
     });
     
+    // 头部滚动效果
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
     // 图片懒加载
     document.addEventListener('DOMContentLoaded', function() {
-        const images = document.querySelectorAll('img[data-src]');
+        const images = document.querySelectorAll('img');
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
+                    img.classList.add('fade-in');
                     observer.unobserve(img);
                 }
             });
         });
         
         images.forEach(img => imageObserver.observe(img));
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    });
+    
+    // 卡片悬停效果增强
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // 滚动列表功能
+    function scrollList(button, direction) {
+        const scrollList = button.closest('.scroll-list');
+        const scrollContainer = scrollList.querySelector('.scroll-container');
+        const scrollAmount = direction * 300; // 每次滚动300px
+        
+        scrollContainer.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+    
+    // 滚动控制按钮显示/隐藏
+    document.querySelectorAll('.scroll-list').forEach(list => {
+        const container = list.querySelector('.scroll-container');
+        const leftButton = list.querySelector('.scroll-control-left');
+        const rightButton = list.querySelector('.scroll-control-right');
+        
+        // 初始检查
+        updateScrollButtons(list);
+        
+        // 滚动时检查
+        container.addEventListener('scroll', () => {
+            updateScrollButtons(list);
+        });
+    });
+    
+    function updateScrollButtons(list) {
+        const container = list.querySelector('.scroll-container');
+        const leftButton = list.querySelector('.scroll-control-left');
+        const rightButton = list.querySelector('.scroll-control-right');
+        
+        // 检查是否可以向左滚动
+        if (container.scrollLeft > 10) {
+            leftButton.style.opacity = '1';
+            leftButton.style.visibility = 'visible';
+        } else {
+            leftButton.style.opacity = '0';
+            leftButton.style.visibility = 'hidden';
+        }
+        
+        // 检查是否可以向右滚动
+        if (container.scrollLeft < container.scrollWidth - container.clientWidth - 10) {
+            rightButton.style.opacity = '1';
+            rightButton.style.visibility = 'visible';
+        } else {
+            rightButton.style.opacity = '0';
+            rightButton.style.visibility = 'hidden';
+        }
+    }
+    
+    // 性能优化：图片懒加载
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img[data-src]');
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('data-src');
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        } else {
+            // 降级方案
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.classList.remove('data-src');
+                img.classList.add('loaded');
+            });
+        }
+    });
+    
+    // 性能优化：减少布局偏移
+    document.addEventListener('DOMContentLoaded', function() {
+        const aspectRatioElements = document.querySelectorAll('.aspect-ratio');
+        aspectRatioElements.forEach(element => {
+            const img = element.querySelector('img');
+            if (img && img.dataset.src) {
+                img.src = img.dataset.src;
+                img.classList.remove('data-src');
+                img.classList.add('loaded');
+            }
+        });
     });
 </script>
 </body>

@@ -1,7 +1,14 @@
 <?php
 return [
-    'type'            => 'sqlite',
-    'database'        => __DIR__ . '/../data/maccms10.db',
+    'type'            => 'mysql',
+    'hostname'        => '127.0.0.1',
+    'database'        => 'maccms10',
+    'username'        => 'root',
+    'password'        => '',
+    'hostport'        => '3306',
+    'dsn'             => '',
+    'params'          => [],
+    'charset'         => 'utf8mb4',
     'prefix'          => 'mac_',
     'debug'           => false,
     'deploy'          => 0,
@@ -14,5 +21,5 @@ return [
     'datetime_format' => 'Y-m-d H:i:s',
     'sql_explain'     => false,
     'builder'         => '',
-    'query'           => '\\think\\db\\Query',
+    'query'           => '\think\db\Query',
 ];

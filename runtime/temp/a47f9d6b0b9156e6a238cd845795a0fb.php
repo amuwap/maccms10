@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:52:"/workspace/application/install/view/index/index.html";i:1775642954;s:51:"/workspace/application/install/view/index/head.html";i:1775642954;s:51:"/workspace/application/install/view/index/foot.html";i:1775642954;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:52:"/workspace/application/install/view/index/index.html";i:1775675362;s:51:"/workspace/application/install/view/index/head.html";i:1775675362;s:51:"/workspace/application/install/view/index/foot.html";i:1775675362;}*/ ?>
 <!DOCTYPE html>
     <html lang="en">
     <head>

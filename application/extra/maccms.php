@@ -49,7 +49,7 @@ return array (
     'cache_port' => '11211',
     'cache_username' => '',
     'cache_password' => '',
-    'cache_flag' => 'cb9e455edf',
+    'cache_flag' => '6c9d7848f6',
     'cache_core' => '0',
     'cache_time' => '3600',
     'cache_page' => '0',
@@ -179,7 +179,7 @@ return array (
   'interface' => 
   array (
     'status' => 0,
-    'pass' => 'cb9e455edfbc044c',
+    'pass' => '6c9d7848f6f32407',
     'vodtype' => '动作片=动作',
     'arttype' => '头条=头条',
   ),

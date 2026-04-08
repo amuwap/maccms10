@@ -319,6 +319,24 @@
                     </div>
                     
                     <fieldset class="layui-elem-field layui-field-title">
+                        <legend>页面标题设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频内容页标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[page_title][vod_detail]" value="{$config['frontend']['page_title']['vod_detail']|default='{$obj.vod_name}{if condition="$obj.type.type_pid eq 1"}{if condition="$obj.vod_version neq ''"} - {$obj.vod_version}{else} - 高清{/if}{/if}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频播放页标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[page_title][vod_play]" value="{$config['frontend']['page_title']['vod_play']|default='{$obj.vod_name} - {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}{if condition="$obj.type.type_pid eq 2" and isset($obj['vod_plot_list'][$param['page']]['name'])} - {$obj['vod_plot_list'][$param['page']]['name']}{/if}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
                         <legend>首页影视设置</legend>
                     </fieldset>
                     

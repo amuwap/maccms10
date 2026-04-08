@@ -1,134 +1,205 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{$maccms.site_name}</title>
+    <title>排行榜 - {$maccms.site_name}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {include file="public/include"}
 </head>
 <body>
 {include file="public/head"}
-<!--当前位置-->
-<div class="bread-crumb-nav fn-clear">
-    <ul class="bread-crumbs">
-        <li class="home"><a href="index.html">首页</a></li>
-        <li>综合排行榜</li>
-        <li class="back"><a href="javascript:MAC.GoBack()">返回上一页</a></li>
-    </ul>
-</div>
-<!-- 电影排行榜 -->
-<div class="top-item-box">
-    <div class="ui-title fn-clear">电影排行榜</div>
-    <div class="ui-cnt fn-clear">
-        <div class="top-item"><h5>总评分排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="1" order="desc" by="score"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
+
+<!-- 当前位置 -->
+<section class="container mt-4 mb-6">
+    <nav class="text-sm text-text-light">
+        <a href="{$maccms.path}" class="text-accent-color hover:underline">首页</a>
+        <span class="mx-2">/</span>
+        <span class="text-text-primary">排行榜</span>
+    </nav>
+</section>
+
+<!-- 排行榜主体 -->
+<section class="container mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 电影排行榜 -->
+        <div class="card p-6">
+            <h2 class="text-xl font-bold mb-6 border-b pb-2">电影排行榜</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="1" order="desc" by="score"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_score}分</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="1" order="desc" by="hits_month"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_month}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="1" order="desc" by="hits_week"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_week}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
         </div>
-        <div class="top-item"><h5>月人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="1" order="desc" by="hits_month"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
+        
+        <!-- 电视剧排行榜 -->
+        <div class="card p-6">
+            <h2 class="text-xl font-bold mb-6 border-b pb-2">电视剧排行榜</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="2" order="desc" by="score"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_score}分</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="2" order="desc" by="hits_month"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_month}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="2" order="desc" by="hits_week"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_week}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
         </div>
-        <div class="top-item"><h5>周人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="1" order="desc" by="hits_week"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
+        
+        <!-- 动漫排行榜 -->
+        <div class="card p-6">
+            <h2 class="text-xl font-bold mb-6 border-b pb-2">动漫排行榜</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="3" order="desc" by="score"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_score}分</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="3" order="desc" by="hits_month"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_month}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="3" order="desc" by="hits_week"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_week}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
         </div>
+        
+        <!-- 综艺排行榜 -->
+        <div class="card p-6">
+            <h2 class="text-xl font-bold mb-6 border-b pb-2">综艺排行榜</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="4" order="desc" by="score"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_score}分</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="4" order="desc" by="hits_month"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_month}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
+                <div class="space-y-3">
+                    {maccms:vod num="10" type="4" order="desc" by="hits_week"}
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
+                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                        <span class="text-text-light">{$vo.vod_hits_week}次</span>
+                    </a>
+                    {/maccms:vod}
+                </div>
+            </div>
+        </div>
+        
     </div>
-</div>
-<!-- 电视剧排行榜 -->
-<div class="top-item-box">
-    <div class="ui-title fn-clear">电视剧排行榜</div>
-    <div class="ui-cnt fn-clear">
-        <div class="top-item"><h5>总评分排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="2" order="desc" by="score"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>月人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="2" order="desc" by="hits_month"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>周人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="2" order="desc" by="hits_week"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- 经典动漫排行榜 -->
-<div class="top-item-box">
-    <div class="ui-title fn-clear">经典动漫排行榜</div>
-    <div class="ui-cnt fn-clear">
-        <div class="top-item"><h5>总评分排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="3" order="desc" by="score"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>月人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="3" order="desc" by="hits_month"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>周人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="3" order="desc" by="hits_week"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- 综艺娱乐排行榜 -->
-<div class="top-item-box">
-    <div class="ui-title fn-clear">综艺娱乐排行榜</div>
-    <div class="ui-cnt fn-clear">
-        <div class="top-item"><h5>总评分排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="4" order="desc" by="score"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>月人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="4" order="desc" by="hits_month"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-        <div class="top-item">
-            <h5>周人气排行榜</h5>
-            <ul class="top-list fn-clear">
-                {maccms:vod num="10" type="4" order="desc" by="hits_week"}
-                <li><a href="{:mac_url_vod_detail($vo)}"><span class="num stress">{$key}.</span><span class="tit">{$vo.vod_name}</span><span class="score">{$vo.vod_score}</span></a></li>
-                {/maccms:vod}
-            </ul>
-        </div>
-    </div>
-</div>
+</section>
 
 {include file="public/foot"}
 </body>

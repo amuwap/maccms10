@@ -5,69 +5,112 @@
     <title>{if condition="isset($config['frontend']['seo']['vod_search']['name']) and !empty($config['frontend']['seo']['vod_search']['name'])"}{$config['frontend']['seo']['vod_search']['name']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}{/if}</title>
     <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod_search']['key']) and !empty($config['frontend']['seo']['vod_search']['key'])"}{$config['frontend']['seo']['vod_search']['key']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果{/if}" />
     <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod_search']['des']) and !empty($config['frontend']['seo']['vod_search']['des'])"}{$config['frontend']['seo']['vod_search']['des']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果{/if}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {include file="public/include"}
 </head>
 <body>
 {include file="public/head"}
-<!--当前位置-->
-<div class="bread-crumb-nav fn-clear">
-    <ul class="bread-crumbs">
-        <li class="home"><a href="{$maccms.path}">首页</a></li>
-        <li>搜索" <strong style="color:#4c8fe8;">{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}</strong>" 结果 " <strong style="color:#4c8fe8" class="mac_total"></strong>" 个资源</li>
-        <li class="back"><a href="javascript:MAC.GoBack()">返回上一页</a></li>
-    </ul>
-</div>
 
-<div class="ui-bar fn-clear">
-    <div class="view-filter">
-        <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'vod')}" class="order {if condition="$param.by eq '' || $param.by eq 'time'"}current{/if}">按时间</a>
-        <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'hits' ],'vod')}" class="order {if condition="$param.by eq 'hits'"}current{/if}">按人气</a>
-        <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'score' ],'vod')}" class="order {if condition="$param.by eq 'score'"}current{/if}">按评分</a>
-    </div>
-</div>
+<!-- 当前位置 -->
+<section class="container mt-4 mb-6">
+    <nav class="text-sm text-text-light">
+        <a href="{$maccms.path}" class="text-accent-color hover:underline">首页</a>
+        <span class="mx-2">/</span>
+        <span class="text-text-primary">搜索结果</span>
+    </nav>
+</section>
 
-<!--搜索结果-->
-<div class="ui-box ui-qire fn-clear" id="list-focus">
-    <ul class="show-list">
-        {maccms:vod num="10" paging="yes" pageurl="vod/search" order="desc" by="time"}
-        <li><a class="play-img" href="{:mac_url_vod_detail($vo)}"><img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" /></a>
-        <div class="play-txt">
-            <h2><a href="{:mac_url_vod_detail($vo)}">{$vo.vod_name}</a></h2>
-            <dl><dt>主演：</dt><dd>{$vo.vod_actor}</dd></dl>
-            <dl class="fn-left"><dt>状态：</dt><dd><span class="color">{if condition="$vo.vod_serial gt 0"}第{$vo.vod_serial}集/共{$vo.vod_total}集{else/}{$vo.vod_remarks}{/if}</span></dd></dl>
-            <dl class="fn-right"><dt>导演：</dt><dd>{$vo.vod_director}</dd></dl>
-            <dl class="fn-left"><dt>类型：</dt><dd>{$vo.type.type_name}</dd></dl>
-            <dl class="fn-right"><dt>地区：</dt><dd><span>{$vo.vod_area}</span></dd></dl>
-            <dl class="fn-left"><dt>时间：</dt><dd><span id="addtime">{$vo.vod_time|date='Y-m-d',###}</span></dd></dl>
-            <dl class="fn-right"><dt>年份：</dt><dd><span>{$vo.vod_year|mac_default}</span></dd></dl>
-            <dl class="juqing"><dd>剧情：{$vo.vod_blurb}……<a class="link detail-desc" href="{:mac_url_vod_detail($vo)}">详细剧情</a></dd></dl>
-        </div></li>
-        {/maccms:vod}
-
-    </ul>
-    <div class="ui-bar list-page fn-clear">
-        {include file="public/paging"}
-    </div>
-    <script>
-        $('.mac_total').html('{$__PAGING__.record_total}');
-    </script>
-
-</div>
-<!--猜你喜欢-->
-<div class="ui-box marg" id="xihuan">
-    <div class="ui-title">
-        <h2>猜你喜欢</h2>
-    </div>
-    <div class="box_con">
-        <ul class="img-list dis">
-            {maccms:vod num="6" type="current" order="desc" by="hits_week"}
-            <li><a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}"><img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}"/><h2>{$vo.vod_name}</h2><p>{$vo.vod_actor}</p><i>{$vo.vod_remarks}</i><em></em></a></li>
+<!-- 搜索结果 -->
+<section class="container mb-8">
+    <div class="card p-6">
+        <h2 class="text-2xl font-bold mb-6">搜索结果</h2>
+        
+        <!-- 搜索框 -->
+        <div class="mb-8">
+            <form action="{:mac_url('vod/search')}" method="get" class="search-bar">
+                <input type="text" name="wd" value="{$param.wd}" class="search-input" placeholder="搜索电影、电视剧、综艺...">
+                <button type="submit" class="search-button">搜索</button>
+            </form>
+            <p class="mt-4 text-text-light">搜索关键词：<strong>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}</strong></p>
+        </div>
+        
+        <!-- 排序选项 -->
+        <div class="mb-6">
+            <h3 class="font-medium mb-3">排序方式</h3>
+            <div class="flex flex-wrap gap-2">
+                <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'vod')}" class="px-4 py-1 border border-border-color rounded-full text-sm hover:bg-accent-color hover:text-white transition-all {if condition="$param.by eq '' || $param.by eq 'time'"}bg-accent-color text-white{/if}">按时间</a>
+                <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'hits' ],'vod')}" class="px-4 py-1 border border-border-color rounded-full text-sm hover:bg-accent-color hover:text-white transition-all {if condition="$param.by eq 'hits'"}bg-accent-color text-white{/if}">按人气</a>
+                <a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'score' ],'vod')}" class="px-4 py-1 border border-border-color rounded-full text-sm hover:bg-accent-color hover:text-white transition-all {if condition="$param.by eq 'score'"}bg-accent-color text-white{/if}">按评分</a>
+            </div>
+        </div>
+        
+        <!-- 搜索结果列表 -->
+        <div class="space-y-6">
+            {maccms:vod num="10" paging="yes" pageurl="vod/search" order="desc" by="time"}
+            <div class="flex gap-6 p-4 border border-border-color rounded-lg hover:bg-background-dark transition-all">
+                <a href="{:mac_url_vod_detail($vo)}" class="w-32 flex-shrink-0">
+                    <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="w-full h-40 object-cover rounded">
+                </a>
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold mb-2"><a href="{:mac_url_vod_detail($vo)}" class="hover:text-accent-color">{$vo.vod_name}</a></h3>
+                    <div class="grid grid-cols-2 gap-2 mb-4">
+                        <div>
+                            <p class="text-sm text-text-light">主演：{$vo.vod_actor|mb_substr=0,30}...</p>
+                            <p class="text-sm text-text-light">导演：{$vo.vod_director|mb_substr=0,20}...</p>
+                            <p class="text-sm text-text-light">类型：{$vo.vod_class}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-text-light">地区：{$vo.vod_area}</p>
+                            <p class="text-sm text-text-light">年份：{$vo.vod_year}</p>
+                            <p class="text-sm text-text-light">状态：{$vo.vod_version}</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary mb-4">{$vo.vod_blurb|mb_substr=0,100}...</p>
+                    <div class="flex gap-2">
+                        <a href="{:mac_url_vod_detail($vo)}" class="btn btn-secondary btn-sm">查看详情</a>
+                        <a href="{:mac_url_vod_play($vo)}" class="btn btn-primary btn-sm">立即播放</a>
+                    </div>
+                </div>
+            </div>
             {/maccms:vod}
-        </ul>
+        </div>
+        
+        <!-- 分页 -->
+        <div class="mt-8 text-center">
+            {include file="public/paging"}
+        </div>
     </div>
-</div>
+</section>
+
+<!-- 猜你喜欢 -->
+<section class="container mb-8">
+    <div class="card p-6">
+        <h2 class="text-2xl font-bold mb-4">猜你喜欢</h2>
+        <div class="grid grid-cols-4 gap-4">
+            {maccms:vod num="8" type="current" order="desc" by="hits_week"}
+            <div class="card">
+                <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
+                    <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">{$vo.vod_name}</h3>
+                        <span class="text-sm font-medium text-accent-color">{$vo.vod_version}</span>
+                    </div>
+                </a>
+            </div>
+            {/maccms:vod}
+        </div>
+    </div>
+</section>
 
 {include file="public/foot"}
+
+<script>
+    // 回车搜索
+    document.querySelector('.search-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            this.form.submit();
+        }
+    });
+</script>
 </body>
 </html>
-

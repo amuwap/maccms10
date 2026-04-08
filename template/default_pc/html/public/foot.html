@@ -1,17 +1,34 @@
 <!-- 页脚 -->
-<div class="footer">
-    <div class="foot-nav">
-        {maccms:type ids="parent" order="asc" by="sort"}
-        <a class="color" href="{:mac_url_type($vo)}" title="{$vo.type_name}">{$vo.type_name}</a>-
-        {/maccms:type}
-
-        <a href="{:mac_url('map/index')}" title="最近更新">最近更新</a>-
-        <a href="{:mac_url('gbook/index')}" title="反馈留言">反馈留言</a>-
-        <a href="{:mac_url('rss/index')}" title="rss">RSS</a>-
-        <a href="{:mac_url('rss/baidu')}" target="_blank" title="网站地图">Sitemap</a>
+<footer class="footer">
+    <div class="container">
+        <div>
+            <h3 class="footer-title">关于我们</h3>
+            <a href="#" class="footer-link">网站简介</a>
+            <a href="#" class="footer-link">联系方式</a>
+            <a href="#" class="footer-link">加入我们</a>
+            <a href="#" class="footer-link">版权声明</a>
+        </div>
+        <div>
+            <h3 class="footer-title">帮助中心</h3>
+            <a href="#" class="footer-link">常见问题</a>
+            <a href="#" class="footer-link">使用教程</a>
+            <a href="#" class="footer-link">意见反馈</a>
+            <a href="#" class="footer-link">举报中心</a>
+        </div>
+        <div>
+            <h3 class="footer-title">合作推广</h3>
+            <a href="#" class="footer-link">广告合作</a>
+            <a href="#" class="footer-link">内容合作</a>
+            <a href="#" class="footer-link">友情链接</a>
+        </div>
+        <div>
+            <h3 class="footer-title">关注我们</h3>
+            <p class="text-white opacity-70 mb-4">扫码关注公众号</p>
+            <div class="w-32 h-32 bg-white rounded mb-4"></div>
+        </div>
     </div>
-    <div class="copyright">
-        <p>免责声明：若本站收录的资源侵犯了您的权益，请发邮件至：{$maccms.site_email}，我们会及时删除侵权内容，谢谢合作！</p>
-        <p>Copyright &#169; 2012-2018 {$maccms.site_url}. All Rights Reserved. {$maccms.site_tj} </p>
+    <div class="container footer-bottom">
+        <p>{$maccms.site_copyright}</p>
+        <p class="mt-2">{$maccms.site_icp}</p>
     </div>
-</div>
+</footer>

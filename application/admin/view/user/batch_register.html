@@ -1,0 +1,123 @@
+{include file="../../../application/admin/view/public/head" /}
+
+<div class="page-container">
+    <form class="layui-form layui-form-pane" id="batchRegisterForm">
+        <div class="layui-tab" lay-filter="tb1">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="setting_1">批量注册用户</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>批量注册设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">注册数量：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="count" value="10" min="1" max="1000" class="layui-input w150" lay-verify="required|number|min:1|max:1000">
+                            <div class="layui-form-mid layui-word-aux">最多1000个</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名前缀：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="prefix" value="user_" class="layui-input w200" lay-verify="required">
+                            <div class="layui-form-mid layui-word-aux">例如：user_，生成 user_1, user_2...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="password" value="123456" class="layui-input w200" lay-verify="required">
+                            <div class="layui-form-mid layui-word-aux">所有用户使用相同密码</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户组：</label>
+                        <div class="layui-input-block">
+                            <select name="group_id" lay-verify="required">
+                                {foreach name="group_list" item="group"}
+                                <option value="{$group.group_id}">{$group.group_name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户状态：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="user_status" value="1" title="启用" checked>
+                            <input type="radio" name="user_status" value="0" title="禁用">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">初始积分：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="user_points" value="0" min="0" class="layui-input w150">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">开始注册</button>
+                <button class="layui-btn layui-btn-warm" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+layui.use(['form', 'layer'], function() {
+    var form = layui.form;
+    var layer = layui.layer;
+    
+    form.on('submit(formSubmit)', function(data) {
+        layer.load(2);
+        $.ajax({
+            url: '{:url("user/batchRegister")}',
+            type: 'POST',
+            data: data.field,
+            dataType: 'json',
+            success: function(res) {
+                layer.closeAll('loading');
+                if (res.code == 1) {
+                    var msg = res.msg;
+                    if (res.failed_count > 0) {
+                        msg += '<br>失败原因：<br>' + res.failed_reasons.join('<br>');
+                    }
+                    layer.alert(msg, {
+                        icon: 1,
+                        title: '成功',
+                        html: true
+                    }, function() {
+                        location.reload();
+                    });
+                } else {
+                    layer.alert(res.msg, {
+                        icon: 2,
+                        title: '错误'
+                    });
+                }
+            },
+            error: function() {
+                layer.closeAll('loading');
+                layer.alert('网络错误，请稍后重试', {
+                    icon: 2,
+                    title: '错误'
+                });
+            }
+        });
+        return false;
+    });
+});
+</script>
+
+{include file="../../../application/admin/view/public/foot" /}

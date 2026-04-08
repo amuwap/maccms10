@@ -224,6 +224,101 @@ class User extends Base
         $uid = intval($uid);
         if($uid > 0) {
             $where2 = [];
+        }
+        return ['code' => 1, 'msg' => '注册成功', 'user_id' => $nid];
+    }
+
+    /**
+     * 批量注册用户
+     * @param array $params 批量注册参数
+     * @return array
+     */
+    public function batchRegister($params)
+    {
+        $config = config('maccms');
+        $count = intval($params['count']);
+        $prefix = trim($params['prefix']);
+        $password = trim($params['password']);
+        $group_id = intval($params['group_id']);
+        $user_status = intval($params['user_status']);
+        $user_points = intval($params['user_points']);
+        
+        if ($count <= 0 || $count > 1000) {
+            return ['code' => 1001, 'msg' => '注册数量必须在1-1000之间'];
+        }
+        
+        if (empty($prefix)) {
+            return ['code' => 1002, 'msg' => '用户名前缀不能为空'];
+        }
+        
+        if (empty($password)) {
+            return ['code' => 1003, 'msg' => '密码不能为空'];
+        }
+        
+        $success_count = 0;
+        $failed_count = 0;
+        $failed_reasons = [];
+        
+        for ($i = 1; $i <= $count; $i++) {
+            $user_name = $prefix . $i;
+            
+            // 检查用户名是否已存在
+            $row = $this->where('user_name', $user_name)->find();
+            if (!empty($row)) {
+                $failed_count++;
+                $failed_reasons[] = "用户名 {$user_name} 已存在";
+                continue;
+            }
+            
+            // 检查用户名格式
+            if (!preg_match("/^[a-zA-Z\d]*$/i", $user_name)) {
+                $failed_count++;
+                $failed_reasons[] = "用户名 {$user_name} 格式不正确";
+                continue;
+            }
+            
+            // 检查过滤词
+            $filter = $GLOBALS['config']['user']['filter_words'];
+            if(!empty($filter)) {
+                $filter_arr = explode(',', $filter);
+                $f_name = str_replace($filter_arr, '', $user_name);
+                if ($f_name != $user_name) {
+                    $failed_count++;
+                    $failed_reasons[] = "用户名 {$user_name} 包含过滤词";
+                    continue;
+                }
+            }
+            
+            // 准备用户数据
+            $fields = [];
+            $fields['user_name'] = $user_name;
+            $fields['user_pwd'] = md5($password);
+            $fields['group_id'] = $group_id > 0 ? $group_id : $this->_def_group;
+            $fields['user_points'] = $user_points > 0 ? $user_points : intval($config['user']['reg_points']);
+            $fields['user_status'] = $user_status;
+            $fields['user_reg_time'] = time();
+            $fields['user_reg_ip'] = sprintf('%u',ip2long('127.0.0.1'));
+            
+            // 插入用户数据
+            $res = $this->insert($fields);
+            if ($res === false) {
+                $failed_count++;
+                $failed_reasons[] = "用户名 {$user_name} 注册失败";
+            } else {
+                $success_count++;
+            }
+        }
+        
+        return [
+            'code' => 1,
+            'msg' => "批量注册完成，成功：{$success_count}，失败：{$failed_count}",
+            'success_count' => $success_count,
+            'failed_count' => $failed_count,
+            'failed_reasons' => $failed_reasons
+        ];
+    }
+
+    public function registerComplete($uid) {
             $where2['user_id'] = $uid;
             $invite = $this->where($where2)->find();
             if ($invite) {

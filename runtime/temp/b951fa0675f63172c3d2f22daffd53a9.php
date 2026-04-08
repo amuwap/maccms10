@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775619941;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775619941;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775619941;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775619941;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775642954;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775642954;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775642954;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775642954;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -31,7 +31,7 @@
             </form>
         </div>
         <div class="hotkeys">热搜：
-            <?php $_69d5d59297363=explode(',',$maccms['search_hot']); if(is_array($_69d5d59297363) || $_69d5d59297363 instanceof \think\Collection || $_69d5d59297363 instanceof \think\Paginator): if( count($_69d5d59297363)==0 ) : echo "" ;else: foreach($_69d5d59297363 as $key2=>$vo2): ?>
+            <?php $_69d64576dbdde=explode(',',$maccms['search_hot']); if(is_array($_69d64576dbdde) || $_69d64576dbdde instanceof \think\Collection || $_69d64576dbdde instanceof \think\Paginator): if( count($_69d64576dbdde)==0 ) : echo "" ;else: foreach($_69d64576dbdde as $key2=>$vo2): ?>
             <a href="<?php echo mac_url('vod/search',['wd'=>$vo2]); ?>"><?php echo $vo2; ?></a>
             <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
@@ -79,7 +79,7 @@
                         <h5>地区</h5>
                         <div class="deansubptc">
                             <a href="<?php echo mac_url_type($vo1,[],'show'); ?>">全部</a>
-                            <?php $_69d5d592972ec=explode(',',$vo1['type_extend']['area']); if(is_array($_69d5d592972ec) || $_69d5d592972ec instanceof \think\Collection || $_69d5d592972ec instanceof \think\Paginator): if( count($_69d5d592972ec)==0 ) : echo "" ;else: foreach($_69d5d592972ec as $key2=>$vo2): ?>
+                            <?php $_69d64576dbd76=explode(',',$vo1['type_extend']['area']); if(is_array($_69d64576dbd76) || $_69d64576dbd76 instanceof \think\Collection || $_69d64576dbd76 instanceof \think\Paginator): if( count($_69d64576dbd76)==0 ) : echo "" ;else: foreach($_69d64576dbd76 as $key2=>$vo2): ?>
                             <a href="<?php echo mac_url_type($vo1,['area'=>$vo2],'show'); ?>"><?php echo $vo2; ?></a>
                             <?php endforeach; endif; else: echo "" ;endif; ?>
                         </div>
@@ -88,7 +88,7 @@
                         <h5>年代</h5>
                         <div class="deansubptc">
                             <a href="<?php echo mac_url_type($vo1,[],'show'); ?>">全部</a>
-                            <?php $_69d5d592972d2=explode(',',$vo1['type_extend']['year']); if(is_array($_69d5d592972d2) || $_69d5d592972d2 instanceof \think\Collection || $_69d5d592972d2 instanceof \think\Paginator): if( count($_69d5d592972d2)==0 ) : echo "" ;else: foreach($_69d5d592972d2 as $key2=>$vo2): ?>
+                            <?php $_69d64576dbd63=explode(',',$vo1['type_extend']['year']); if(is_array($_69d64576dbd63) || $_69d64576dbd63 instanceof \think\Collection || $_69d64576dbd63 instanceof \think\Paginator): if( count($_69d64576dbd63)==0 ) : echo "" ;else: foreach($_69d64576dbd63 as $key2=>$vo2): ?>
                             <a href="<?php echo mac_url_type($vo1,['year'=>$vo2],'show'); ?>"><?php echo $vo2; ?></a>
                             <?php endforeach; endif; else: echo "" ;endif; ?>
                         </div>
@@ -97,7 +97,7 @@
                         <h5>字母</h5>
                         <div class="deansubptc">
                             <a href="<?php echo mac_url_type($vo1,[],'show'); ?>">全部</a>
-                            <?php $_69d5d592972c3=explode(',','A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0-9'); if(is_array($_69d5d592972c3) || $_69d5d592972c3 instanceof \think\Collection || $_69d5d592972c3 instanceof \think\Paginator): if( count($_69d5d592972c3)==0 ) : echo "" ;else: foreach($_69d5d592972c3 as $key2=>$vo2): ?>
+                            <?php $_69d64576dbd57=explode(',','A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0-9'); if(is_array($_69d64576dbd57) || $_69d64576dbd57 instanceof \think\Collection || $_69d64576dbd57 instanceof \think\Paginator): if( count($_69d64576dbd57)==0 ) : echo "" ;else: foreach($_69d64576dbd57 as $key2=>$vo2): ?>
                             <a href="<?php echo mac_url_type($vo1,['letter'=>$vo2],'show'); ?>"><?php echo $vo2; ?></a>
                             <?php endforeach; endif; else: echo "" ;endif; ?>
                         </div>

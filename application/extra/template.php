@@ -79,7 +79,45 @@ return [
             'show_category' => true,
             'show_stats' => true,
             'show_schedule' => true,
-            'auto_play' => false
+            'auto_play' => false,
+            'auto_start' => false,
+            'auto_start_time' => '00:00',
+            'auto_end' => false,
+            'auto_end_time' => '23:59',
+            'auto_loop' => true,
+            'danmaku' => [
+                'enabled' => true,
+                'content' => [
+                    '精彩！',
+                    '厉害',
+                    '666',
+                    '支持主播',
+                    '太精彩了',
+                    '继续加油',
+                    '爱了爱了',
+                    '主播好厉害',
+                    '这个操作太秀了',
+                    '期待更多内容'
+                ],
+                'interval' => 5
+            ],
+            'charging' => [
+                'enabled' => false,
+                'mode' => 'time', // time, watch, vip
+                'start_time' => 0, // 开播后多少秒开始收费
+                'price' => 0
+            ],
+            'stream_data' => [
+                'enabled' => true,
+                'stats_interval' => 5, // 数据统计间隔（秒）
+                'max_online_users' => 1000, // 最大在线人数
+                'bandwidth_limit' => 0, // 带宽限制（Mbps），0表示无限制
+                'record' => [
+                    'enabled' => false,
+                    'duration' => 3600, // 录制时长（秒）
+                    'quality' => '720p'
+                ]
+            ]
         ],
         'animations' => [
             'enabled' => true,

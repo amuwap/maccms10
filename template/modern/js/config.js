@@ -99,7 +99,34 @@ const TemplateConfig = {
         showCategory: {$config.frontend.live.show_category|default=true},
         showStats: {$config.frontend.live.show_stats|default=true},
         showSchedule: {$config.frontend.live.show_schedule|default=true},
-        autoPlay: {$config.frontend.live.auto_play|default=false}
+        autoPlay: {$config.frontend.live.auto_play|default=false},
+        autoStart: {$config.frontend.live.auto_start|default=false},
+        autoStartTime: '{$config.frontend.live.auto_start_time|default="00:00"}',
+        autoEnd: {$config.frontend.live.auto_end|default=false},
+        autoEndTime: '{$config.frontend.live.auto_end_time|default="23:59"}',
+        autoLoop: {$config.frontend.live.auto_loop|default=true},
+        danmaku: {
+            enabled: {$config.frontend.live.danmaku.enabled|default=true},
+            content: {$config.frontend.live.danmaku.content|default='["精彩！","厉害","666","支持主播","太精彩了","继续加油","爱了爱了","主播好厉害","这个操作太秀了","期待更多内容"]'},
+            interval: {$config.frontend.live.danmaku.interval|default=5}
+        },
+        charging: {
+            enabled: {$config.frontend.live.charging.enabled|default=false},
+            mode: '{$config.frontend.live.charging.mode|default="time"}',
+            startTime: {$config.frontend.live.charging.start_time|default=0},
+            price: {$config.frontend.live.charging.price|default=0}
+        },
+        streamData: {
+            enabled: {$config.frontend.live.stream_data.enabled|default=true},
+            statsInterval: {$config.frontend.live.stream_data.stats_interval|default=5},
+            maxOnlineUsers: {$config.frontend.live.stream_data.max_online_users|default=1000},
+            bandwidthLimit: {$config.frontend.live.stream_data.bandwidth_limit|default=0},
+            record: {
+                enabled: {$config.frontend.live.stream_data.record.enabled|default=false},
+                duration: {$config.frontend.live.stream_data.record.duration|default=3600},
+                quality: '{$config.frontend.live.stream_data.record.quality|default="720p"}'
+            }
+        }
     },
     
     // 动画设置

@@ -11,7 +11,7 @@
                 <div class="live-play-page">
                     <div class="glass-card live-player-container">
                         <div class="live-player-wrapper">
-                            <video class="live-player" controls {$config.frontend.live.auto_play|default=false ? 'autoplay' : ''} playsinline>
+                            <video class="live-player" controls {$config.frontend.live.auto_play|default=false ? 'autoplay' : ''} {$config.frontend.live.auto_loop|default=true ? 'loop' : ''} playsinline>
                                 <source src="{$live_info.live_mp4_url|default=''}" type="video/mp4">
                                 您的浏览器不支持视频播放
                             </video>
@@ -102,5 +102,61 @@
                         initFakeLive(liveId, '.live-play-page');
                     }
                 });
+                
+                // 自动发送弹幕
+                function initAutoDanmaku() {
+                    if (TemplateConfig.live.danmaku.enabled) {
+                        const danmakuContent = TemplateConfig.live.danmaku.content;
+                        const interval = TemplateConfig.live.danmaku.interval * 1000;
+                        
+                        if (danmakuContent && danmakuContent.length > 0) {
+                            setInterval(function() {
+                                const randomIndex = Math.floor(Math.random() * danmakuContent.length);
+                                const randomContent = danmakuContent[randomIndex];
+                                
+                                // 模拟发送弹幕
+                                sendDanmaku(randomContent);
+                            }, interval);
+                        }
+                    }
+                }
+                
+                // 发送弹幕
+                function sendDanmaku(content) {
+                    if (!content) return;
+                    
+                    const danmakuContainer = document.querySelector('.danmaku-container');
+                    if (!danmakuContainer) return;
+                    
+                    // 创建弹幕元素
+                    const danmaku = document.createElement('div');
+                    danmaku.className = 'danmaku-item';
+                    danmaku.textContent = content;
+                    
+                    // 随机位置和颜色
+                    danmaku.style.top = Math.random() * 80 + '%';
+                    danmaku.style.color = getRandomColor();
+                    
+                    // 添加到容器
+                    danmakuContainer.appendChild(danmaku);
+                    
+                    // 动画结束后移除
+                    setTimeout(function() {
+                        danmaku.remove();
+                    }, 8000);
+                }
+                
+                // 获取随机颜色
+                function getRandomColor() {
+                    const colors = ['#ffffff', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#e17055', '#00b894', '#6c5ce7'];
+                    return colors[Math.floor(Math.random() * colors.length)];
+                }
+                
+                // 页面加载完成后初始化自动弹幕
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initAutoDanmaku);
+                } else {
+                    initAutoDanmaku();
+                }
             </script>
 {include file="public/foot.html"}

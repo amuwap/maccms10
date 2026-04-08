@@ -169,6 +169,12 @@ return array(
         '6801' => array("show"=>0,'name' => '--提现删除', 'controller' => 'cash',		'action' => 'del'),
         '6802' => array("show"=>0,'name' => '--提现审核', 'controller' => 'cash',		'action' => 'audit'),
 
+        '69' => array("show"=>1,'name' => '自动互动管理', 'controller' => 'autoInteraction',		'action' => 'index'),
+        '6901' => array("show"=>0,'name' => '--批量注册用户', 'controller' => 'autoInteraction',		'action' => 'batchRegister'),
+        '6902' => array("show"=>0,'name' => '--自动评论影视', 'controller' => 'autoInteraction',		'action' => 'autoCommentVod'),
+        '6903' => array("show"=>0,'name' => '--自动弹幕直播', 'controller' => 'autoInteraction',		'action' => 'autoCommentLive'),
+        '6904' => array("show"=>0,'name' => '--批量用户列表', 'controller' => 'autoInteraction',		'action' => 'userList'),
+
     )),
 
     '7' => array('name' => '模版', 'icon' => 'xe72d', 'sub' => array(

@@ -50,6 +50,20 @@ class User extends Base
         return $this->fetch('admin@user/index');
     }
 
+    public function batchRegister()
+    {
+        if (request()->isPost()) {
+            $param = input();
+            $res = model('User')->batchRegister($param);
+            return json($res);
+        }
+        
+        $group_list = model('Group')->getCache('group_list');
+        $this->assign('group_list', $group_list);
+        $this->assign('title', '批量注册用户');
+        return $this->fetch('admin@user/batch_register');
+    }
+
     public function reward()
     {
         $param = input();

@@ -1,0 +1,250 @@
+{include file="public/head.html"}
+            <div class="container">
+                <!-- 直播页面头部 -->
+                <div class="live-page-header">
+                    <div class="glass-card live-header-card animate-fade-in">
+                        <h1 class="live-page-title">无人直播</h1>
+                        <p class="live-page-subtitle">24小时不间断精彩内容</p>
+                    </div>
+                </div>
+                
+                <!-- 直播分类导航 -->
+                <div class="live-category-nav glass-card">
+                    <div class="category-scroll">
+                        <a href="{:mac_url('live/index')}" class="category-item active">全部</a>
+                        <a href="{:mac_url('live/index',['cat'=>'movie'])}" class="category-item">电影</a>
+                        <a href="{:mac_url('live/index',['cat'=>'tv'])}" class="category-item">电视剧</a>
+                        <a href="{:mac_url('live/index',['cat'=>'variety'])}" class="category-item">综艺</a>
+                        <a href="{:mac_url('live/index',['cat'=>'anime'])}" class="category-item">动漫</a>
+                        <a href="{:mac_url('live/index',['cat'=>'sports'])}" class="category-item">体育</a>
+                    </div>
+                </div>
+                
+                <!-- 直播推荐 -->
+                <div class="section">
+                    <div class="glass-card animate-fade-in">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">热门直播间</h2>
+                            </div>
+                        </div>
+                        <div class="live-grid">
+                            <!-- 直播项 1 -->
+                            <div class="live-item glass-card animate-scale-in">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20movie%20channel%20with%20play%20button&image_size=landscape_16_9" alt="电影直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">1,234 观看</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">经典电影轮播</h3>
+                                    <p class="live-desc">24小时不间断播放经典电影</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 2 -->
+                            <div class="live-item glass-card animate-scale-in">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20tv%20series%20channel&image_size=landscape_16_9" alt="电视剧直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">892 观看</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">热门电视剧</h3>
+                                    <p class="live-desc">最新电视剧轮播</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 3 -->
+                            <div class="live-item glass-card animate-scale-in">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20variety%20show%20channel&image_size=landscape_16_9" alt="综艺直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">654 观看</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">热门综艺</h3>
+                                    <p class="live-desc">精选综艺节目轮播</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 4 -->
+                            <div class="live-item glass-card animate-scale-in">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20anime%20channel&image_size=landscape_16_9" alt="动漫直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">1,023 观看</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">动漫天地</h3>
+                                    <p class="live-desc">经典动漫轮播</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 直播时间表 -->
+                <div class="section">
+                    <div class="glass-card animate-fade-in">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">今日直播时间表</h2>
+                            </div>
+                        </div>
+                        <div class="live-schedule">
+                            <div class="schedule-item">
+                                <div class="schedule-time">00:00 - 06:00</div>
+                                <div class="schedule-content">
+                                    <h4>深夜电影档</h4>
+                                    <p>经典老电影轮播</p>
+                                </div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">06:00 - 12:00</div>
+                                <div class="schedule-content">
+                                    <h4>早间剧场</h4>
+                                    <p>热门电视剧</p>
+                                </div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">12:00 - 18:00</div>
+                                <div class="schedule-content">
+                                    <h4>午间综艺</h4>
+                                    <p>精选综艺节目</p>
+                                </div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="schedule-time">18:00 - 24:00</div>
+                                <div class="schedule-content">
+                                    <h4>黄金时段</h4>
+                                    <p>最新电影大片</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 直播特色 -->
+                <div class="section">
+                    <div class="glass-card animate-fade-in">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">直播特色</h2>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">24小时直播</h3>
+                                <p class="text-secondary">全天候不间断播放，随时观看</p>
+                            </div>
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-success to-info rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">高清画质</h3>
+                                <p class="text-secondary">全高清画质，带给你极致视觉体验</p>
+                            </div>
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-accent to-warning rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">多端同步</h3>
+                                <p class="text-secondary">支持PC、手机、平板等多种设备</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // 直播页面交互
+                $(document).ready(function() {
+                    // 直播项悬停效果
+                    $('.live-item').on('mouseenter', function() {
+                        $(this).addClass('animate-float');
+                    }).on('mouseleave', function() {
+                        $(this).removeClass('animate-float');
+                    });
+                    
+                    // 直播分类切换
+                    $('.category-item').on('click', function(e) {
+                        e.preventDefault();
+                        $('.category-item').removeClass('active');
+                        $(this).addClass('active');
+                        // 这里可以添加分类切换的逻辑
+                    });
+                    
+                    // 直播播放
+                    $('.live-play-btn').on('click', function() {
+                        const liveTitle = $(this).closest('.live-item').find('.live-title').text();
+                        // 这里可以添加直播播放的逻辑
+                        alert('正在打开直播：' + liveTitle);
+                    });
+                });
+            </script>
+{include file="public/foot.html"}

@@ -466,6 +466,7 @@ class AiService
         if (isset($options['prompts']) && isset($options['prompts']['intro'])) {
             $prompt = $options['prompts']['intro'];
             // 替换占位符
+            $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
             $prompt = str_replace('{vod_name}', $vod_name, $prompt);
             $prompt = str_replace('{type_name}', $type_name, $prompt);
             $prompt = str_replace('{vod_actor}', isset($vod_info['vod_actor']) ? $vod_info['vod_actor'] : '', $prompt);
@@ -489,12 +490,33 @@ class AiService
         }
         return $result;
     }
+    
+    /**
+     * 替换maccms10系统标签
+     * @param string $content 内容
+     * @param array $vod_info 影视信息
+     * @return string
+     */
+    protected function replaceMacCmsTags($content, $vod_info = []) {
+        // 替换field标签
+        $content = preg_replace_callback('/\{field\.(\w+)\}/', function($matches) use ($vod_info) {
+            $field = $matches[1];
+            return isset($vod_info[$field]) ? $vod_info[$field] : '';
+        }, $content);
+        
+        // 替换其他常用标签
+        $content = str_replace('{site_name}', config('site.site_name', '网站名称'), $content);
+        $content = str_replace('{site_url}', config('site.site_url', ''), $content);
+        
+        return $content;
+    }
 
     public function generateActors($vod_name, $actor_names = '', $options = [])
     {
         $actors = explode(',', $actor_names);
         $actor_list = [];
         $errors = [];
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         
         foreach ($actors as $actor_name) {
             $actor_name = trim($actor_name);
@@ -503,6 +525,7 @@ class AiService
                 if (isset($options['prompts']) && isset($options['prompts']['actors'])) {
                     $prompt = $options['prompts']['actors'];
                     // 替换占位符
+                    $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
                     $prompt = str_replace('{actor_name}', $actor_name, $prompt);
                     $prompt = str_replace('{vod_name}', $vod_name, $prompt);
                 } else {
@@ -547,12 +570,14 @@ class AiService
     {
         $reviews = [];
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         
         for ($i = 0; $i < $count; $i++) {
             // 检查是否有自定义提示词
             if (isset($options['prompts']) && isset($options['prompts']['reviews'])) {
                 $prompt = $options['prompts']['reviews'];
                 // 替换占位符
+                $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
                 $prompt = str_replace('{vod_name}', $vod_name, $prompt);
                 $prompt = str_replace('{type_name}', $type_name, $prompt);
             } else {
@@ -587,10 +612,12 @@ class AiService
 
     public function generateEpisodes($vod_name, $total_episodes = 10, $options = [])
     {
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         // 检查是否有自定义提示词
         if (isset($options['prompts']) && isset($options['prompts']['episodes'])) {
             $prompt = $options['prompts']['episodes'];
             // 替换占位符
+            $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
             $prompt = str_replace('{vod_name}', $vod_name, $prompt);
             $prompt = str_replace('{total_episodes}', $total_episodes, $prompt);
         } else {
@@ -620,11 +647,13 @@ class AiService
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
         $actor = isset($options['vod_actor']) ? $options['vod_actor'] : '';
         $director = isset($options['vod_director']) ? $options['vod_director'] : '';
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         
         // 检查是否有自定义提示词
         if (isset($options['prompts']) && isset($options['prompts']['score'])) {
             $prompt = $options['prompts']['score'];
             // 替换占位符
+            $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
             $prompt = str_replace('{vod_name}', $vod_name, $prompt);
             $prompt = str_replace('{type_name}', $type_name, $prompt);
             $prompt = str_replace('{actor}', $actor, $prompt);
@@ -648,11 +677,13 @@ class AiService
     {
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
         $content = isset($options['vod_content']) ? $options['vod_content'] : '';
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         
         // 检查是否有自定义提示词
         if (isset($options['prompts']) && isset($options['prompts']['tags'])) {
             $prompt = $options['prompts']['tags'];
             // 替换占位符
+            $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
             $prompt = str_replace('{vod_name}', $vod_name, $prompt);
             $prompt = str_replace('{type_name}', $type_name, $prompt);
             $prompt = str_replace('{content}', $content, $prompt);
@@ -681,12 +712,14 @@ class AiService
         $comments = [];
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
         $content = isset($options['vod_content']) ? $options['vod_content'] : '';
+        $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
         
         for ($i = 0; $i < $count; $i++) {
             // 检查是否有自定义提示词
             if (isset($options['prompts']) && isset($options['prompts']['comments'])) {
                 $prompt = $options['prompts']['comments'];
                 // 替换占位符
+                $prompt = $this->replaceMacCmsTags($prompt, $vod_info);
                 $prompt = str_replace('{vod_name}', $vod_name, $prompt);
                 $prompt = str_replace('{type_name}', $type_name, $prompt);
                 $prompt = str_replace('{content}', $content, $prompt);

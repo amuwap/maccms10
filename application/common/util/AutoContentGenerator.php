@@ -132,29 +132,8 @@ class AutoContentGenerator {
             return false;
         }
 
-        foreach ($types as $type) {
-            switch ($type) {
-                case 'intro':
-                    if (empty($vod_info['vod_content'])) {
-                        return true;
-                    }
-                    break;
-                case 'tags':
-                    $tag_count = model('Tag')->where(['tag_mid' => 1, 'tag_rid' => $vod_id])->count();
-                    if ($tag_count == 0) {
-                        return true;
-                    }
-                    break;
-                case 'comments':
-                    $comment_count = model('Comment')->where(['comment_mid' => 1, 'comment_rid' => $vod_id])->count();
-                    if ($comment_count == 0) {
-                        return true;
-                    }
-                    break;
-            }
-        }
-
-        return false;
+        // 始终返回true，因为我们要替换原有内容
+        return true;
     }
 
     /**
@@ -176,6 +155,9 @@ class AutoContentGenerator {
 
             // 保存标签
             if (isset($data['tags']) && $data['tags']['code'] == 1) {
+                // 先删除现有的标签关联
+                model('TagRelation')->where(['tag_mid' => 1, 'tag_rid' => $vod_id])->delete();
+                
                 $tags = $data['tags']['tags'];
                 foreach ($tags as $tag_name) {
                     $tag_info = model('Tag')->where(['tag_name' => $tag_name, 'tag_mid' => 1])->find();
@@ -190,21 +172,21 @@ class AutoContentGenerator {
                     }
 
                     // 关联标签
-                    $tag_relation = model('TagRelation')->where(['tag_id' => $tag_id, 'tag_rid' => $vod_id, 'tag_mid' => 1])->find();
-                    if (!$tag_relation) {
-                        model('TagRelation')->insert([
-                            'tag_id' => $tag_id,
-                            'tag_rid' => $vod_id,
-                            'tag_mid' => 1,
-                            'tag_time' => time()
-                        ]);
-                    }
+                    model('TagRelation')->insert([
+                        'tag_id' => $tag_id,
+                        'tag_rid' => $vod_id,
+                        'tag_mid' => 1,
+                        'tag_time' => time()
+                    ]);
                 }
                 $saved[] = '标签';
             }
 
             // 保存评论
             if (isset($data['comments']) && $data['comments']['code'] == 1) {
+                // 先删除现有的评论
+                model('Comment')->where(['comment_mid' => 1, 'comment_rid' => $vod_id])->delete();
+                
                 $comments = $data['comments']['comments'];
                 foreach ($comments as $comment) {
                     // 随机选择一个批量注册的用户

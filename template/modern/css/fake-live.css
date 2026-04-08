@@ -1,8 +1,890 @@
+/* 影视风格直播样式 */
+
+/* 电影胶片效果 */
+.film-strip-top,
+.film-strip-bottom {
+    height: 40px;
+    background: linear-gradient(90deg, #1a1a1a 0%, #333 25%, #1a1a1a 50%, #333 75%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.film-strip-top::before,
+.film-strip-bottom::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: repeating-linear-gradient(90deg, #000 0px, #000 10px, transparent 10px, transparent 20px);
+    transform: translateY(-50%);
+}
+
+/* 电影胶片边框 */
+.film-border {
+    position: relative;
+    border: 8px solid #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.film-border:hover {
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
+    transform: scale(1.02);
+}
+
+.film-border-large {
+    border: 12px solid #1a1a1a;
+}
+
+/* 直播首页头部 */
+.live-hero-banner {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-film-reel {
+    width: 80px;
+    height: 80px;
+    border: 8px solid #333;
+    border-radius: 50%;
+    background: #1a1a1a;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-film-reel::before {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 4px solid #555;
+    border-radius: 50%;
+    background: #222;
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    letter-spacing: 2px;
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-film {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-film::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-film:hover::before {
+    left: 100%;
+}
+
+.btn-film:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 193, 7, 0.5);
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 2;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 10px
+    );
+    z-index: 3;
+}
+
+/* 分类导航影视风格 */
+.category-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.category-item-film:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.category-item-film.active {
+    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    border-color: var(--accent-color);
+}
+
+/* 直播项影视风格 */
+.live-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.live-item-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.live-play-btn-film {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+}
+
+.live-play-btn-film:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.8);
+    background: rgba(255, 193, 7, 0.2);
+}
+
+.live-badge-film {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.live-viewers-film {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.live-category-tag-film {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.live-info-film {
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.live-info-film .live-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.live-info-film .live-desc {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+/* 精选直播影视风格 */
+.featured-live-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.featured-live-item-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.featured-live-badge-film {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.featured-live-play-btn-film {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.6);
+    z-index: 10;
+}
+
+.featured-live-play-btn-film:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 40px rgba(255, 193, 7, 0.9);
+    background: rgba(255, 193, 7, 0.2);
+}
+
+.featured-live-info-film {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.featured-live-info-film .featured-live-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.featured-live-info-film .featured-live-desc {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 直播时间表影视风格 */
+.live-schedule-film {
+    position: relative;
+}
+
+.schedule-item-film {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--accent-color);
+}
+
+.schedule-item-film:hover {
+    transform: translateX(8px);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.schedule-item-featured {
+    border-left: 4px solid var(--primary-color);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.schedule-time-film {
+    flex-shrink: 0;
+    width: 120px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.schedule-content-film {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.schedule-content-film h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.schedule-content-film p {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.schedule-tag-film {
+    padding: 4px 12px;
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid var(--accent-color);
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-right: 8px;
+}
+
+.status-badge-film {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.status-badge-hot {
+    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+/* 特色卡片影视风格 */
+.feature-card-film {
+    position: relative;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-card-film:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color);
+}
+
+.feature-icon-film {
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.feature-icon-film:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* 直播数据影视风格 */
+.live-stats-grid-film {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.stat-card-film {
+    position: relative;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.stat-card-film::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.stat-card-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color);
+}
+
+.stat-number-film {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label-film {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 章节标题影视风格 */
+.section-icon-film {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 8px;
+    margin-right: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.section-title-film {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.section-more-film {
+    position: relative;
+    transition: all 0.3s ease;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.section-more-film:hover {
+    color: var(--text-primary);
+    transform: translateX(4px);
+}
+
+/* 直播播放页面影视风格 */
+.live-play-hero {
+    position: relative;
+    padding: 40px 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.live-play-hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.live-play-hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    letter-spacing: 2px;
+}
+
+.live-play-hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
 /* 直播播放器样式 */
 .live-play-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 0;
+}
+
+/* 直播信息卡片影视风格 */
+.live-info-card-film {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.live-info-card-film:hover {
+    box-shadow: 0 8px 24px rgba(255, 193, 7, 0.2);
+}
+
+.live-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.live-title-film {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.live-anchor-film {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.live-stats-film {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item-film {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.stat-item-film:hover {
+    background: rgba(255, 193, 7, 0.1);
+    transform: translateY(-4px);
+}
+
+.stat-label-film {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value-film {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* 评论区影视风格 */
+.comment-section-film {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comment-section-film:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.section-header-film {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comment-list-film {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding-right: 12px;
+}
+
+.comment-item-film {
+    padding: 16px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--accent-color);
+}
+
+.comment-item-film:hover {
+    transform: translateX(4px);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.comment-input-film {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.comment-input-film:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+}
+
+.comment-submit-film {
+    padding: 0 24px;
+    transition: all 0.3s ease;
+}
+
+/* 礼物区影视风格 */
+.gift-section-film {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gift-section-film:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.gift-panel-film {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.gift-item-film {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.gift-item-film:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.gift-icon-film {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--accent-color);
+}
+
+.gift-name-film {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.gift-price-film {
+    display: block;
+    font-size: 12px;
+    color: var(--accent-color);
+}
+
+.gift-ranking-film {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 16px;
+}
+
+.ranking-item-film {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.ranking-item-film:hover {
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.ranking-item-film .rank-film {
+    font-weight: bold;
+    color: var(--accent-color);
+    width: 24px;
+}
+
+.ranking-item-film .username-film {
+    flex: 1;
+    color: var(--text-primary);
+}
+
+.ranking-item-film .total-film {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* 弹幕区影视风格 */
+.danmaku-section-film {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.danmaku-section-film:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.danmaku-input-film {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.danmaku-input-film:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+}
+
+.danmaku-submit-film {
+    padding: 0 24px;
+    transition: all 0.3s ease;
+}
+
+.viewer-diversity-film {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 16px;
+}
+
+.diversity-item-film {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+}
+
+.diversity-name-film {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.diversity-count-film {
+    display: block;
+    font-size: 12px;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+}
+
+.diversity-bar-film {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.diversity-progress-film {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 4px;
+    transition: width 0.5s ease;
 }
 
 .live-player-container {
@@ -49,7 +931,193 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     animation: danmaku 8s linear forwards;
 }
+/* 影视风格动画效果 */
 
+/* 电影胶片滚动效果 */
+@keyframes filmRoll {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* 镜头切换效果 */
+@keyframes cameraPan {
+    0% {
+        transform: scale(1) translateX(0);
+    }
+    50% {
+        transform: scale(1.1) translateX(-5%);
+    }
+    100% {
+        transform: scale(1) translateX(0);
+    }
+}
+
+/* 灯光闪烁效果 */
+@keyframes lightFlicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.8;
+    }
+}
+
+/* 电影放映效果 */
+@keyframes projectorStart {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* 字幕淡入效果 */
+@keyframes subtitleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 电影胶片边框动画 */
+.film-border {
+    position: relative;
+    border: 8px solid #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.film-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 10px,
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.1) 11px
+    );
+    pointer-events: none;
+    animation: filmRoll 20s linear infinite;
+}
+
+.film-border:hover {
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
+    transform: scale(1.02);
+    animation: cameraPan 3s ease-in-out infinite;
+}
+
+/* 直播项动画 */
+.live-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    animation: projectorStart 0.8s ease-out;
+}
+
+.live-item-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 播放按钮动画 */
+.live-play-btn-film {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+    animation: lightFlicker 3s ease-in-out infinite;
+}
+
+.live-play-btn-film:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.8);
+    background: rgba(255, 193, 7, 0.2);
+}
+
+/* 精选直播动画 */
+.featured-live-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+    animation: projectorStart 1s ease-out;
+}
+
+.featured-live-item-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 直播时间表动画 */
+.schedule-item-film {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--accent-color);
+    animation: subtitleFadeIn 0.6s ease-out;
+}
+
+.schedule-item-film:hover {
+    transform: translateX(8px);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 统计卡片动画 */
+.stat-card-film {
+    position: relative;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    animation: projectorStart 0.8s ease-out;
+}
+
+.stat-card-film:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color);
+}
+
+/* 弹幕动画 */
 @keyframes danmaku {
     from {
         transform: translateX(100%);
@@ -494,8 +1562,52 @@
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-    .live-stats {
-        gap: 1rem;
+    /* 直播首页响应式 */
+    .live-hero-banner {
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .live-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .live-stats-grid-film {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    /* 直播播放页面响应式 */
+    .live-play-hero-title {
+        font-size: 32px;
+    }
+    
+    .live-play-hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .live-info-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .live-stats-film {
+        gap: 16px;
     }
     
     .grid {
@@ -511,9 +1623,73 @@
     .gift-panel {
         grid-template-columns: repeat(4, 1fr);
     }
+    
+    .gift-panel-film {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 @media (max-width: 480px) {
+    /* 直播首页响应式 */
+    .live-hero-banner {
+        height: 40vh;
+        min-height: 300px;
+    }
+    
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    .live-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .live-stats-grid-film {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    /* 直播播放页面响应式 */
+    .live-play-hero-title {
+        font-size: 24px;
+    }
+    
+    .live-play-hero-subtitle {
+        font-size: 14px;
+    }
+    
+    .live-title-film {
+        font-size: 24px;
+    }
+    
+    .live-stats-film {
+        flex-wrap: wrap;
+    }
+    
+    .stat-item-film {
+        flex: 1 1 45%;
+    }
+    
+    .gift-panel {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .gift-panel-film {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .comment-section,
+    .gift-section,
+    .danmaku-section {
+        height: 350px;
+    }
+    
+    /* 通用响应式 */
     .live-title {
         font-size: 20px;
     }
@@ -525,8 +1701,208 @@
     .stat-item {
         flex: 1 1 45%;
     }
-    
-    .gift-panel {
-        grid-template-columns: repeat(3, 1fr);
+}
+
+/* 用户交互体验优化 */
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+/* 按钮交互优化 */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:active {
+    transform: scale(0.98) translateZ(0);
+}
+
+/* 卡片悬停效果 */
+.glass-card {
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px) rotateX(2deg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 输入框交互优化 */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+    transform: scale(1.1);
+}
+
+/* 加载动画优化 */
+.loading {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 4px solid rgba(255, 193, 7, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--accent-color);
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
+}
+
+/* 微交互效果 */
+.live-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.live-item-film::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.live-item-film:hover::before {
+    transform: translateX(100%);
+}
+
+/* 影视风格的页面过渡效果 */
+.page-transition {
+    animation: pageFadeIn 0.8s ease-out;
+}
+
+@keyframes pageFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 影视风格的按钮点击效果 */
+.btn-film {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-film::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 193, 7, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-film:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* 影视风格的悬停效果 */
+.schedule-item-film {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.schedule-item-film::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+    transition: width 0.3s ease;
+}
+
+.schedule-item-film:hover::before {
+    width: 8px;
+}
+
+/* 影视风格的文本效果 */
+.section-title-film {
+    position: relative;
+    display: inline-block;
+}
+
+.section-title-film::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+    transition: width 0.3s ease;
+}
+
+.section-title-film:hover::after {
+    width: 100%;
 }

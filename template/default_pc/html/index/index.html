@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{$maccms.site_name}</title>
-    <meta name="keywords" content="{$maccms.site_keywords}" />
-    <meta name="description" content="{$maccms.site_description}" />
+    <title>{if condition="isset($config['frontend']['seo']['vod']['name']) and !empty($config['frontend']['seo']['vod']['name'])"}{$config['frontend']['seo']['vod']['name']|raw}{else}{$maccms.site_name}{/if}</title>
+    <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod']['key']) and !empty($config['frontend']['seo']['vod']['key'])"}{$config['frontend']['seo']['vod']['key']|raw}{else}{$maccms.site_keywords}{/if}" />
+    <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod']['des']) and !empty($config['frontend']['seo']['vod']['des'])"}{$config['frontend']['seo']['vod']['des']|raw}{else}{$maccms.site_description}{/if}" />
     {include file="public/include"}
 </head>
 <body>

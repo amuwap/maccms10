@@ -41,6 +41,115 @@
                     </div>
                     
                     <fieldset class="layui-elem-field layui-field-title">
+                        <legend>SEO设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频首页SEO标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod][name]" value="{$config['frontend']['seo']['vod']['name']|default='{$maccms.seo.vod.name}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频首页SEO关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod][key]" value="{$config['frontend']['seo']['vod']['key']|default='{$maccms.seo.vod.key}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频首页SEO描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[seo][vod][des]" class="layui-textarea">{$config['frontend']['seo']['vod']['des']|default='{$maccms.seo.vod.des}'}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频内容页SEO标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_detail][name]" value="{$config['frontend']['seo']['vod_detail']['name']|default='{$obj.vod_name}详情介绍 - {$maccms.site_name}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频内容页SEO关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_detail][key]" value="{$config['frontend']['seo']['vod_detail']['key']|default='{$obj.vod_name},{$obj.vod_name}在线观看,{$obj.vod_name}下载'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频内容页SEO描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[seo][vod_detail][des]" class="layui-textarea">{$config['frontend']['seo']['vod_detail']['des']|default='{$obj.vod_name}剧情介绍，{$obj.vod_name}在线观看，{$obj.vod_name}下载'}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频播放页SEO标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_play][name]" value="{$config['frontend']['seo']['vod_play']['name']|default='在线播放{$obj.vod_name} - {$maccms.site_name}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频播放页SEO关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_play][key]" value="{$config['frontend']['seo']['vod_play']['key']|default='{$obj.vod_name}在线观看,{$obj.vod_name}播放'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频播放页SEO描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[seo][vod_play][des]" class="layui-textarea">{$config['frontend']['seo']['vod_play']['des']|default='{$obj.vod_name}在线播放，{$obj.vod_name}剧情介绍'}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频分类页SEO标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_type][name]" value="{$config['frontend']['seo']['vod_type']['name']|default='最新{$obj.type_title}-推荐{$obj.type_title} - {$maccms.site_name}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频分类页SEO关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_type][key]" value="{$config['frontend']['seo']['vod_type']['key']|default='{$obj.type_key}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频分类页SEO描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[seo][vod_type][des]" class="layui-textarea">{$config['frontend']['seo']['vod_type']['des']|default='{$obj.type_des}'}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频搜索页SEO标题：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_search][name]" value="{$config['frontend']['seo']['vod_search']['name']|default='{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频搜索页SEO关键词：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[seo][vod_search][key]" value="{$config['frontend']['seo']['vod_search']['key']|default='{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频搜索页SEO描述：</label>
+                        <div class="layui-input-block">
+                            <textarea name="frontend[seo][vod_search][des]" class="layui-textarea">{$config['frontend']['seo']['vod_search']['des']|default='{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果'}</textarea>
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
                         <legend>文字设置</legend>
                     </fieldset>
                     

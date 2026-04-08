@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width ,initial-scale = 1,minimum-scale = 1,maximum-scale = 1,user-scalable =no,"/>.
     <title>{if condition="isset($config['frontend']['page_title']['vod_play']) and !empty($config['frontend']['page_title']['vod_play'])"}{$config['frontend']['page_title']['vod_play']|raw}{else}在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源{/if} - {$maccms.site_name}</title>
-    <meta name="keywords" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍" />
-    <meta name="description" content="{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍" />
+    <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod_play']['key']) and !empty($config['frontend']['seo']['vod_play']['key'])"}{$config['frontend']['seo']['vod_play']['key']|raw}{else}{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍{/if}" />
+    <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod_play']['des']) and !empty($config['frontend']['seo']['vod_play']['des'])"}{$config['frontend']['seo']['vod_play']['des']|raw}{else}{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍{/if}" />
     {include file="public/include"}
 </head>
 <body>

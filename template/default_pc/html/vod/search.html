@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}</title>
-    <meta name="keywords" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果" />
-    <meta name="description" content="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果" />
+    <title>{if condition="isset($config['frontend']['seo']['vod_search']['name']) and !empty($config['frontend']['seo']['vod_search']['name'])"}{$config['frontend']['seo']['vod_search']['name']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果 - {$maccms.site_name}{/if}</title>
+    <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod_search']['key']) and !empty($config['frontend']['seo']['vod_search']['key'])"}{$config['frontend']['seo']['vod_search']['key']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果{/if}" />
+    <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod_search']['des']) and !empty($config['frontend']['seo']['vod_search']['des'])"}{$config['frontend']['seo']['vod_search']['des']|raw}{else}{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}搜索结果{/if}" />
     {include file="public/include"}
 </head>
 <body>

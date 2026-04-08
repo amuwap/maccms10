@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>最新{$obj.type_title}-推荐{$obj.type_title}-第{$param.page}页 - {$maccms.site_name}</title>
-    <meta name="keywords" content="{$obj.type_key}" />
-    <meta name="description" content="{$obj.type_des}" />
+    <title>{if condition="isset($config['frontend']['seo']['vod_type']['name']) and !empty($config['frontend']['seo']['vod_type']['name'])"}{$config['frontend']['seo']['vod_type']['name']|raw}{else}最新{$obj.type_title}-推荐{$obj.type_title}-第{$param.page}页 - {$maccms.site_name}{/if}</title>
+    <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod_type']['key']) and !empty($config['frontend']['seo']['vod_type']['key'])"}{$config['frontend']['seo']['vod_type']['key']|raw}{else}{$obj.type_key}{/if}" />
+    <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod_type']['des']) and !empty($config['frontend']['seo']['vod_type']['des'])"}{$config['frontend']['seo']['vod_type']['des']|raw}{else}{$obj.type_des}{/if}" />
     {include file="public/include"}
 </head>
 <body>

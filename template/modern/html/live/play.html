@@ -1,4 +1,5 @@
 {include file="public/head.html"}
+<script src="../../js/config.js"></script>
             <div class="live-play-hero">
                 <div class="live-play-hero-content">
                     <h1 class="live-play-hero-title">{$live_info.live_name|default='直播标题'}</h1>
@@ -10,7 +11,7 @@
                 <div class="live-play-page">
                     <div class="glass-card live-player-container">
                         <div class="live-player-wrapper">
-                            <video class="live-player" controls autoplay playsinline>
+                            <video class="live-player" controls {$config.frontend.live.auto_play|default=false ? 'autoplay' : ''} playsinline>
                                 <source src="{$live_info.live_mp4_url|default=''}" type="video/mp4">
                                 您的浏览器不支持视频播放
                             </video>

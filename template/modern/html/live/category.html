@@ -1,4 +1,5 @@
 {include file="public/head.html"}
+<script src="../../js/config.js"></script>
             <!-- 直播分类页面头部 -->
             <div class="live-hero-banner">
                 <div class="hero-content">
@@ -13,6 +14,7 @@
             
             <div class="container">
                 <!-- 直播分类导航 -->
+                {if $config.frontend.live.show_category|default=true}
                 <div class="live-category-nav glass-card">
                     <div class="category-scroll">
                         <a href="{:mac_url('live/category',['cat'=>'all'])}" class="category-item active">全部</a>
@@ -25,6 +27,7 @@
                         <a href="{:mac_url('live/category',['cat'=>'education'])}" class="category-item">教育</a>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 分类直播列表 -->
                 <div class="section">

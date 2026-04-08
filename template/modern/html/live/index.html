@@ -1,12 +1,13 @@
 {include file="public/head.html"}
+<script src="../../js/config.js"></script>
             <!-- 直播页面头部横幅 - 直播风格 -->
             <div class="live-hero-banner">
                 <div class="hero-content">
                     <h1 class="hero-title">无人直播</h1>
                     <p class="hero-subtitle">24小时不间断精彩内容</p>
                     <div class="hero-buttons">
-                        <a href="{:mac_url('live/index')}" class="btn btn-primary">立即观看</a>
-                        <a href="#schedule" class="btn btn-secondary">直播时间表</a>
+                        <a href="{:mac_url('live/index')}" class="btn btn-primary">{$config.frontend.btn_text.play|default='播放'}</a>
+                        <a href="#schedule" class="btn btn-secondary">{$config.frontend.lang.zh.episode_list|default='直播时间表'}</a>
                     </div>
                 </div>
                 <div class="hero-bg">
@@ -17,6 +18,7 @@
             
             <div class="container">
                 <!-- 直播分类导航 -->
+                {if $config.frontend.live.show_category|default=true}
                 <div class="live-category-nav glass-card">
                     <div class="category-scroll">
                         <a href="{:mac_url('live/index')}" class="category-item active">全部</a>
@@ -29,6 +31,7 @@
                         <a href="{:mac_url('live/index',['cat'=>'education'])}" class="category-item">教育</a>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 直播推荐 -->
                 <div class="section">
@@ -203,6 +206,7 @@
                 </div>
                 
                 <!-- 直播时间表 -->
+                {if $config.frontend.live.show_schedule|default=true}
                 <div id="schedule" class="section">
                     <div class="glass-card">
                         <div class="section-header">
@@ -278,6 +282,7 @@
                         </div>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 直播特色 -->
                 <div class="section">
@@ -329,6 +334,7 @@
                 </div>
                 
                 <!-- 直播统计 -->
+                {if $config.frontend.live.show_stats|default=true}
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
@@ -363,6 +369,7 @@
                         </div>
                     </div>
                 </div>
+                {/if}
             </div>
             <script>
                 // 直播页面交互

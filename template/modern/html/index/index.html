@@ -1,18 +1,22 @@
 {include file="public/head.html"}
+<script src="../js/config.js"></script>
             <div class="container">
                 <!-- 主横幅 -->
+                {if $config.frontend.features.banner|default=true}
                 <div class="banner-section">
                     <div class="glass-card banner-card animate-fade-in">
-                        <h1 class="banner-title">欢迎来到{$maccms.site_name}</h1>
-                        <p class="banner-subtitle">海量高清影视资源，畅享极致观影体验</p>
+                        <h1 class="banner-title" data-lang="welcome">欢迎来到{$maccms.site_name}</h1>
+                        <p class="banner-subtitle">{$config.frontend.site_description|default='海量高清影视资源，畅享极致观影体验'}</p>
                         <div class="banner-actions">
-                            <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg animate-fade-in-delay-1">立即观影</a>
-                            <a href="{:mac_url('label/rank')}" class="btn btn-secondary btn-lg animate-fade-in-delay-2">热门榜单</a>
+                            <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg animate-fade-in-delay-1">{$config.frontend.btn_text.play|default='播放'}</a>
+                            <a href="{:mac_url('label/rank')}" class="btn btn-secondary btn-lg animate-fade-in-delay-2">{$config.frontend.lang.zh.hot_recommendations|default='热门榜单'}</a>
                         </div>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 分类导航 -->
+                {if $config.frontend.features.category_nav|default=true}
                 <div class="category-nav glass-card">
                     <div class="category-scroll">
                         <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
@@ -21,8 +25,10 @@
                         {/maccms:type}
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 热门推荐 -->
+                {if $config.frontend.features.hot_recommend|default=true}
                 <div class="section">
                     <div class="glass-card animate-fade-in">
                         <div class="section-header">
@@ -32,12 +38,12 @@
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                     </svg>
                                 </div>
-                                <h2 class="section-title">热门推荐</h2>
+                                <h2 class="section-title" data-lang="hot_recommendations">{$config.frontend.lang.zh.hot_recommendations|default='热门推荐'}</h2>
                             </div>
-                            <a href="{:mac_url('label/rank')}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <a href="{:mac_url('label/rank')}" class="more-link" data-lang="view_more">{$config.frontend.lang.zh.view_more|default='查看更多'} <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
-                            {maccms:vod num="12" order="vod_hits_month"}
+                            {maccms:vod num="{$config.frontend.homepage.recommend_count|default=12}" order="vod_hits_month"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="content-poster">
@@ -72,8 +78,10 @@
                         </div>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 最新更新 -->
+                {if $config.frontend.features.latest_update|default=true}
                 <div class="section">
                     <div class="glass-card animate-fade-in">
                         <div class="section-header">
@@ -84,12 +92,12 @@
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                 </div>
-                                <h2 class="section-title">最新更新</h2>
+                                <h2 class="section-title" data-lang="latest_updates">{$config.frontend.lang.zh.latest_updates|default='最新更新'}</h2>
                             </div>
-                            <a href="{:mac_url('map/index')}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <a href="{:mac_url('map/index')}" class="more-link" data-lang="view_more">{$config.frontend.lang.zh.view_more|default='查看更多'} <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
-                            {maccms:vod num="12" order="vod_time_add"}
+                            {maccms:vod num="{$config.frontend.homepage.latest_count|default=12}" order="vod_time_add"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="content-poster">
@@ -114,8 +122,10 @@
                         </div>
                     </div>
                 </div>
+                {/if}
                 
                 <!-- 分类内容 -->
+                {if $config.frontend.features.category_content|default=true}
                 {maccms:type ids="parent" order="asc" by="sort" id="vo"}
                 <div class="section">
                     <div class="glass-card animate-fade-in">
@@ -131,10 +141,10 @@
                                 </div>
                                 <h2 class="section-title">{$vo.type_name}</h2>
                             </div>
-                            <a href="{:mac_url_type($vo)}" class="more-link">查看更多 <i class="layui-icon layui-icon-right"></i></a>
+                            <a href="{:mac_url_type($vo)}" class="more-link" data-lang="view_more">{$config.frontend.lang.zh.view_more|default='查看更多'} <i class="layui-icon layui-icon-right"></i></a>
                         </div>
                         <div class="content-grid">
-                            {maccms:vod num="8" type="'.$vo['type_id'].'" order="vod_time_add"}
+                            {maccms:vod num="{$config.frontend.homepage.category_count|default=8}" type=".$vo['type_id']" order="vod_time_add"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
                                     <div class="content-poster">
@@ -159,8 +169,10 @@
                     </div>
                 </div>
                 {/maccms:type}
+                {/if}
                 
                 <!-- 特色区块 -->
+                {if $config.frontend.features.feature_section|default=true}
                 <div class="section">
                     <div class="glass-card animate-fade-in">
                         <div class="section-header">
@@ -208,5 +220,6 @@
                         </div>
                     </div>
                 </div>
+                {/if}
             </div>
 {include file="public/foot.html"}

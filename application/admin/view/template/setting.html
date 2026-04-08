@@ -8,6 +8,9 @@
                 <li lay-id="setting_2">APP设置</li>
                 <li lay-id="setting_3">筛选设置</li>
                 <li lay-id="setting_4">排序设置</li>
+                <li lay-id="setting_5">影视设置</li>
+                <li lay-id="setting_6">直播设置</li>
+                <li lay-id="setting_7">高级设置</li>
             </ul>
             <div class="layui-tab-content">
                 <!-- 前端设置 -->
@@ -19,21 +22,21 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">网站标题：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="frontend[site_title]" value="{$config['frontend']['site_title']|default=''}" class="layui-input">
+                            <input type="text" name="frontend[site_title]" value="{$config['frontend']['site_title']|default='苹果CMS测试网站'}" class="layui-input">
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">网站描述：</label>
                         <div class="layui-input-block">
-                            <textarea name="frontend[site_description]" class="layui-textarea">{$config['frontend']['site_description']|default=''}</textarea>
+                            <textarea name="frontend[site_description]" class="layui-textarea">{$config['frontend']['site_description']|default='海量高清影视资源，畅享极致观影体验'}</textarea>
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">网站关键词：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="frontend[site_keywords]" value="{$config['frontend']['site_keywords']|default=''}" class="layui-input">
+                            <input type="text" name="frontend[site_keywords]" value="{$config['frontend']['site_keywords']|default='短视频,搞笑视频,视频分享,免费视频,在线视频,预告片'}" class="layui-input">
                         </div>
                     </div>
                     
@@ -47,6 +50,8 @@
                             <input type="text" name="frontend[btn_text][play]" placeholder="播放" value="{$config['frontend']['btn_text']['play']|default='播放'}" class="layui-input w150">
                             <input type="text" name="frontend[btn_text][download]" placeholder="下载" value="{$config['frontend']['btn_text']['download']|default='下载'}" class="layui-input w150">
                             <input type="text" name="frontend[btn_text][collect]" placeholder="收藏" value="{$config['frontend']['btn_text']['collect']|default='收藏'}" class="layui-input w150">
+                            <input type="text" name="frontend[btn_text][follow]" placeholder="追剧" value="{$config['frontend']['btn_text']['follow']|default='追剧'}" class="layui-input w150">
+                            <input type="text" name="frontend[btn_text][like]" placeholder="点赞" value="{$config['frontend']['btn_text']['like']|default='点赞'}" class="layui-input w150">
                         </div>
                     </div>
                     
@@ -56,6 +61,7 @@
                             <input type="text" name="frontend[status_text][vip]" placeholder="VIP" value="{$config['frontend']['status_text']['vip']|default='VIP'}" class="layui-input w150">
                             <input type="text" name="frontend[status_text][hot]" placeholder="热门" value="{$config['frontend']['status_text']['hot']|default='热门'}" class="layui-input w150">
                             <input type="text" name="frontend[status_text][new]" placeholder="最新" value="{$config['frontend']['status_text']['new']|default='最新'}" class="layui-input w150">
+                            <input type="text" name="frontend[status_text][recommend]" placeholder="推荐" value="{$config['frontend']['status_text']['recommend']|default='推荐'}" class="layui-input w150">
                         </div>
                     </div>
                     
@@ -69,13 +75,59 @@
                             <input type="text" name="frontend[theme_color][primary]" placeholder="#3b82f6" value="{$config['frontend']['theme_color']['primary']|default='#3b82f6'}" class="layui-input w150">
                             <input type="text" name="frontend[theme_color][secondary]" placeholder="#8b5cf6" value="{$config['frontend']['theme_color']['secondary']|default='#8b5cf6'}" class="layui-input w150">
                             <input type="text" name="frontend[theme_color][accent]" placeholder="#fbbf24" value="{$config['frontend']['theme_color']['accent']|default='#fbbf24'}" class="layui-input w150">
+                            <input type="text" name="frontend[theme_color][success]" placeholder="#10b981" value="{$config['frontend']['theme_color']['success']|default='#10b981'}" class="layui-input w150">
+                            <input type="text" name="frontend[theme_color][danger]" placeholder="#ef4444" value="{$config['frontend']['theme_color']['danger']|default='#ef4444'}" class="layui-input w150">
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">字体设置：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="frontend[font][family]" placeholder="字体家族" value="{$config['frontend']['font']['family']|default='Microsoft YaHei, sans-serif'}" class="layui-input">
+                            <input type="text" name="frontend[font][family]" placeholder="字体家族" value="{$config['frontend']['font']['family']|default='Microsoft YaHei, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif'}" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">字体大小：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[font][size][base]" placeholder="基础字体" value="{$config['frontend']['font']['size']['base']|default='16px'}" class="layui-input w100">
+                            <input type="text" name="frontend[font][size][heading1]" placeholder="标题1" value="{$config['frontend']['font']['size']['heading1']|default='32px'}" class="layui-input w100">
+                            <input type="text" name="frontend[font][size][heading2]" placeholder="标题2" value="{$config['frontend']['font']['size']['heading2']|default='24px'}" class="layui-input w100">
+                            <input type="text" name="frontend[font][size][heading3]" placeholder="标题3" value="{$config['frontend']['font']['size']['heading3']|default='20px'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>布局设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">容器宽度：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[layout][container_width]" placeholder="1400px" value="{$config['frontend']['layout']['container_width']|default='1400px'}" class="layui-input w150">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">间距设置：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[layout][section_spacing]" placeholder="32px" value="{$config['frontend']['layout']['section_spacing']|default='32px'}" class="layui-input w100">
+                            <input type="text" name="frontend[layout][card_spacing]" placeholder="24px" value="{$config['frontend']['layout']['card_spacing']|default='24px'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>功能开关</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">首页功能：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="frontend[features][banner]" value="1" title="轮播图" {if condition="$config['frontend']['features']['banner'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[features][category_nav]" value="1" title="分类导航" {if condition="$config['frontend']['features']['category_nav'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[features][hot_recommend]" value="1" title="热门推荐" {if condition="$config['frontend']['features']['hot_recommend'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[features][latest_update]" value="1" title="最新更新" {if condition="$config['frontend']['features']['latest_update'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[features][feature_section]" value="1" title="特色区块" {if condition="$config['frontend']['features']['feature_section'] ?? true"}checked{/if}>
                         </div>
                     </div>
                 </div>
@@ -89,7 +141,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">APP名称：</label>
                         <div class="layui-input-block">
-                            <input type="text" name="app[app_name]" value="{$config['app']['app_name']|default=''}" class="layui-input">
+                            <input type="text" name="app[app_name]" value="{$config['app']['app_name']|default='苹果CMS'}" class="layui-input">
                         </div>
                     </div>
                     
@@ -103,7 +155,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">更新说明：</label>
                         <div class="layui-input-block">
-                            <textarea name="app[update_desc]" class="layui-textarea">{$config['app']['update_desc']|default=''}</textarea>
+                            <textarea name="app[update_desc]" class="layui-textarea">{$config['app']['update_desc']|default='修复已知问题，优化用户体验'}</textarea>
                         </div>
                     </div>
                     
@@ -124,6 +176,32 @@
                             <input type="text" name="app[app_key]" value="{$config['app']['app_key']|default=''}" class="layui-input">
                         </div>
                     </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>APP功能设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">APP功能：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="app[features][push_notification]" value="1" title="推送通知" {if condition="$config['app']['features']['push_notification'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="app[features][offline_download]" value="1" title="离线下载" {if condition="$config['app']['features']['offline_download'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="app[features][screen_cast]" value="1" title="投屏功能" {if condition="$config['app']['features']['screen_cast'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="app[features][gesture_control]" value="1" title="手势控制" {if condition="$config['app']['features']['gesture_control'] ?? true"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">默认画质：</label>
+                        <div class="layui-input-inline">
+                            <select name="app[player][default_quality]">
+                                <option value="360p" {if condition="$config['app']['player']['default_quality'] eq '360p'"}selected{/if}>360p</option>
+                                <option value="480p" {if condition="$config['app']['player']['default_quality'] eq '480p'"}selected{/if}>480p</option>
+                                <option value="720p" {if condition="$config['app']['player']['default_quality'] eq '720p' or empty($config['app']['player']['default_quality'])"}selected{/if}>720p</option>
+                                <option value="1080p" {if condition="$config['app']['player']['default_quality'] eq '1080p'"}selected{/if}>1080p</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- 筛选设置 -->
@@ -135,19 +213,19 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">启用筛选：</label>
                         <div class="layui-input-inline">
-                            <input type="radio" name="filter[enabled]" value="1" title="开启" {if condition="$config['filter']['enabled'] eq 1"}checked{/if}>
-                            <input type="radio" name="filter[enabled]" value="0" title="关闭" {if condition="$config['filter']['enabled'] neq 1"}checked{/if}>
+                            <input type="radio" name="filter[enabled]" value="1" title="开启" {if condition="$config['filter']['enabled'] ?? true"}checked{/if}>
+                            <input type="radio" name="filter[enabled]" value="0" title="关闭" {if condition="!($config['filter']['enabled'] ?? true)"}checked{/if}>
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">筛选选项：</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="filter[options][]" value="type" title="分类" {if condition="in_array('type', $config['filter']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="filter[options][]" value="area" title="地区" {if condition="in_array('area', $config['filter']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="filter[options][]" value="year" title="年份" {if condition="in_array('year', $config['filter']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="filter[options][]" value="lang" title="语言" {if condition="in_array('lang', $config['filter']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="filter[options][]" value="state" title="状态" {if condition="in_array('state', $config['filter']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="type" title="分类" {if condition="in_array('type', $config['filter']['options'] ?? ['type', 'area', 'year', 'lang', 'state'] )"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="area" title="地区" {if condition="in_array('area', $config['filter']['options'] ?? ['type', 'area', 'year', 'lang', 'state'] )"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="year" title="年份" {if condition="in_array('year', $config['filter']['options'] ?? ['type', 'area', 'year', 'lang', 'state'] )"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="lang" title="语言" {if condition="in_array('lang', $config['filter']['options'] ?? ['type', 'area', 'year', 'lang', 'state'] )"}checked{/if}>
+                            <input type="checkbox" name="filter[options][]" value="state" title="状态" {if condition="in_array('state', $config['filter']['options'] ?? ['type', 'area', 'year', 'lang', 'state'] )"}checked{/if}>
                         </div>
                     </div>
                     
@@ -155,10 +233,18 @@
                         <label class="layui-form-label">筛选方式：</label>
                         <div class="layui-input-inline">
                             <select name="filter[method]">
-                                <option value="ajax" {if condition="$config['filter']['method'] eq 'ajax'"}selected{/if}>AJAX筛选</option>
+                                <option value="ajax" {if condition="$config['filter']['method'] eq 'ajax' or empty($config['filter']['method'])"}selected{/if}>AJAX筛选</option>
                                 <option value="link" {if condition="$config['filter']['method'] eq 'link'"}selected{/if}>链接筛选</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">AJAX延迟：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="filter[ajax_delay]" value="{$config['filter']['ajax_delay']|default='300'}" class="layui-input w100">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">毫秒</div>
                     </div>
                 </div>
                 
@@ -172,7 +258,7 @@
                         <label class="layui-form-label">默认排序：</label>
                         <div class="layui-input-inline">
                             <select name="sort[default]">
-                                <option value="time" {if condition="$config['sort']['default'] eq 'time'"}selected{/if}>最新发布</option>
+                                <option value="time" {if condition="$config['sort']['default'] eq 'time' or empty($config['sort']['default'])"}selected{/if}>最新发布</option>
                                 <option value="hits" {if condition="$config['sort']['default'] eq 'hits'"}selected{/if}>最多点击</option>
                                 <option value="score" {if condition="$config['sort']['default'] eq 'score'"}selected{/if}>最高评分</option>
                                 <option value="rand" {if condition="$config['sort']['default'] eq 'rand'"}selected{/if}>随机推荐</option>
@@ -183,20 +269,200 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">排序选项：</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="sort[options][]" value="time" title="最新发布" {if condition="in_array('time', $config['sort']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="sort[options][]" value="hits" title="最多点击" {if condition="in_array('hits', $config['sort']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="sort[options][]" value="score" title="最高评分" {if condition="in_array('score', $config['sort']['options'] ?? [])"}checked{/if}>
-                            <input type="checkbox" name="sort[options][]" value="rand" title="随机推荐" {if condition="in_array('rand', $config['sort']['options'] ?? [])"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="time" title="最新发布" {if condition="in_array('time', $config['sort']['options'] ?? ['time', 'hits', 'score', 'rand'] )"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="hits" title="最多点击" {if condition="in_array('hits', $config['sort']['options'] ?? ['time', 'hits', 'score', 'rand'] )"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="score" title="最高评分" {if condition="in_array('score', $config['sort']['options'] ?? ['time', 'hits', 'score', 'rand'] )"}checked{/if}>
+                            <input type="checkbox" name="sort[options][]" value="rand" title="随机推荐" {if condition="in_array('rand', $config['sort']['options'] ?? ['time', 'hits', 'score', 'rand'] )"}checked{/if}>
                         </div>
                     </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">智能推荐：</label>
                         <div class="layui-input-inline">
-                            <input type="radio" name="sort[smart]" value="1" title="开启" {if condition="$config['sort']['smart'] eq 1"}checked{/if}>
-                            <input type="radio" name="sort[smart]" value="0" title="关闭" {if condition="$config['sort']['smart'] neq 1"}checked{/if}>
+                            <input type="radio" name="sort[smart]" value="1" title="开启" {if condition="$config['sort']['smart'] ?? true"}checked{/if}>
+                            <input type="radio" name="sort[smart]" value="0" title="关闭" {if condition="!($config['sort']['smart'] ?? true)"}checked{/if}>
                         </div>
                         <div class="layui-form-mid layui-word-aux">根据用户行为推荐内容</div>
+                    </div>
+                </div>
+                
+                <!-- 影视设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>影视详情页设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">显示选项：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="frontend[vod_detail][show_rating]" value="1" title="评分系统" {if condition="$config['frontend']['vod_detail']['show_rating'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_detail][show_meta]" value="1" title="元数据" {if condition="$config['frontend']['vod_detail']['show_meta'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_detail][show_actions]" value="1" title="操作按钮" {if condition="$config['frontend']['vod_detail']['show_actions'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_detail][show_plot]" value="1" title="剧情简介" {if condition="$config['frontend']['vod_detail']['show_plot'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_detail][show_cast]" value="1" title="演职人员" {if condition="$config['frontend']['vod_detail']['show_cast'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_detail][show_related]" value="1" title="相关推荐" {if condition="$config['frontend']['vod_detail']['show_related'] ?? true"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>播放页面设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">播放选项：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="frontend[vod_play][show_controls]" value="1" title="播放控制" {if condition="$config['frontend']['vod_play']['show_controls'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_play][show_episode_list]" value="1" title="选集列表" {if condition="$config['frontend']['vod_play']['show_episode_list'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_play][show_related]" value="1" title="相关推荐" {if condition="$config['frontend']['vod_play']['show_related'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[vod_play][auto_play]" value="1" title="自动播放" {if condition="$config['frontend']['vod_play']['auto_play'] ?? false"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>首页影视设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数量设置：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[homepage][banner_count]" value="{$config['frontend']['homepage']['banner_count']|default='5'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">轮播图数量</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">推荐数量：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[homepage][recommend_count]" value="{$config['frontend']['homepage']['recommend_count']|default='12'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">热门推荐数量</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">更新数量：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[homepage][latest_count]" value="{$config['frontend']['homepage']['latest_count']|default='12'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">最新更新数量</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分类数量：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[homepage][category_count]" value="{$config['frontend']['homepage']['category_count']|default='8'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">分类内容数量</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 直播设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>直播页面设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">直播选项：</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="frontend[live][show_category]" value="1" title="分类导航" {if condition="$config['frontend']['live']['show_category'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[live][show_stats]" value="1" title="直播统计" {if condition="$config['frontend']['live']['show_stats'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[live][show_schedule]" value="1" title="直播 schedule" {if condition="$config['frontend']['live']['show_schedule'] ?? true"}checked{/if}>
+                            <input type="checkbox" name="frontend[live][auto_play]" value="1" title="自动播放" {if condition="$config['frontend']['live']['auto_play'] ?? false"}checked{/if}>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 高级设置 -->
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>动画设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">启用动画：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="frontend[animations][enabled]" value="1" title="开启" {if condition="$config['frontend']['animations']['enabled'] ?? true"}checked{/if}>
+                            <input type="radio" name="frontend[animations][enabled]" value="0" title="关闭" {if condition="!($config['frontend']['animations']['enabled'] ?? true)"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">动画时长：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[animations][duration]" value="{$config['frontend']['animations']['duration']|default='0.3s'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">动画缓动：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[animations][easing]" value="{$config['frontend']['animations']['easing']|default='ease-out'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>响应式设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">断点设置：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[responsive][mobile_breakpoint]" value="{$config['frontend']['responsive']['mobile_breakpoint']|default='768px'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">移动端断点</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">平板断点：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[responsive][tablet_breakpoint]" value="{$config['frontend']['responsive']['tablet_breakpoint']|default='992px'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">桌面断点：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="frontend[responsive][desktop_breakpoint]" value="{$config['frontend']['responsive']['desktop_breakpoint']|default='1200px'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>API设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">API超时：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[api][timeout]" value="{$config['frontend']['api']['timeout']|default='5000'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">毫秒</div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">重试次数：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[api][retry]" value="{$config['frontend']['api']['retry']|default='3'}" class="layui-input w100">
+                        </div>
+                    </div>
+                    
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>缓存设置</legend>
+                    </fieldset>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">启用缓存：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="frontend[cache][enabled]" value="1" title="开启" {if condition="$config['frontend']['cache']['enabled'] ?? true"}checked{/if}>
+                            <input type="radio" name="frontend[cache][enabled]" value="0" title="关闭" {if condition="!($config['frontend']['cache']['enabled'] ?? true)"}checked{/if}>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">缓存时长：</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="frontend[cache][duration]" value="{$config['frontend']['cache']['duration']|default='3600'}" class="layui-input w100">
+                            <div class="layui-form-mid layui-word-aux">秒</div>
+                        </div>
                     </div>
                 </div>
             </div>

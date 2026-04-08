@@ -1,4 +1,5 @@
 {include file="public/head.html"}
+<script src="../../js/config.js"></script>
             <div class="container">
                 <nav class="breadcrumb">
                     <a href="{:mac_url('index/index')}" class="breadcrumb-item">首页</a>
@@ -80,7 +81,7 @@
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                                         </svg>
-                                        收藏
+                                        {$config.frontend.btn_text.collect|default='收藏'}
                                     </button>
                                     <button class="action-btn" onclick="shareContent()">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -90,7 +91,7 @@
                                             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
                                             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
                                         </svg>
-                                        分享
+                                        {$config.frontend.btn_text.share|default='分享'}
                                     </button>
                                     <button class="action-btn" onclick="reportError()">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -98,7 +99,7 @@
                                             <line x1="12" y1="8" x2="12" y2="12"/>
                                             <line x1="12" y1="16" x2="12.01" y2="16"/>
                                         </svg>
-                                        报错
+                                        {$config.frontend.btn_text.report|default='报错'}
                                     </button>
                                 </div>
                             </div>
@@ -107,11 +108,12 @@
                 </div>
             </div>
 
+            {if $config.frontend.vod_play.show_episode_list|default=true}
             <div class="container">
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
-                            <h2 class="section-title">选集列表</h2>
+                            <h2 class="section-title" data-lang="episode_list">{$config.frontend.lang.zh.episode_list|default='选集列表'}</h2>
                         </div>
                         <div class="episode-grid">
                             {volist name="vo.vod_play_list" id="play" key="k"}
@@ -124,13 +126,15 @@
                     </div>
                 </div>
             </div>
+            {/if}
 
+            {if $config.frontend.vod_play.show_related|default=true}
             <div class="container">
                 <div class="section">
                     <div class="glass-card">
                         <div class="section-header">
-                            <h2 class="section-title">相关推荐</h2>
-                            <a href="{:mac_url_type($vo)}" class="more-link">查看更多</a>
+                            <h2 class="section-title" data-lang="related_content">{$config.frontend.lang.zh.related_content|default='相关推荐'}</h2>
+                            <a href="{:mac_url_type($vo)}" class="more-link" data-lang="view_more">{$config.frontend.lang.zh.view_more|default='查看更多'}</a>
                         </div>
                         <div class="content-grid">
                             {maccms:vod num="8" type="$vo.type_id" order="rand"}
@@ -160,6 +164,7 @@
                     </div>
                 </div>
             </div>
+            {/if}
 
             <script>
                 var totalEpisodes = {$vo.vod_play_list|count};

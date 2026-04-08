@@ -1,4 +1,5 @@
 {include file="public/head.html"}
+<script src="../../js/config.js"></script>
             <div class="container art-detail">
                 <article class="glass-card art-detail-card fade-in-up">
                     <div class="art-detail-header">
@@ -37,11 +38,11 @@
                         <div class="art-actions">
                             <button class="btn btn-primary btn-like" data-id="{$obj.art_id}">
                                 <i class="icon-heart"></i>
-                                点赞 (<span>{$obj.art_up}</span>)
+                                {$config.frontend.btn_text.like|default='点赞'} (<span>{$obj.art_up}</span>)
                             </button>
                             <button class="btn btn-secondary btn-share">
                                 <i class="icon-share"></i>
-                                分享
+                                {$config.frontend.btn_text.share|default='分享'}
                             </button>
                         </div>
                         

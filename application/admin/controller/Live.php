@@ -28,6 +28,8 @@ class Live extends Base
             }
         }
         $this->assign('categories', $this->getLiveCategories());
+        $this->assign('play_modes', $this->getPlayModes());
+        $this->assign('charge_modes', $this->getChargeModes());
         return $this->fetch('info');
     }
 
@@ -47,7 +49,27 @@ class Live extends Base
         $info = LiveModel::get($live_id);
         $this->assign('info', $info);
         $this->assign('categories', $this->getLiveCategories());
+        $this->assign('play_modes', $this->getPlayModes());
+        $this->assign('charge_modes', $this->getChargeModes());
         return $this->fetch('info');
+    }
+
+    private function getPlayModes()
+    {
+        return [
+            1 => '普通播放',
+            2 => '循环播放',
+            3 => '随机播放'
+        ];
+    }
+
+    private function getChargeModes()
+    {
+        return [
+            1 => '按时间收费',
+            2 => '按次数收费',
+            3 => '免费'
+        ];
     }
 
     private function getLiveCategories()

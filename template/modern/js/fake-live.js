@@ -78,12 +78,30 @@ class FakeLive {
 
         const videoElement = this.container.querySelector('video');
         if (videoElement) {
+            // 视频播放优化设置
+            videoElement.preload = 'auto'; // 预加载视频
+            videoElement.playsinline = true; // 内联播放
+            videoElement.crossOrigin = 'anonymous'; // 允许跨域
             videoElement.src = this.streamUrl;
             videoElement.controls = true;
             videoElement.autoplay = true;
             videoElement.muted = false;
+            videoElement.playsinline = true;
+            videoElement.poster = ''; // 可以设置视频封面
 
-            videoElement.addEventListener('play', () => {
+            // 网络状况检测和自适应
+            this.detectNetworkStatus();
+
+            // 视频缓冲事件监听
+            videoElement.addEventListener('progress', () => {
+                this.updateBufferProgress();
+            });
+
+            videoElement.addEventListener('loadedmetadata', () => {
+                this.handleLoadedMetadata();
+            });
+
+            videoElement.addEventListener('playing', () => {
                 this.isPlaying = true;
                 this.simulateViewerInteraction('view');
             });
@@ -92,7 +110,98 @@ class FakeLive {
                 this.isPlaying = false;
             });
 
+            videoElement.addEventListener('error', (e) => {
+                this.handleVideoError(e);
+            });
+
             this.player = videoElement;
+        }
+    }
+
+    // 网络状况检测
+    detectNetworkStatus() {
+        if (navigator.connection) {
+            const connection = navigator.connection;
+            
+            // 监听网络变化
+            connection.addEventListener('change', () => {
+                this.adjustPlaybackQuality(connection);
+            });
+            
+            // 初始调整
+            this.adjustPlaybackQuality(connection);
+        }
+    }
+
+    // 根据网络状况调整播放质量
+    adjustPlaybackQuality(connection) {
+        if (!this.player) return;
+        
+        const effectiveType = connection.effectiveType;
+        console.log('网络状况:', effectiveType);
+        
+        // 根据网络类型调整播放策略
+        switch (effectiveType) {
+            case '4g':
+                // 4G网络，使用高清
+                this.player.playbackRate = 1.0;
+                break;
+            case '3g':
+                // 3G网络，使用标清
+                this.player.playbackRate = 0.9;
+                break;
+            case '2g':
+                // 2G网络，使用低清
+                this.player.playbackRate = 0.8;
+                break;
+            default:
+                // 其他网络，使用默认设置
+                this.player.playbackRate = 1.0;
+        }
+    }
+
+    // 更新缓冲进度
+    updateBufferProgress() {
+        if (!this.player) return;
+        
+        const buffered = this.player.buffered;
+        if (buffered.length > 0) {
+            const bufferedEnd = buffered.end(buffered.length - 1);
+            const duration = this.player.duration;
+            const bufferProgress = (bufferedEnd / duration) * 100;
+            
+            // 可以在这里更新UI显示缓冲进度
+            console.log('缓冲进度:', bufferProgress.toFixed(2) + '%');
+        }
+    }
+
+    // 处理视频元数据加载完成
+    handleLoadedMetadata() {
+        if (!this.player) return;
+        
+        console.log('视频元数据加载完成:', {
+            duration: this.player.duration,
+            width: this.player.videoWidth,
+            height: this.player.videoHeight
+        });
+        
+        // 可以在这里设置视频的初始状态
+    }
+
+    // 处理视频错误
+    handleVideoError(e) {
+        console.error('视频播放错误:', e);
+        
+        // 错误处理逻辑
+        if (this.streamUrl) {
+            // 尝试重新加载
+            setTimeout(() => {
+                if (this.player) {
+                    this.player.src = this.streamUrl;
+                    this.player.load();
+                    this.player.play();
+                }
+            }, 3000);
         }
     }
 

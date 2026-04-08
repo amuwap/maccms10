@@ -30,40 +30,57 @@
 
 <!-- 播放器 -->
 <section class="container mb-8">
-    <div class="card">
-        <div class="card-content p-6">
-            <h2 class="text-2xl font-bold mb-4">{$obj.vod_name} - {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</h2>
-            <div class="bg-primary-color rounded-lg overflow-hidden">
-                <div id="bofang_box" class="aspect-w-16 aspect-h-9">
-                    {$player_data}
-                    {$player_js}
-                </div>
+    <div class="bg-background-light rounded-xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+            {$obj.vod_name} - {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}
+        </h2>
+        <div class="bg-primary-color rounded-xl overflow-hidden shadow-xl">
+            <div id="bofang_box" class="aspect-w-16 aspect-h-9">
+                {$player_data}
+                {$player_js}
             </div>
-            <div class="flex justify-between items-center mt-4">
-                <div class="flex gap-4">
-                    <a href="{$obj.player_info.link_pre}" class="btn btn-secondary">上一集</a>
-                    <a href="{$obj.player_info.link_next}" class="btn btn-secondary">下一集</a>
-                </div>
-                <a href="javascript:;" onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href,'{$obj.vod_id}')" class="text-accent-color hover:underline">报错</a>
+        </div>
+        <div class="flex flex-wrap justify-between items-center mt-6 gap-4">
+            <div class="flex gap-3">
+                <a href="{$obj.player_info.link_pre}" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    上一集
+                </a>
+                <a href="{$obj.player_info.link_next}" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
+                    下一集
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
             </div>
+            <a href="javascript:;" onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href,'{$obj.vod_id}')" class="text-accent-color hover:text-primary transition-colors duration-300 flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                报错
+            </a>
         </div>
     </div>
 </section>
 
 <!-- 选集列表 -->
 <section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">选集</h2>
+    <h2 class="text-2xl font-bold mb-6 flex items-center">
+        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+        选集
+    </h2>
     {maccms:foreach name="obj.vod_play_list" id="vo"}
-    <div class="card mb-4">
-        <div class="card-content p-6">
-            <h3 class="text-lg font-bold mb-4">{$vo.player_info.show}</h3>
-            <div class="grid grid-cols-8 gap-4">
-                {maccms:foreach name="vo.urls" id="vo2" key="key2"}
-                <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="px-4 py-2 border border-border-color rounded-md text-center hover:bg-accent-color hover:text-white transition-all {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}bg-accent-color text-white{/if}">
-                    {$vo2.name}
-                </a>
-                {/maccms:foreach}
-            </div>
+    <div class="bg-background-light rounded-xl p-6 shadow-lg mb-6">
+        <h3 class="text-lg font-bold mb-5">{$vo.player_info.show}</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+            {maccms:foreach name="vo.urls" id="vo2" key="key2"}
+            <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="px-4 py-2 border border-border-color rounded-md text-center hover:bg-accent-color hover:text-white transition-all duration-300 transform hover:scale-105 hover:shadow-md {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}bg-accent-color text-white{/if}">
+                {$vo2.name}
+            </a>
+            {/maccms:foreach}
         </div>
     </div>
     {/maccms:foreach}
@@ -71,41 +88,71 @@
 
 <!-- 剧情介绍 -->
 <section class="container mb-8">
-    <div class="card">
-        <div class="card-content p-6">
-            <h2 class="text-2xl font-bold mb-4">剧情介绍</h2>
-            <div class="text-text-secondary leading-relaxed">
-                {$obj.vod_content}
-            </div>
+    <div class="bg-background-light rounded-xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+            剧情介绍
+        </h2>
+        <div class="text-text-secondary leading-relaxed">
+            {$obj.vod_content}
         </div>
     </div>
 </section>
 
 <!-- 相关推荐 -->
 <section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-4">相关推荐</h2>
-    <div class="grid grid-cols-4 gap-4">
-        {maccms:vod num="8" type="current" order="desc" by="time"}
-        <div class="card">
-            <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}">
-                <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="card-image">
-                <div class="card-content">
-                    <h3 class="card-title">{$vo.vod_name}</h3>
-                    <span class="text-sm font-medium text-accent-color">{$vo.vod_version}</span>
+    <h2 class="text-2xl font-bold mb-6 flex items-center">
+        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+        相关推荐
+    </h2>
+    <div class="relative">
+        <div class="overflow-x-auto pb-4 scrollbar-hide">
+            <div class="flex gap-4 min-w-max">
+                {maccms:vod num="12" type="current" order="desc" by="time"}
+                <div class="group relative w-48 sm:w-56">
+                    <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" class="block">
+                        <div class="aspect-[2/3] rounded-lg overflow-hidden shadow-lg relative">
+                            <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-3 text-white w-full">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-medium">{$vo.vod_score}</span>
+                                        <span class="text-xs bg-accent-color/90 px-2 py-1 rounded">{$vo.vod_year}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h3 class="font-medium line-clamp-2 transition-colors duration-300 group-hover:text-accent-color">{$vo.vod_name}</h3>
+                            <span class="text-sm text-text-light mt-1 block">{$vo.vod_class}</span>
+                        </div>
+                    </a>
                 </div>
-            </a>
+                {/maccms:vod}
+            </div>
         </div>
-        {/maccms:vod}
+        <!-- 滚动控制按钮 -->
+        <button class="scroll-left absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-background-light/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10 hover:bg-background-light transition-all duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button class="scroll-right absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-background-light/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg z-10 hover:bg-background-light transition-all duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
     </div>
 </section>
 
 <!-- 评论 -->
 <section class="container mb-8">
-    <div class="card">
-        <div class="card-content p-6">
-            <h2 class="text-2xl font-bold mb-4">评论</h2>
-            <div class="mac_comment" data-id="{$obj.vod_id}" data-mid="{$maccms.mid}"></div>
-        </div>
+    <div class="bg-background-light rounded-xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+            评论
+        </h2>
+        <div class="mac_comment" data-id="{$obj.vod_id}" data-mid="{$maccms.mid}"></div>
     </div>
 </section>
 
@@ -117,6 +164,19 @@
         MAC.Comment.Verify = {$comment.verify};
         MAC.Comment.Init();
         MAC.Comment.Show(1);
+        
+        // 相关推荐滚动控制
+        const scrollContainer = $('.overflow-x-auto');
+        const scrollLeftBtn = $('.scroll-left');
+        const scrollRightBtn = $('.scroll-right');
+        
+        scrollLeftBtn.on('click', function() {
+            scrollContainer.animate({ scrollLeft: '-=300' }, 300);
+        });
+        
+        scrollRightBtn.on('click', function() {
+            scrollContainer.animate({ scrollLeft: '+=300' }, 300);
+        });
     });
 </script>
 </body>

@@ -14,27 +14,32 @@
 <!-- 英雄区 -->
 {maccms:vod num="1" level="9" order="desc" by="time"}
 <section class="hero">
-    <img src="{$vo.vod_pic_slide|mac_url_img}" alt="{$vo.vod_name}" class="hero-background"/>
-    <div class="hero-content fade-in">
-        <div class="hero-badges">
-            <span class="hero-badge">{$vo.vod_year}</span>
-            <span class="hero-badge">{$vo.vod_area}</span>
-            <span class="hero-badge">{$vo.vod_lang}</span>
-            <span class="hero-badge">{$vo.vod_remarks}</span>
+    <div class="hero-background-container">
+        <img src="{$vo.vod_pic_slide|mac_url_img}" alt="{$vo.vod_name}" class="hero-background"/>
+        <div class="hero-gradient"></div>
+    </div>
+    <div class="hero-content container">
+        <div class="hero-content-inner">
+            <div class="hero-badges">
+                <span class="hero-badge">{$vo.vod_year}</span>
+                <span class="hero-badge">{$vo.vod_area}</span>
+                <span class="hero-badge">{$vo.vod_lang}</span>
+                <span class="hero-badge">{$vo.vod_remarks}</span>
+            </div>
+            <h1 class="hero-title">{$vo.vod_name}</h1>
+            <p class="hero-subtitle">{$vo.vod_blurb|mb_substr=0,150}...</p>
+            <div class="hero-actions">
+                <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-primary">
+                    <i class="fas fa-play"></i>
+                    立即观看
+                </a>
+                <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-secondary">
+                    <i class="fas fa-info-circle"></i>
+                    了解详情
+                </a>
+            </div>
         </div>
-        <h1 class="hero-title">{$vo.vod_name}</h1>
-        <p class="hero-subtitle">{$vo.vod_blurb|mb_substr=0,150}...</p>
-        <div class="hero-actions">
-            <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-primary">
-                <i class="fas fa-play"></i>
-                立即观看
-            </a>
-            <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-secondary">
-                <i class="fas fa-info-circle"></i>
-                了解详情
-            </a>
-        </div>
-        <div class="hero-search mt-6">
+        <div class="hero-search">
             <div class="relative">
                 <input type="text" class="search-input" placeholder="搜索电影、电视剧、综艺..." id="search-input">
                 <button class="search-button" id="search-button">搜索</button>
@@ -46,21 +51,36 @@
 
 <!-- 分类导航 -->
 <section class="container mt-8">
-    <div class="grid grid-cols-5 gap-6 mb-12">
+    <h2 class="section-title">
+        分类导航
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
         {maccms:type ids="1,2,3,4" order="asc" by="sort" id="vo1" key="key1"}
         <a href="{:mac_url_type($vo1)}" class="category-card">
-            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt={$vo1.type_name}%20category%20banner%20cinema%20dark%20theme&image_size=landscape_16_9" alt="{$vo1.type_name}" class="w-full h-full object-cover">
-            <div class="category-overlay">
+            <div class="category-image-container">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt={$vo1.type_name}%20category%20banner%20cinema%20dark%20theme&image_size=landscape_16_9" alt="{$vo1.type_name}" class="category-image">
+                <div class="category-gradient"></div>
+            </div>
+            <div class="category-content">
                 <h3 class="category-title">{$vo1.type_name}</h3>
                 <p class="category-subtitle">浏览全部{$vo1.type_name}</p>
+                <div class="category-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
             </div>
         </a>
         {/maccms:type}
         <a href="{:mac_url('label/rank')}" class="category-card">
-            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20ranking%20leaderboard%20cinema%20dark%20theme&image_size=landscape_16_9" alt="影视排行榜" class="w-full h-full object-cover">
-            <div class="category-overlay">
+            <div class="category-image-container">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20ranking%20leaderboard%20cinema%20dark%20theme&image_size=landscape_16_9" alt="影视排行榜" class="category-image">
+                <div class="category-gradient"></div>
+            </div>
+            <div class="category-content">
                 <h3 class="category-title">影视排行榜</h3>
                 <p class="category-subtitle">查看热门排行</p>
+                <div class="category-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
             </div>
         </a>
     </div>

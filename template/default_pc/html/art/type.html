@@ -10,38 +10,66 @@
 <body>
 {include file="public/head"}
 
-<!--当前位置-->
-<div class="bread-crumb-nav fn-clear">
-    <ul class="bread-crumbs">
-        <li class="home"><a href="{$maccms.path}">首页</a></li>
-        <li><a href="{:mac_url_type($obj)}">{$obj.type_name}</a></li>
-        <li class="back"><a href="javascript:MAC.GoBack()">返回上一页</a></li>
-    </ul>
-</div>
-<!--文章列表-->
-<div class="wenzhang">
-    <div class="vodlist_l">
-        <ul class="pianyi">
-            {maccms:art num="30" paging="yes" type="current" order="desc" by="time"}
-            <li><span>{$vo.art_time|date='Y-m-d',###}</span><a href="{:mac_url_art_detail($vo)}">{$vo.art_name}</a></li>
-            {/maccms:art}
-        </ul>
+<!-- 当前位置 -->
+<section class="container mt-4 mb-6">
+    <nav class="text-sm text-text-light">
+        <a href="{$maccms.path}" class="text-accent-color hover:underline">首页</a>
+        <span class="mx-2">/</span>
+        <span class="text-text-primary">{$obj.type_name}</span>
+    </nav>
+</section>
 
-        {include file="public/paging"}
-
-    </div>
-    <div class="vodlist_r">
-        <div class="ui-ranking">
-            <h3>热点影视资讯</h3>
-            <ul class="ranking-list">
-                {maccms:art num="20" order="desc" by="hits_month"}
-                <li><span>{$vo.art_hits_month}</span><i {if condition="$key lt 4"} class="stress"{/if}>{$key}</i><a href="{:mac_url_art_detail($vo)}" title="{$vo.art_name}">{$vo.art_name}</a></li>
-                {/maccms:art}
-            </ul>
+<!-- 文章列表 -->
+<section class="container mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- 主内容区 -->
+        <div class="lg:col-span-2">
+            <div class="bg-background-light rounded-xl p-6 shadow-lg">
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+                    {$obj.type_name}
+                </h1>
+                
+                <div class="space-y-4">
+                    {maccms:art num="30" paging="yes" type="current" order="desc" by="time"}
+                    <a href="{:mac_url_art_detail($vo)}" class="block p-4 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1 group">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-medium group-hover:text-accent-color transition-colors duration-300">{$vo.art_name}</h3>
+                            <span class="text-sm text-text-light">{$vo.art_time|date='Y-m-d',###}</span>
+                        </div>
+                    </a>
+                    {/maccms:art}
+                </div>
+                
+                <!-- 分页 -->
+                <div class="mt-8">
+                    {include file="public/paging"}
+                </div>
+            </div>
+        </div>
+        
+        <!-- 侧边栏 -->
+        <div class="lg:col-span-1">
+            <div class="bg-background-light rounded-xl p-6 shadow-lg">
+                <h3 class="text-lg font-bold mb-4 flex items-center">
+                    <span class="w-1 h-4 bg-accent-color mr-3 rounded-full"></span>
+                    热点影视资讯
+                </h3>
+                <ul class="space-y-3">
+                    {maccms:art num="15" order="desc" by="hits_month"}
+                    <li>
+                        <a href="{:mac_url_art_detail($vo)}" class="flex items-center p-2 rounded-lg hover:bg-background-dark transition-all duration-300 group">
+                            <span class="w-6 h-6 flex items-center justify-center rounded-full mr-3 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                            <span class="flex-1 text-sm group-hover:text-accent-color transition-colors duration-300 truncate">{$vo.art_name}</span>
+                            <span class="text-xs text-text-light ml-2">{$vo.art_hits_month}</span>
+                        </a>
+                    </li>
+                    {/maccms:art}
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="clear"></div>
-</div>
+</section>
 
 {include file="public/foot"}
 </body>

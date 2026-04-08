@@ -20,32 +20,40 @@
 
 <!-- 排行榜主体 -->
 <section class="container mb-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <h2 class="text-2xl font-bold mb-8 flex items-center">
+        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
+        排行榜
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         <!-- 电影排行榜 -->
-        <div class="card p-6">
-            <h2 class="text-xl font-bold mb-6 border-b pb-2">电影排行榜</h2>
+        <div class="bg-background-light rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-6 flex items-center border-b pb-3">
+                <span class="w-1 h-4 bg-accent-color mr-3 rounded-full"></span>
+                电影排行榜
+            </h2>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">总评分排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="1" order="desc" by="score"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_score}分</span>
                     </a>
                     {/maccms:vod}
                 </div>
             </div>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">月人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="1" order="desc" by="hits_month"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_month}次</span>
                     </a>
                     {/maccms:vod}
@@ -53,12 +61,12 @@
             </div>
             
             <div>
-                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
-                <div class="space-y-3">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">周人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="1" order="desc" by="hits_week"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_week}次</span>
                     </a>
                     {/maccms:vod}
@@ -67,29 +75,32 @@
         </div>
         
         <!-- 电视剧排行榜 -->
-        <div class="card p-6">
-            <h2 class="text-xl font-bold mb-6 border-b pb-2">电视剧排行榜</h2>
+        <div class="bg-background-light rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-6 flex items-center border-b pb-3">
+                <span class="w-1 h-4 bg-accent-color mr-3 rounded-full"></span>
+                电视剧排行榜
+            </h2>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">总评分排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="2" order="desc" by="score"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_score}分</span>
                     </a>
                     {/maccms:vod}
                 </div>
             </div>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">月人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="2" order="desc" by="hits_month"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_month}次</span>
                     </a>
                     {/maccms:vod}
@@ -97,12 +108,12 @@
             </div>
             
             <div>
-                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
-                <div class="space-y-3">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">周人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="2" order="desc" by="hits_week"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_week}次</span>
                     </a>
                     {/maccms:vod}
@@ -111,29 +122,32 @@
         </div>
         
         <!-- 动漫排行榜 -->
-        <div class="card p-6">
-            <h2 class="text-xl font-bold mb-6 border-b pb-2">动漫排行榜</h2>
+        <div class="bg-background-light rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-6 flex items-center border-b pb-3">
+                <span class="w-1 h-4 bg-accent-color mr-3 rounded-full"></span>
+                动漫排行榜
+            </h2>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">总评分排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="3" order="desc" by="score"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_score}分</span>
                     </a>
                     {/maccms:vod}
                 </div>
             </div>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">月人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="3" order="desc" by="hits_month"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_month}次</span>
                     </a>
                     {/maccms:vod}
@@ -141,12 +155,12 @@
             </div>
             
             <div>
-                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
-                <div class="space-y-3">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">周人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="3" order="desc" by="hits_week"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_week}次</span>
                     </a>
                     {/maccms:vod}
@@ -155,29 +169,32 @@
         </div>
         
         <!-- 综艺排行榜 -->
-        <div class="card p-6">
-            <h2 class="text-xl font-bold mb-6 border-b pb-2">综艺排行榜</h2>
+        <div class="bg-background-light rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-6 flex items-center border-b pb-3">
+                <span class="w-1 h-4 bg-accent-color mr-3 rounded-full"></span>
+                综艺排行榜
+            </h2>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">总评分排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">总评分排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="4" order="desc" by="score"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_score}分</span>
                     </a>
                     {/maccms:vod}
                 </div>
             </div>
             
-            <div class="mb-6">
-                <h3 class="text-lg font-medium mb-4">月人气排行榜</h3>
-                <div class="space-y-3">
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">月人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="4" order="desc" by="hits_month"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_month}次</span>
                     </a>
                     {/maccms:vod}
@@ -185,12 +202,12 @@
             </div>
             
             <div>
-                <h3 class="text-lg font-medium mb-4">周人气排行榜</h3>
-                <div class="space-y-3">
+                <h3 class="text-lg font-medium mb-4 text-text-secondary">周人气排行榜</h3>
+                <div class="space-y-2">
                     {maccms:vod num="10" type="4" order="desc" by="hits_week"}
-                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 border border-border-color rounded-md hover:bg-background-dark transition-all">
-                        <span class="w-8 h-8 flex items-center justify-center bg-accent-color text-white rounded-full mr-4 font-bold">{$key+1}</span>
-                        <span class="flex-1 font-medium hover:text-accent-color">{$vo.vod_name}</span>
+                    <a href="{:mac_url_vod_detail($vo)}" class="flex items-center p-3 rounded-lg hover:bg-background-dark transition-all duration-300 transform hover:translate-x-1">
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold {if condition="$key < 3"}bg-accent-color text-white{else}bg-background-dark text-text-primary{/if}">{$key+1}</span>
+                        <span class="flex-1 font-medium hover:text-accent-color transition-colors duration-300">{$vo.vod_name}</span>
                         <span class="text-text-light">{$vo.vod_hits_week}次</span>
                     </a>
                     {/maccms:vod}

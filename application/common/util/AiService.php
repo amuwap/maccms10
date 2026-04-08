@@ -260,7 +260,8 @@ class AiService
             'ernie' => 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions',
             'glm' => 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
             'deepseek' => 'https://api.deepseek.com/v1/chat/completions',
-            'moonshot' => 'https://api.moonshot.cn/v1/chat/completions'
+            'moonshot' => 'https://api.moonshot.cn/v1/chat/completions',
+            'doubao' => 'https://ark.cn-beijing.volces.com/api/v3/chat/completions'
         ];
         return isset($urls[$provider]) ? $urls[$provider] : $urls['openai'];
     }
@@ -460,14 +461,27 @@ class AiService
         $type_name = $type_info ? $type_info['type_name'] : '视频';
         
         $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
-        $prompt = $this->buildVodBlurbPrompt(
-            $vod_name, 
-            $type_name,
-            isset($vod_info['vod_actor']) ? $vod_info['vod_actor'] : '',
-            isset($vod_info['vod_director']) ? $vod_info['vod_director'] : '',
-            isset($vod_info['vod_year']) ? $vod_info['vod_year'] : '',
-            isset($vod_info['vod_area']) ? $vod_info['vod_area'] : ''
-        );
+        
+        // 检查是否有自定义提示词
+        if (isset($options['prompts']) && isset($options['prompts']['intro'])) {
+            $prompt = $options['prompts']['intro'];
+            // 替换占位符
+            $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+            $prompt = str_replace('{type_name}', $type_name, $prompt);
+            $prompt = str_replace('{vod_actor}', isset($vod_info['vod_actor']) ? $vod_info['vod_actor'] : '', $prompt);
+            $prompt = str_replace('{vod_director}', isset($vod_info['vod_director']) ? $vod_info['vod_director'] : '', $prompt);
+            $prompt = str_replace('{vod_year}', isset($vod_info['vod_year']) ? $vod_info['vod_year'] : '', $prompt);
+            $prompt = str_replace('{vod_area}', isset($vod_info['vod_area']) ? $vod_info['vod_area'] : '', $prompt);
+        } else {
+            $prompt = $this->buildVodBlurbPrompt(
+                $vod_name, 
+                $type_name,
+                isset($vod_info['vod_actor']) ? $vod_info['vod_actor'] : '',
+                isset($vod_info['vod_director']) ? $vod_info['vod_director'] : '',
+                isset($vod_info['vod_year']) ? $vod_info['vod_year'] : '',
+                isset($vod_info['vod_area']) ? $vod_info['vod_area'] : ''
+            );
+        }
         
         $result = $this->generateContent($prompt, 'intro', $options);
         if ($result['code'] == 1) {
@@ -485,7 +499,16 @@ class AiService
         foreach ($actors as $actor_name) {
             $actor_name = trim($actor_name);
             if (!empty($actor_name)) {
-                $prompt = $this->buildActorInfoPrompt($actor_name, $vod_name);
+                // 检查是否有自定义提示词
+                if (isset($options['prompts']) && isset($options['prompts']['actors'])) {
+                    $prompt = $options['prompts']['actors'];
+                    // 替换占位符
+                    $prompt = str_replace('{actor_name}', $actor_name, $prompt);
+                    $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+                } else {
+                    $prompt = $this->buildActorInfoPrompt($actor_name, $vod_name);
+                }
+                
                 $result = $this->generateContent($prompt, 'actor', $options);
                 if ($result['code'] == 1) {
                     $actor_data = json_decode($result['data'], true);
@@ -526,7 +549,16 @@ class AiService
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
         
         for ($i = 0; $i < $count; $i++) {
-            $prompt = $this->buildReviewPrompt($vod_name, $type_name);
+            // 检查是否有自定义提示词
+            if (isset($options['prompts']) && isset($options['prompts']['reviews'])) {
+                $prompt = $options['prompts']['reviews'];
+                // 替换占位符
+                $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+                $prompt = str_replace('{type_name}', $type_name, $prompt);
+            } else {
+                $prompt = $this->buildReviewPrompt($vod_name, $type_name);
+            }
+            
             $localOptions = $options;
             $localOptions['use_cache'] = false;
             
@@ -555,7 +587,16 @@ class AiService
 
     public function generateEpisodes($vod_name, $total_episodes = 10, $options = [])
     {
-        $prompt = $this->buildPlotPrompt($vod_name, $total_episodes);
+        // 检查是否有自定义提示词
+        if (isset($options['prompts']) && isset($options['prompts']['episodes'])) {
+            $prompt = $options['prompts']['episodes'];
+            // 替换占位符
+            $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+            $prompt = str_replace('{total_episodes}', $total_episodes, $prompt);
+        } else {
+            $prompt = $this->buildPlotPrompt($vod_name, $total_episodes);
+        }
+        
         $result = $this->generateContent($prompt, 'plot', $options);
         
         if ($result['code'] == 1) {
@@ -580,7 +621,18 @@ class AiService
         $actor = isset($options['vod_actor']) ? $options['vod_actor'] : '';
         $director = isset($options['vod_director']) ? $options['vod_director'] : '';
         
-        $prompt = $this->buildScorePrompt($vod_name, $type_name, $actor, $director);
+        // 检查是否有自定义提示词
+        if (isset($options['prompts']) && isset($options['prompts']['score'])) {
+            $prompt = $options['prompts']['score'];
+            // 替换占位符
+            $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+            $prompt = str_replace('{type_name}', $type_name, $prompt);
+            $prompt = str_replace('{actor}', $actor, $prompt);
+            $prompt = str_replace('{director}', $director, $prompt);
+        } else {
+            $prompt = $this->buildScorePrompt($vod_name, $type_name, $actor, $director);
+        }
+        
         $result = $this->generateContent($prompt, 'score', $options);
         
         if ($result['code'] == 1) {
@@ -597,7 +649,17 @@ class AiService
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
         $content = isset($options['vod_content']) ? $options['vod_content'] : '';
         
-        $prompt = $this->buildTagsPrompt($vod_name, $type_name, $content);
+        // 检查是否有自定义提示词
+        if (isset($options['prompts']) && isset($options['prompts']['tags'])) {
+            $prompt = $options['prompts']['tags'];
+            // 替换占位符
+            $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+            $prompt = str_replace('{type_name}', $type_name, $prompt);
+            $prompt = str_replace('{content}', $content, $prompt);
+        } else {
+            $prompt = $this->buildTagsPrompt($vod_name, $type_name, $content);
+        }
+        
         $result = $this->generateContent($prompt, 'tags', $options);
         
         if ($result['code'] == 1) {
@@ -621,7 +683,17 @@ class AiService
         $content = isset($options['vod_content']) ? $options['vod_content'] : '';
         
         for ($i = 0; $i < $count; $i++) {
-            $prompt = $this->buildCommentPrompt($vod_name, $type_name, $content);
+            // 检查是否有自定义提示词
+            if (isset($options['prompts']) && isset($options['prompts']['comments'])) {
+                $prompt = $options['prompts']['comments'];
+                // 替换占位符
+                $prompt = str_replace('{vod_name}', $vod_name, $prompt);
+                $prompt = str_replace('{type_name}', $type_name, $prompt);
+                $prompt = str_replace('{content}', $content, $prompt);
+            } else {
+                $prompt = $this->buildCommentPrompt($vod_name, $type_name, $content);
+            }
+            
             $localOptions = $options;
             $localOptions['use_cache'] = false;
             
@@ -946,6 +1018,9 @@ class AiService
             ],
             'moonshot' => [
                 'moonshot-v1-8k', 'moonshot-v1-32k', 'moonshot-v1-128k'
+            ],
+            'doubao' => [
+                'doubao-pro-1.5', 'doubao-pro', 'doubao-lite'
             ]
         ];
 

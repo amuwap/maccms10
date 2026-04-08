@@ -20,9 +20,10 @@ class AutoContentGenerator {
      * 自动为影视生成内容
      * @param int $vod_id 影视ID
      * @param array $types 要生成的内容类型
+     * @param array $prompts 自定义提示词
      * @return array
      */
-    public function generateContentForVod($vod_id, $types = ['intro', 'tags', 'comments']) {
+    public function generateContentForVod($vod_id, $types = ['intro', 'tags', 'comments'], $prompts = []) {
         try {
             // 获取影视信息
             $vod_info = model('Vod')->get($vod_id);
@@ -39,7 +40,8 @@ class AutoContentGenerator {
             $options = [
                 'vod_info' => $vod_info,
                 'use_cache' => true,
-                'cache_time' => 86400
+                'cache_time' => 86400,
+                'prompts' => $prompts
             ];
 
             // 批量生成内容
@@ -69,9 +71,10 @@ class AutoContentGenerator {
      * 批量为多个影视生成内容
      * @param array $vod_ids 影视ID列表
      * @param array $types 要生成的内容类型
+     * @param array $prompts 自定义提示词
      * @return array
      */
-    public function batchGenerateContent($vod_ids, $types = ['intro', 'tags', 'comments']) {
+    public function batchGenerateContent($vod_ids, $types = ['intro', 'tags', 'comments'], $prompts = []) {
         $results = [];
         $batch_count = ceil(count($vod_ids) / $this->batchSize);
 
@@ -87,8 +90,15 @@ class AutoContentGenerator {
             }
 
             if (!empty($need_generate_ids)) {
+                // 准备选项
+                $options = [
+                    'use_cache' => true,
+                    'cache_time' => 86400,
+                    'prompts' => $prompts
+                ];
+                
                 // 批量生成内容
-                $result = $this->aiService->batchGenerate($need_generate_ids, $types);
+                $result = $this->aiService->batchGenerate($need_generate_ids, $types, $options);
                 
                 if ($result['code'] == 1) {
                     foreach ($result['results'] as $vod_id => $vod_result) {
@@ -241,10 +251,11 @@ class AutoContentGenerator {
      * 生成指定类型的内容
      * @param int $vod_id 影视ID
      * @param string $type 内容类型
+     * @param array $prompts 自定义提示词
      * @return array
      */
-    public function generateSpecificContent($vod_id, $type) {
-        return $this->generateContentForVod($vod_id, [$type]);
+    public function generateSpecificContent($vod_id, $type, $prompts = []) {
+        return $this->generateContentForVod($vod_id, [$type], $prompts);
     }
 
     /**

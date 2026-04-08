@@ -1,0 +1,58 @@
+{include file="public/head.html"}
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">直播管理</li>
+            <li><a href="{:url('Live/gifts')}">礼物管理</a></li>
+        </ul>
+        <div class="layui-tab-content" style="padding: 20px 0;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-btn-container">
+                    <a href="{:url('Live/add')}" class="layui-btn layui-btn-normal">添加直播</a>
+                </div>
+                <table class="layui-table" lay-data="{height:315, url:'/admin/live/index', page:true, id:'test'}" lay-filter="test">
+                    <thead>
+                        <tr>
+                            <th lay-data="{field:'live_id', width:80, sort:true}">ID</th>
+                            <th lay-data="{field:'live_name', minWidth:150}">直播名称</th>
+                            <th lay-data="{field:'live_anchor', width:100}">主播</th>
+                            <th lay-data="{field:'live_category', width:100}">分类</th>
+                            <th lay-data="{field:'live_status', width:80, templet:'#statusTpl'}">状态</th>
+                            <th lay-data="{field:'live_online', width:80, sort:true}">在线人数</th>
+                            <th lay-data="{field:'live_hits', width:80, sort:true}">观看次数</th>
+                            <th lay-data="{field:'live_time', width:150, templet:'#timeTpl'}">更新时间</th>
+                            <th lay-data="{field:'live_sort', width:80, sort:true}">排序</th>
+                            <th lay-data="{fixed:'right', width:200, align:'center', toolbar:'#barDemo'}">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+                <script type="text/html" id="statusTpl">
+                    {{# if(d.live_status == 1){ }}
+                    <span class="layui-badge layui-bg-green">在线</span>
+                    {{# } else { }}
+                    <span class="layui-badge">离线</span>
+                    {{# } }}
+                </script>
+                <script type="text/html" id="timeTpl">
+                    {{# if(d.live_time > 0){ }}
+                    {{layui.util.toDateString(d.live_time * 1000, 'yyyy-MM-dd HH:mm:ss')}}
+                    {{# } else { }}
+                    -{{# }}
+                </script>
+                <script type="text/html" id="barDemo">
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                    {{# if(d.live_status == 0){ }}
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="start">开播</a>
+                    {{# } else { }}
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="stop">下播</a>
+                    {{# } }}
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+layui.use('table', function(){var table = layui.table; table.on('tool(test)', function(obj){var data = obj.data; if(obj.event === 'del'){layer.confirm('确定要删除该直播吗？', function(index){$.post('{:url("Live/del")}',{live_id:data.live_id},function(res){if(res.code == 1){layer.msg('删除成功'); table.reload('test');}else{layer.msg('删除失败');}},'json');layer.close(index);});} else if(obj.event === 'edit'){window.location.href='{:url("Live/edit")}?live_id='+data.live_id;} else if(obj.event === 'start'){layer.confirm('确定要开播吗？', function(index){$.post('{:url("Live/start_live")}',{live_id:data.live_id},function(res){if(res.code == 1){layer.msg('开播成功'); table.reload('test');}else{layer.msg('开播失败');}},'json');layer.close(index);});} else if(obj.event === 'stop'){layer.confirm('确定要下播吗？', function(index){$.post('{:url("Live/stop_live")}',{live_id:data.live_id},function(res){if(res.code == 1){layer.msg('下播成功'); table.reload('test');}else{layer.msg('下播失败');}},'json');layer.close(index);});}});});
+</script>
+{include file="public/foot.html"}

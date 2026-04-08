@@ -1,0 +1,43 @@
+{include file="public/head.html"}
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li><a href="{:url('Live/index')}">直播管理</a></li>
+            <li class="layui-this">礼物管理</li>
+        </ul>
+        <div class="layui-tab-content" style="padding: 20px 0;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-btn-container">
+                    <a href="{:url('Live/add_gift')}" class="layui-btn layui-btn-normal">添加礼物</a>
+                </div>
+                <table class="layui-table" lay-data="{height:315, url:'/admin/live/gifts', page:true, id:'giftTest'}" lay-filter="giftTest">
+                    <thead>
+                        <tr>
+                            <th lay-data="{field:'gift_id', width:80, sort:true}">ID</th>
+                            <th lay-data="{field:'gift_name', minWidth:150}">礼物名称</th>
+                            <th lay-data="{field:'gift_price', width:100, sort:true}">价格</th>
+                            <th lay-data="{field:'gift_status', width:80, templet:'#giftStatusTpl'}">状态</th>
+                            <th lay-data="{field:'gift_sort', width:80, sort:true}">排序</th>
+                            <th lay-data="{fixed:'right', width:150, align:'center', toolbar:'#giftBarDemo'}">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+                <script type="text/html" id="giftStatusTpl">
+                    {{# if(d.gift_status == 1){ }}
+                    <span class="layui-badge layui-bg-green">启用</span>
+                    {{# } else { }}
+                    <span class="layui-badge">禁用</span>
+                    {{# } }}
+                </script>
+                <script type="text/html" id="giftBarDemo">
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+layui.use('table', function(){var table = layui.table; table.on('tool(giftTest)', function(obj){var data = obj.data; if(obj.event === 'del'){layer.confirm('确定要删除该礼物吗？', function(index){$.post('{:url("Live/del_gift")}',{gift_id:data.gift_id},function(res){if(res.code == 1){layer.msg('删除成功'); table.reload('giftTest');}else{layer.msg('删除失败');}},'json');layer.close(index);});} else if(obj.event === 'edit'){window.location.href='{:url("Live/edit_gift")}?gift_id='+data.gift_id;}});});
+</script>
+{include file="public/foot.html"}

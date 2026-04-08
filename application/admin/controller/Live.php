@@ -27,6 +27,7 @@ class Live extends Base
                 return $this->error('添加失败');
             }
         }
+        $this->assign('categories', $this->getLiveCategories());
         return $this->fetch('info');
     }
 
@@ -45,7 +46,25 @@ class Live extends Base
         }
         $info = LiveModel::get($live_id);
         $this->assign('info', $info);
+        $this->assign('categories', $this->getLiveCategories());
         return $this->fetch('info');
+    }
+
+    private function getLiveCategories()
+    {
+        return [
+            '' => '请选择分类',
+            'movie' => '电影',
+            'tv' => '电视剧',
+            'variety' => '综艺',
+            'anime' => '动漫',
+            'sports' => '体育',
+            'music' => '音乐',
+            'game' => '游戏',
+            'education' => '教育',
+            'news' => '新闻',
+            'other' => '其他'
+        ];
     }
 
     public function del()

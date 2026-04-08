@@ -1,0 +1,63 @@
+{include file="public/head.html"}
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <div class="layui-tab-content" style="padding: 20px 0;">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" action="" method="post">
+                    <input type="hidden" name="gift_id" value="{$info.gift_id|default=''}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gift_name" value="{$info.gift_name|default=''}" lay-verify="required" placeholder="请输入礼物名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物图片</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gift_pic" value="{$info.gift_pic|default=''}" placeholder="请输入礼物图片地址" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物价格</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gift_price" value="{$info.gift_price|default='0'}" lay-verify="required" placeholder="请输入礼物价格" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物类型</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="gift_type" value="1" title="虚拟礼物" {if condition="isset($info.gift_type) and $info.gift_type eq 1"}checked{/if}>
+                            <input type="radio" name="gift_type" value="2" title="实物礼物" {if condition="isset($info.gift_type) and $info.gift_type eq 2"}checked{/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物动画</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gift_animation" value="{$info.gift_animation|default=''}" placeholder="请输入礼物动画地址" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">礼物状态</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="gift_status" value="1" title="启用" {if condition="isset($info.gift_status) and $info.gift_status eq 1"}checked{/if}>
+                            <input type="radio" name="gift_status" value="0" title="禁用" {if condition="isset($info.gift_status) and $info.gift_status eq 0"}checked{/if}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="gift_sort" value="{$info.gift_sort|default='0'}" placeholder="请输入排序" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/foot.html"}

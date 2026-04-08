@@ -252,4 +252,15 @@ return array(
         '11106' => array("show"=>0,'name' => '--应用插件升级', 'controller' => 'addon',		'action' => 'upgrade'),
     )),
 
+    '12' => array('name' => '直播', 'icon' => 'xe639', 'sub' => array(
+        '121' => array("show"=>1,'name' => '直播管理', 'controller' => 'live',		'action' => 'index'),
+        '12101' => array("show"=>0,'name' => '--直播信息维护', 'controller' => 'live',		'action' => 'info'),
+        '12102' => array("show"=>0,'name' => '--直播删除', 'controller' => 'live',		'action' => 'del'),
+        '12103' => array("show"=>0,'name' => '--直播状态', 'controller' => 'live',		'action' => 'field'),
+
+        '122' => array("show"=>1,'name' => '礼物管理', 'controller' => 'live',		'action' => 'gifts'),
+        '12201' => array("show"=>0,'name' => '--礼物信息维护', 'controller' => 'live',		'action' => 'gift_info'),
+        '12202' => array("show"=>0,'name' => '--礼物删除', 'controller' => 'live',		'action' => 'gift_del'),
+    )),
+
 );

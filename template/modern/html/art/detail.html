@@ -1,46 +1,46 @@
 {include file="public/head.html"}
             <div class="container art-detail">
-                <article class="glass-card art-detail-card">
+                <article class="glass-card art-detail-card fade-in-up">
                     <div class="art-detail-header">
                         <h1 class="art-detail-title">{$obj.art_name}</h1>
                         <div class="art-detail-meta">
                             <span class="art-author">
-                                <i class="layui-icon layui-icon-username"></i>
+                                <i class="icon-user"></i>
                                 {$obj.art_author}
                             </span>
                             <span class="art-time">
-                                <i class="layui-icon layui-icon-time"></i>
+                                <i class="icon-time"></i>
                                 {$obj.art_time_add|mac_day}
                             </span>
                             <span class="art-type">
-                                <i class="layui-icon layui-icon-list"></i>
+                                <i class="icon-list"></i>
                                 {$obj.type.type_name}
                             </span>
                             <span class="art-views">
-                                <i class="layui-icon layui-icon-eye"></i>
+                                <i class="icon-eye"></i>
                                 {$obj.art_hits}
                             </span>
                         </div>
                     </div>
                     
                     {if condition="!empty($obj.art_pic)"}
-                    <div class="art-detail-poster">
+                    <div class="art-detail-poster fade-in-up">
                         <img src="{$obj.art_pic|mac_url_img}" alt="{$obj.art_name}" />
                     </div>
                     {/if}
                     
-                    <div class="art-detail-content article-content">
+                    <div class="art-detail-content article-content fade-in-up">
                         {$obj.art_content}
                     </div>
                     
-                    <div class="art-detail-footer">
+                    <div class="art-detail-footer fade-in-up">
                         <div class="art-actions">
                             <button class="btn btn-primary btn-like" data-id="{$obj.art_id}">
-                                <i class="layui-icon layui-icon-praise"></i>
+                                <i class="icon-heart"></i>
                                 点赞 (<span>{$obj.art_up}</span>)
                             </button>
                             <button class="btn btn-secondary btn-share">
-                                <i class="layui-icon layui-icon-share"></i>
+                                <i class="icon-share"></i>
                                 分享
                             </button>
                         </div>
@@ -53,7 +53,7 @@
                     </div>
                 </article>
                 
-                <div class="art-relate glass-card">
+                <div class="art-relate glass-card fade-in-up">
                     <h3 class="relate-title">相关文章</h3>
                     <div class="relate-list">
                         {maccms:art num="6" type="'.$obj['type_id'].'" not="'.$obj['art_id'].'" order="art_hits desc"}
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 
-                <div class="art-comments glass-card">
+                <div class="art-comments glass-card fade-in-up">
                     <h3 class="comments-title">评论区</h3>
                     
                     <div class="comment-form">
@@ -100,6 +100,10 @@
                 $(document).ready(function() {
                     $('.btn-like').on('click', function() {
                         const artId = $(this).data('id');
+                        const $button = $(this);
+                        
+                        $button.addClass('animate-heartbeat');
+                        
                         $.ajax({
                             url: '{:mac_url("art/digg")}',
                             type: 'POST',
@@ -107,12 +111,22 @@
                             dataType: 'json',
                             success: function(res) {
                                 if (res.code === 1) {
-                                    const count = $('.btn-like span');
+                                    const count = $button.find('span');
                                     count.text(parseInt(count.text()) + 1);
-                                    layer.msg(res.msg, {icon: 1});
+                                    
+                                    // 显示成功动画
+                                    $button.css('background', 'linear-gradient(135deg, var(--success-color), #059669)');
+                                    
+                                    setTimeout(function() {
+                                        $button.removeClass('animate-heartbeat');
+                                        $button.css('background', '');
+                                    }, 1000);
                                 } else {
-                                    layer.msg(res.msg, {icon: 2});
+                                    $button.removeClass('animate-heartbeat');
                                 }
+                            },
+                            error: function() {
+                                $button.removeClass('animate-heartbeat');
                             }
                         });
                     });
@@ -120,11 +134,24 @@
                     $('.btn-submit-comment').on('click', function() {
                         const content = $('.comment-input').val().trim();
                         if (!content) {
-                            layer.msg('请输入评论内容', {icon: 2});
                             return;
                         }
-                        layer.msg('评论发表成功', {icon: 1});
-                        $('.comment-input').val('');
+                        
+                        const $button = $(this);
+                        $button.addClass('animate-pulse');
+                        
+                        // 模拟评论发表
+                        setTimeout(function() {
+                            $button.removeClass('animate-pulse');
+                            $('.comment-input').val('');
+                        }, 1000);
+                    });
+                    
+                    // 平滑滚动到评论区
+                    $('.comment-input').on('focus', function() {
+                        $('html, body').animate({
+                            scrollTop: $(this).offset().top - 100
+                        }, 300);
                     });
                 });
             </script>

@@ -157,6 +157,31 @@ body::before {
     letter-spacing: -0.5px;
 }
 
+/* 导航容器 */
+.nav-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* 菜单切换按钮 */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    z-index: 1001;
+}
+
+.menu-toggle:hover {
+    background: var(--glass-bg);
+}
+
 /* 导航 */
 .nav-main {
     display: flex;
@@ -548,6 +573,39 @@ body::before {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 24px;
     margin: 24px 0;
+}
+
+/* 移动端内容网格优化 */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .content-poster {
+        aspect-ratio: 3/4;
+    }
+    
+    .content-info {
+        padding: 12px 4px 4px;
+    }
+    
+    .content-title {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .content-meta {
+        font-size: 12px;
+    }
 }
 
 .content-item {
@@ -975,7 +1033,7 @@ body::before {
     color: white;
 }
 
-/* ========================================
+/* ======================================== 
    搜索页面设计
    ======================================== */
 .search-page {
@@ -987,6 +1045,127 @@ body::before {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+}
+
+/* 移动端搜索页面优化 */
+@media (max-width: 768px) {
+    .search-page {
+        padding: 16px 0;
+    }
+    
+    .search-result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    
+    .search-query {
+        font-size: 18px;
+    }
+    
+    .filter-section {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .filter-group {
+        margin-bottom: 16px;
+    }
+    
+    .filter-options {
+        gap: 8px;
+    }
+    
+    .filter-option {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .sort-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    
+    .sort-options {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .sort-option {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .search-results-list {
+        gap: 16px;
+    }
+    
+    .search-result-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+        padding: 16px;
+    }
+    
+    .result-card-poster {
+        width: 100%;
+        max-width: 150px;
+    }
+    
+    .result-card-content {
+        flex: 1;
+        width: 100%;
+    }
+    
+    .result-card-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .result-card-meta {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+    
+    .result-card-desc {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+    
+    .result-card-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .action-link {
+        justify-content: center;
+    }
+    
+    .empty-state-card {
+        padding: 32px 20px;
+    }
+    
+    .empty-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+    
+    .empty-state-card h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    
+    .empty-state-card p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
 }
 
 .search-query {
@@ -1087,7 +1266,7 @@ body::before {
     color: var(--text-primary);
 }
 
-/* ========================================
+/* ======================================== 
    用户中心设计
    ======================================== */
 .user-center {
@@ -1100,6 +1279,109 @@ body::before {
     position: sticky;
     top: 100px;
     align-self: start;
+}
+
+/* 移动端用户中心优化 */
+@media (max-width: 768px) {
+    .user-center {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .user-sidebar {
+        position: static;
+    }
+    
+    .user-profile {
+        padding: 20px;
+    }
+    
+    .user-avatar-lg {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px;
+    }
+    
+    .user-name-lg {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+    
+    .user-nav {
+        padding: 4px;
+    }
+    
+    .user-nav-item {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    .user-content {
+        padding: 20px;
+    }
+    
+    .user-section-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .info-card {
+        padding: 16px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .form-group {
+        margin-right: 0;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .security-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .security-info {
+        flex: 1;
+    }
+    
+    .favs-list, .plays-list {
+        gap: 12px;
+    }
+    
+    .favs-item, .plays-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .favs-poster, .plays-poster {
+        width: 120px;
+    }
+    
+    .favs-info, .plays-info {
+        flex: 1;
+    }
+    
+    .favs-actions, .plays-actions {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
 }
 
 .user-profile {
@@ -1302,7 +1584,7 @@ body::before {
     color: var(--text-muted);
 }
 
-/* ========================================
+/* ======================================== 
    按钮设计
    ======================================== */
 .btn {
@@ -1318,6 +1600,57 @@ body::before {
     cursor: pointer;
     transition: all var(--transition-normal);
     text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 移动端按钮优化 */
+@media (max-width: 768px) {
+    .btn {
+        padding: 14px 32px;
+        font-size: 16px;
+        min-height: 48px;
+    }
+    
+    .btn-sm {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-height: 40px;
+    }
+    
+    .btn-lg {
+        padding: 16px 40px;
+        font-size: 18px;
+        min-height: 56px;
+    }
+}
+
+/* 触摸反馈 */
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* 表单输入框 */
+input, textarea, select {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 移动端输入框优化 */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        padding: 14px 16px;
+        font-size: 16px;
+        min-height: 48px;
+    }
+    
+    textarea {
+        min-height: 120px;
+    }
 }
 
 .btn-primary {
@@ -1549,8 +1882,60 @@ body::before {
         gap: 16px;
     }
     
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(24px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
+    }
+    
+    .nav-main.active {
+        transform: translateX(0);
+    }
+    
     .nav-list {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+    
+    .nav-item {
+        margin: 8px 0;
+    }
+    
+    .nav-item > a {
+        font-size: 18px;
+        padding: 16px 32px;
+    }
+    
+    .nav-dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        margin-top: 8px;
+    }
+    
+    .nav-dropdown li a {
+        font-size: 16px;
+        padding: 12px 24px;
     }
     
     .search-box {
@@ -1979,7 +2364,7 @@ body::before {
     animation: jello 1s ease;
 }
 
-/* ========================================
+/* ======================================== 
    首页新增样式
    ======================================== */
 .banner-section {
@@ -1991,6 +2376,187 @@ body::before {
     text-align: center;
     position: relative;
     overflow: hidden;
+}
+
+/* 移动端文章页面优化 */
+@media (max-width: 768px) {
+    .banner-section {
+        margin: 24px 0;
+    }
+    
+    .banner-card {
+        padding: 40px 20px;
+    }
+    
+    .banner-title {
+        font-size: 32px;
+    }
+    
+    .banner-subtitle {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .banner-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .category-nav {
+        margin-bottom: 24px;
+    }
+    
+    .category-scroll {
+        gap: 8px;
+        padding: 4px;
+    }
+    
+    .category-item {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .section-header {
+        margin-bottom: 16px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .art-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+    
+    .art-poster {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .art-content {
+        flex: 1;
+        width: 100%;
+    }
+    
+    .art-title {
+        font-size: 18px;
+    }
+    
+    .art-meta {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .art-desc {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .art-detail-card {
+        padding: 20px;
+    }
+    
+    .art-detail-title {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+    
+    .art-detail-meta {
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .art-detail-poster {
+        margin: 20px 0;
+    }
+    
+    .art-detail-poster img {
+        border-radius: var(--radius-md);
+    }
+    
+    .art-actions {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .art-tags {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .art-tag {
+        padding: 4px 12px;
+        font-size: 13px;
+    }
+    
+    .art-relate {
+        margin-top: 32px;
+        padding: 20px;
+    }
+    
+    .relate-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .relate-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .relate-poster {
+        width: 100%;
+    }
+    
+    .relate-title-text {
+        font-size: 14px;
+    }
+    
+    .art-comments {
+        margin-top: 32px;
+        padding: 20px;
+    }
+    
+    .comment-form {
+        margin-bottom: 24px;
+    }
+    
+    .comment-input {
+        min-height: 100px;
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .comment-form-footer {
+        justify-content: center;
+        margin-top: 12px;
+    }
+    
+    .comment-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 0;
+    }
+    
+    .comment-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .comment-content {
+        flex: 1;
+        width: 100%;
+    }
 }
 
 .banner-card::before {
@@ -2234,6 +2800,72 @@ body::before {
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 40px;
+}
+
+/* 移动端视频详情页优化 */
+@media (max-width: 768px) {
+    .vod-detail-main {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .vod-poster-section {
+        position: static;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .vod-poster-wrapper {
+        border-radius: var(--radius-lg);
+    }
+    
+    .btn-play-large {
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+    
+    .vod-header {
+        margin-bottom: 20px;
+    }
+    
+    .vod-title {
+        font-size: 24px;
+    }
+    
+    .vod-subtitle {
+        font-size: 14px;
+    }
+    
+    .vod-meta-top {
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    
+    .vod-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+    }
+    
+    .vod-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .episode-list-horizontal {
+        gap: 8px;
+        padding: 4px;
+    }
+    
+    .episode-item-horizontal {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
 }
 
 .vod-poster-section {
@@ -2495,7 +3127,7 @@ body::before {
     line-height: 1.8;
 }
 
-/* ========================================
+/* ======================================== 
    播放页样式
    ======================================== */
 .play-container {
@@ -2514,6 +3146,77 @@ body::before {
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-xl);
+}
+
+/* 移动端播放页优化 */
+@media (max-width: 768px) {
+    .play-container {
+        margin-bottom: 24px;
+    }
+    
+    .player-section {
+        margin-bottom: 16px;
+    }
+    
+    .video-wrapper {
+        border-radius: var(--radius-md);
+    }
+    
+    .play-info-section {
+        margin-bottom: 24px;
+    }
+    
+    .play-info-card {
+        padding: 20px;
+    }
+    
+    .play-title {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    
+    .play-meta {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .play-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+    }
+    
+    .control-group {
+        justify-content: space-between;
+    }
+    
+    .control-select {
+        flex: 1;
+        margin-left: 12px;
+    }
+    
+    .control-actions {
+        margin-left: 0;
+        justify-content: space-between;
+    }
+    
+    .episode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+    }
+    
+    .episode-card {
+        padding: 12px 8px;
+    }
+    
+    .episode-number {
+        font-size: 16px;
+    }
+    
+    .episode-label {
+        font-size: 12px;
+    }
 }
 
 .video-player {

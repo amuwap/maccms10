@@ -65,26 +65,35 @@
                             <img src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}" />
                         </a>
                     </div>
-                    <nav class="nav-main">
-                        <ul class="nav-list">
-                            <li class="nav-item {if condition="$maccms.aid eq 1"}active{/if}">
-                                <a href="{$maccms.path}">首页</a>
-                            </li>
-                            {maccms:type ids="parent" order="asc" by="sort"}
-                            <li class="nav-item {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"}active{/if}">
-                                <a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
-                                {maccms:type ids="child" pid="'.$vo['type_id'].'" order="asc" by="sort" id="vo2"}
-                                <ul class="nav-dropdown">
-                                    <li><a href="{:mac_url_type($vo2)}">{$vo2.type_name}</a></li>
-                                </ul>
+                    <div class="nav-container">
+                        <button class="menu-toggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        </button>
+                        <nav class="nav-main">
+                            <ul class="nav-list">
+                                <li class="nav-item {if condition="$maccms.aid eq 1"}active{/if}">
+                                    <a href="{$maccms.path}">首页</a>
+                                </li>
+                                {maccms:type ids="parent" order="asc" by="sort"}
+                                <li class="nav-item {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"}active{/if}">
+                                    <a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
+                                    {maccms:type ids="child" pid="'.$vo['type_id'].'" order="asc" by="sort" id="vo2"}
+                                    <ul class="nav-dropdown">
+                                        <li><a href="{:mac_url_type($vo2)}">{$vo2.type_name}</a></li>
+                                    </ul>
+                                    {/maccms:type}
+                                </li>
                                 {/maccms:type}
-                            </li>
-                            {/maccms:type}
-                            <li class="nav-item">
-                                <a href="{:mac_url('live/index')}">直播</a>
-                            </li>
-                        </ul>
-                    </nav>
+                                <li class="nav-item">
+                                    <a href="{:mac_url('live/index')}">直播</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                     <div class="header-right">
                         <div class="search-box">
                             <input type="text" class="search-input" placeholder="搜索影片..." value="{$param.wd}" />

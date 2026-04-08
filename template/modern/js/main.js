@@ -269,16 +269,36 @@ function animateNumber(element, target, duration = 1000) {
 // 响应式菜单
 function initResponsiveMenu() {
     const menuToggle = $('.menu-toggle');
-    const navList = $('.nav-list');
+    const navMain = $('.nav-main');
     
     menuToggle.on('click', function() {
-        navList.toggleClass('active');
+        navMain.toggleClass('active');
+        // 切换菜单图标
+        const svg = $(this).find('svg');
+        if (navMain.hasClass('active')) {
+            svg.html('<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>');
+        } else {
+            svg.html('<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>');
+        }
     });
     
     // 点击菜单项后关闭菜单
     $('.nav-item a').on('click', function() {
-        if (window.innerWidth < 768) {
-            navList.removeClass('active');
+        if (window.innerWidth < 768 && navMain.hasClass('active')) {
+            navMain.removeClass('active');
+            // 恢复菜单图标
+            const svg = menuToggle.find('svg');
+            svg.html('<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>');
+        }
+    });
+    
+    // 点击菜单外部关闭菜单
+    $(document).on('click', function(e) {
+        if (window.innerWidth < 768 && navMain.hasClass('active') && !menuToggle.is(e.target) && !menuToggle.find('*').is(e.target) && !navMain.is(e.target) && !navMain.find('*').is(e.target)) {
+            navMain.removeClass('active');
+            // 恢复菜单图标
+            const svg = menuToggle.find('svg');
+            svg.html('<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>');
         }
     });
 }

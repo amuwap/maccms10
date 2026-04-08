@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775662116;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775659662;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775659745;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775659761;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775675362;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775675362;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775675362;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775675362;}*/ ?>
 <!doctype html>
 <html>
 <head>

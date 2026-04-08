@@ -1,20 +1,19 @@
 {include file="public/head.html"}
             <div class="container">
+                <!-- 主横幅 -->
                 <div class="banner-section">
-                    <div class="img-text-overlay">
-                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cinema%20movie%20theater%20background%20with%20movie%20posters%20and%20neon%20lights&image_size=landscape_16_9" alt="{$maccms.site_name}" />
-                        <div class="img-text-content">
-                            <h1 class="img-text-title animate-fade-in">欢迎来到{$maccms.site_name}</h1>
-                            <p class="img-text-desc animate-fade-in-delay-1">海量高清影视资源，畅享极致观影体验</p>
-                            <div class="banner-actions animate-fade-in-delay-2">
-                                <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg">立即观影</a>
-                                <a href="{:mac_url('label/rank')}" class="btn btn-outline btn-lg">热门榜单</a>
-                            </div>
+                    <div class="glass-card banner-card animate-fade-in">
+                        <h1 class="banner-title">欢迎来到{$maccms.site_name}</h1>
+                        <p class="banner-subtitle">海量高清影视资源，畅享极致观影体验</p>
+                        <div class="banner-actions">
+                            <a href="{:mac_url('vod/type',['id'=>1])}" class="btn btn-primary btn-lg animate-fade-in-delay-1">立即观影</a>
+                            <a href="{:mac_url('label/rank')}" class="btn btn-secondary btn-lg animate-fade-in-delay-2">热门榜单</a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="category-nav">
+                <!-- 分类导航 -->
+                <div class="category-nav glass-card">
                     <div class="category-scroll">
                         <a href="{:mac_url('vod/show',['tid'=>0])}" class="category-item active">全部</a>
                         {maccms:type ids="parent" order="asc" by="sort"}
@@ -23,8 +22,9 @@
                     </div>
                 </div>
                 
+                <!-- 热门推荐 -->
                 <div class="section">
-                    <div class="glass-card">
+                    <div class="glass-card animate-fade-in">
                         <div class="section-header">
                             <div class="section-title-wrap">
                                 <div class="section-icon">
@@ -40,32 +40,30 @@
                             {maccms:vod num="12" order="vod_hits_month"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
-                                    <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
-                                        <div class="poster-overlay">
-                                            <div class="play-btn">
+                                    <div class="content-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="content-img" loading="lazy" />
+                                        <div class="content-overlay">
+                                            <div class="content-play-btn">
                                                 <i class="layui-icon layui-icon-play"></i>
                                             </div>
                                         </div>
-                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                        <span class="content-badge content-badge-hot">{$vo.vod_remarks}</span>
                                         <div class="item-hot-badge">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                                             </svg>
                                         </div>
                                     </div>
-                                    <div class="item-info">
-                                        <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <div class="item-meta-wrap">
-                                            <span class="item-meta">{$vo.vod_area}</span>
-                                            <span class="item-dot">·</span>
-                                            <span class="item-meta">{$vo.vod_year}</span>
-                                            <div class="item-rating">
+                                    <div class="content-info">
+                                        <h3 class="content-title">{$vo.vod_name}</h3>
+                                        <div class="content-meta">
+                                            <span class="content-views">{$vo.vod_area} · {$vo.vod_year}</span>
+                                            <span class="content-rating">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                                 </svg>
                                                 <span>{$vo.vod_score|default='8.0'}</span>
-                                            </div>
+                                            </span>
                                         </div>
                                     </div>
                                 </a>
@@ -75,8 +73,9 @@
                     </div>
                 </div>
                 
+                <!-- 最新更新 -->
                 <div class="section">
-                    <div class="glass-card">
+                    <div class="glass-card animate-fade-in">
                         <div class="section-header">
                             <div class="section-title-wrap">
                                 <div class="section-icon">
@@ -93,22 +92,20 @@
                             {maccms:vod num="12" order="vod_time_add"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
-                                    <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
-                                        <div class="poster-overlay">
-                                            <div class="play-btn">
+                                    <div class="content-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="content-img" loading="lazy" />
+                                        <div class="content-overlay">
+                                            <div class="content-play-btn">
                                                 <i class="layui-icon layui-icon-play"></i>
                                             </div>
                                         </div>
-                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                        <span class="content-badge content-badge-new">{$vo.vod_remarks}</span>
                                         <div class="item-new-badge">NEW</div>
                                     </div>
-                                    <div class="item-info">
-                                        <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <div class="item-meta-wrap">
-                                            <span class="item-meta">{$vo.vod_area}</span>
-                                            <span class="item-dot">·</span>
-                                            <span class="item-meta">{$vo.vod_year}</span>
+                                    <div class="content-info">
+                                        <h3 class="content-title">{$vo.vod_name}</h3>
+                                        <div class="content-meta">
+                                            <span class="content-views">{$vo.vod_area} · {$vo.vod_year}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -118,9 +115,10 @@
                     </div>
                 </div>
                 
+                <!-- 分类内容 -->
                 {maccms:type ids="parent" order="asc" by="sort" id="vo"}
                 <div class="section">
-                    <div class="glass-card">
+                    <div class="glass-card animate-fade-in">
                         <div class="section-header">
                             <div class="section-title-wrap">
                                 <div class="section-icon">
@@ -139,21 +137,19 @@
                             {maccms:vod num="8" type="'.$vo['type_id'].'" order="vod_time_add"}
                             <div class="content-item animate-scale-in">
                                 <a href="{:mac_url_vod_detail($vo)}">
-                                    <div class="item-poster">
-                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="poster-img" loading="lazy" />
-                                        <div class="poster-overlay">
-                                            <div class="play-btn">
+                                    <div class="content-poster">
+                                        <img src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name}" class="content-img" loading="lazy" />
+                                        <div class="content-overlay">
+                                            <div class="content-play-btn">
                                                 <i class="layui-icon layui-icon-play"></i>
                                             </div>
                                         </div>
-                                        <span class="item-remark">{$vo.vod_remarks}</span>
+                                        <span class="content-badge content-badge-vip">{$vo.vod_remarks}</span>
                                     </div>
-                                    <div class="item-info">
-                                        <h3 class="item-title">{$vo.vod_name}</h3>
-                                        <div class="item-meta-wrap">
-                                            <span class="item-meta">{$vo.vod_area}</span>
-                                            <span class="item-dot">·</span>
-                                            <span class="item-meta">{$vo.vod_year}</span>
+                                    <div class="content-info">
+                                        <h3 class="content-title">{$vo.vod_name}</h3>
+                                        <div class="content-meta">
+                                            <span class="content-views">{$vo.vod_area} · {$vo.vod_year}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -163,5 +159,54 @@
                     </div>
                 </div>
                 {/maccms:type}
+                
+                <!-- 特色区块 -->
+                <div class="section">
+                    <div class="glass-card animate-fade-in">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">观影特色</h2>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">高清画质</h3>
+                                <p class="text-secondary">全平台支持高清画质，带给你极致的视觉体验</p>
+                            </div>
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-success to-info rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">海量资源</h3>
+                                <p class="text-secondary">涵盖电影、电视剧、综艺、动漫等多种类型</p>
+                            </div>
+                            <div class="feature-card text-center p-6">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-accent to-warning rounded-full flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">多端同步</h3>
+                                <p class="text-secondary">支持PC、手机、平板等多种设备，随时随地观影</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 {include file="public/foot.html"}

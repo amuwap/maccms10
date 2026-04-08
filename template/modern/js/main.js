@@ -1,5 +1,30 @@
 // 主JS文件 - 处理页面交互和动画效果
 
+// 工具函数：防抖
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 工具函数：节流
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
 $(document).ready(function() {
     // 初始化页面动画
     initAnimations();
@@ -97,14 +122,14 @@ function initSearch() {
 function initScrollTop() {
     const scrollTopBtn = $('.scroll-top');
     
-    // 显示/隐藏按钮
-    $(window).on('scroll', function() {
+    // 显示/隐藏按钮 (使用节流优化)
+    $(window).on('scroll', throttle(function() {
         if ($(window).scrollTop() > 300) {
             scrollTopBtn.fadeIn();
         } else {
             scrollTopBtn.fadeOut();
         }
-    });
+    }, 100));
     
     // 点击滚动到顶部
     scrollTopBtn.on('click', function() {
@@ -198,7 +223,7 @@ function initLoadMore() {
     // 这里可以添加无限滚动加载的逻辑
     let loading = false;
     
-    $(window).on('scroll', function() {
+    $(window).on('scroll', throttle(function() {
         if (loading) return;
         
         const windowHeight = $(window).height();
@@ -216,7 +241,7 @@ function initLoadMore() {
                 loading = false;
             }, 1000);
         }
-    });
+    }, 200));
 }
 
 // 播放报错提交
@@ -292,6 +317,7 @@ function initResponsiveMenu() {
     const menuToggle = $('.menu-toggle');
     const navMain = $('.nav-main');
     
+    // 切换菜单
     menuToggle.on('click', function() {
         navMain.toggleClass('active');
         // 切换菜单图标
@@ -322,6 +348,16 @@ function initResponsiveMenu() {
             svg.html('<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>');
         }
     });
+    
+    // 窗口大小变化时的处理 (使用防抖优化)
+    $(window).on('resize', debounce(function() {
+        if (window.innerWidth >= 768) {
+            navMain.removeClass('active');
+            // 恢复菜单图标
+            const svg = menuToggle.find('svg');
+            svg.html('<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>');
+        }
+    }, 200));
 }
 
 // 图片懒加载
@@ -336,9 +372,14 @@ function initLazyLoad() {
                     imageObserver.unobserve(image);
                 }
             });
+        }, {
+            root: null,
+            rootMargin: '200px 0px', // 提前200px开始加载
+            threshold: 0.01
         });
         
-        document.querySelectorAll('img[data-src]').forEach(img => {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => {
             imageObserver.observe(img);
         });
     } else {

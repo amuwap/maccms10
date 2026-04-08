@@ -424,12 +424,44 @@ body::before {
     background: var(--glass-bg);
 }
 
-/* ========================================
+/* ======================================== 
    主要内容区域
    ======================================== */
 .main-content {
     padding: 32px 0;
     min-height: calc(100vh - 200px);
+}
+
+/* 性能优化：非可视区内容优化 */
+.section,
+.content-grid,
+.art-list,
+.search-results-list {
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px;
+}
+
+/* 性能优化：避免布局抖动 */
+img {
+    width: 100%;
+    height: auto;
+}
+
+.content-poster,
+.art-poster,
+.relate-poster {
+    aspect-ratio: 2/3;
+    overflow: hidden;
+}
+
+/* 性能优化：GPU加速 */
+.glass-card,
+.content-item,
+.btn,
+.search-input {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 /* 页面标题 */

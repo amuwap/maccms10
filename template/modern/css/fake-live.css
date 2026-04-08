@@ -1,44 +1,4 @@
-/* 影视风格直播样式 */
-
-/* 电影胶片效果 */
-.film-strip-top,
-.film-strip-bottom {
-    height: 40px;
-    background: linear-gradient(90deg, #1a1a1a 0%, #333 25%, #1a1a1a 50%, #333 75%, #1a1a1a 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.film-strip-top::before,
-.film-strip-bottom::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background: repeating-linear-gradient(90deg, #000 0px, #000 10px, transparent 10px, transparent 20px);
-    transform: translateY(-50%);
-}
-
-/* 电影胶片边框 */
-.film-border {
-    position: relative;
-    border: 8px solid #1a1a1a;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.film-border:hover {
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
-    transform: scale(1.02);
-}
-
-.film-border-large {
-    border: 12px solid #1a1a1a;
-}
+/* 直播风格样式 */
 
 /* 直播首页头部 */
 .live-hero-banner {
@@ -61,34 +21,11 @@
     padding: 0 20px;
 }
 
-.hero-film-reel {
-    width: 80px;
-    height: 80px;
-    border: 8px solid #333;
-    border-radius: 50%;
-    background: #1a1a1a;
-    position: absolute;
-    top: 20%;
-    left: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-film-reel::before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    border: 4px solid #555;
-    border-radius: 50%;
-    background: #222;
-}
-
 .hero-title {
     font-size: 64px;
     font-weight: 800;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -106,34 +43,6 @@
 .hero-buttons {
     display: flex;
     gap: 20px;
-}
-
-.btn-film {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.btn-film::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.btn-film:hover::before {
-    left: 100%;
-}
-
-.btn-film:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 193, 7, 0.5);
 }
 
 .hero-bg {
@@ -161,53 +70,99 @@
     z-index: 2;
 }
 
-.hero-overlay {
+/* 分类导航直播风格 */
+.live-category-nav {
+    margin-bottom: 30px;
+    padding: 16px;
+}
+
+.category-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+}
+
+.category-item {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.category-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.category-item.active {
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 直播项直播风格 */
+.live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.live-item {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.live-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.live-poster {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 比例 */
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.live-img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: repeating-linear-gradient(
-        45deg,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 1px,
-        transparent 10px
-    );
-    z-index: 3;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-/* 分类导航影视风格 */
-.category-item-film {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
+.live-item:hover .live-img {
+    transform: scale(1.05);
 }
 
-.category-item-film:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+.live-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    z-index: 5;
 }
 
-.category-item-film.active {
-    background: linear-gradient(135deg, var(--accent-color), #ff9800);
-    border-color: var(--accent-color);
-}
-
-/* 直播项影视风格 */
-.live-item-film {
-    position: relative;
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.live-item-film:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-}
-
-.live-play-btn-film {
+.live-play-btn {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -220,17 +175,25 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    border: 2px solid var(--accent-color);
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+    z-index: 10;
 }
 
-.live-play-btn-film:hover {
+.live-play-btn:hover {
     transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.8);
-    background: rgba(255, 193, 7, 0.2);
+    box-shadow: 0 0 30px rgba(79, 70, 229, 0.8);
+    background: rgba(79, 70, 229, 0.2);
 }
 
-.live-badge-film {
+.live-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.live-badge {
     padding: 4px 12px;
     border-radius: 16px;
     font-size: 12px;
@@ -238,34 +201,48 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
 }
 
-.live-viewers-film {
+.live-badge-hot {
+    background: linear-gradient(135deg, #ef4444, #f87171);
+    border-color: #ef4444;
+}
+
+.live-badge-new {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    border-color: #10b981;
+}
+
+.live-viewers {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.9);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.live-category-tag-film {
+.live-category-tag {
     position: absolute;
     top: 12px;
     right: 12px;
     padding: 4px 12px;
-    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
     border-radius: 16px;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: white;
 }
 
-.live-info-film {
+.live-info {
     padding: 16px;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
+    border-radius: 0 0 12px 12px;
 }
 
-.live-info-film .live-title {
+.live-info .live-title {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 8px;
@@ -273,29 +250,82 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-.live-info-film .live-desc {
+.live-info .live-desc {
     font-size: 14px;
     margin-bottom: 12px;
     color: var(--text-secondary);
 }
 
-/* 精选直播影视风格 */
-.featured-live-item-film {
-    position: relative;
-    transition: all 0.3s ease;
+.live-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
 }
 
-.featured-live-item-film:hover {
+/* 精选直播直播风格 */
+.featured-live {
+    margin-bottom: 30px;
+}
+
+.featured-live-item {
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.featured-live-item:hover {
     transform: translateY(-8px);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
-.featured-live-badge-film {
+.featured-live-content {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 比例 */
+    overflow: hidden;
+}
+
+.featured-live-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.featured-live-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.featured-live-item:hover .featured-live-img {
+    transform: scale(1.05);
+}
+
+.featured-live-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.featured-live-badge {
     position: absolute;
     top: 20px;
     left: 20px;
     padding: 8px 16px;
-    background: linear-gradient(135deg, var(--accent-color), #ff9800);
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
@@ -303,9 +333,10 @@
     letter-spacing: 1px;
     z-index: 10;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: white;
 }
 
-.featured-live-play-btn-film {
+.featured-live-play-btn {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -318,25 +349,25 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    border: 3px solid var(--accent-color);
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.6);
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 30px rgba(79, 70, 229, 0.6);
     z-index: 10;
 }
 
-.featured-live-play-btn-film:hover {
+.featured-live-play-btn:hover {
     transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 40px rgba(255, 193, 7, 0.9);
-    background: rgba(255, 193, 7, 0.2);
+    box-shadow: 0 0 40px rgba(79, 70, 229, 0.9);
+    background: rgba(79, 70, 229, 0.2);
 }
 
-.featured-live-info-film {
+.featured-live-info {
     padding: 24px;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 193, 7, 0.3);
+    border-top: 1px solid rgba(79, 70, 229, 0.3);
 }
 
-.featured-live-info-film .featured-live-title {
+.featured-live-info .featured-live-title {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 12px;
@@ -344,19 +375,27 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-.featured-live-info-film .featured-live-desc {
+.featured-live-info .featured-live-desc {
     font-size: 16px;
     margin-bottom: 20px;
     color: var(--text-secondary);
     line-height: 1.6;
 }
 
-/* 直播时间表影视风格 */
-.live-schedule-film {
+.featured-live-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* 直播时间表直播风格 */
+.live-schedule {
     position: relative;
 }
 
-.schedule-item-film {
+.schedule-item {
     position: relative;
     display: flex;
     align-items: center;
@@ -365,60 +404,65 @@
     background: rgba(0, 0, 0, 0.4);
     border-radius: 12px;
     transition: all 0.3s ease;
-    border-left: 4px solid var(--accent-color);
+    border-left: 4px solid var(--primary-color);
 }
 
-.schedule-item-film:hover {
+.schedule-item:hover {
     transform: translateX(8px);
     background: rgba(0, 0, 0, 0.6);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .schedule-item-featured {
-    border-left: 4px solid var(--primary-color);
-    background: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid #6366f1;
+    background: rgba(99, 102, 241, 0.1);
 }
 
-.schedule-time-film {
+.schedule-time {
     flex-shrink: 0;
     width: 120px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--accent-color);
+    color: var(--primary-color);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.schedule-content-film {
+.schedule-content {
     flex: 1;
     margin: 0 20px;
 }
 
-.schedule-content-film h4 {
+.schedule-content h4 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
     color: var(--text-primary);
 }
 
-.schedule-content-film p {
+.schedule-content p {
     font-size: 14px;
     margin-bottom: 12px;
     color: var(--text-secondary);
 }
 
-.schedule-tag-film {
+.schedule-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.schedule-tag {
     padding: 4px 12px;
-    background: rgba(255, 193, 7, 0.2);
-    border: 1px solid var(--accent-color);
+    background: rgba(79, 70, 229, 0.2);
+    border: 1px solid var(--primary-color);
     border-radius: 16px;
     font-size: 12px;
     font-weight: 500;
-    color: var(--accent-color);
-    margin-right: 8px;
+    color: var(--primary-color);
 }
 
-.status-badge-film {
+.status-badge {
     padding: 6px 16px;
     border-radius: 20px;
     font-size: 12px;
@@ -426,48 +470,51 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.status-badge-hot {
-    background: linear-gradient(135deg, var(--accent-color), #ff9800);
-    border-color: var(--accent-color);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
 }
 
-/* 特色卡片影视风格 */
-.feature-card-film {
+.status-badge-hot {
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 特色卡片直播风格 */
+.feature-card {
     position: relative;
     transition: all 0.3s ease;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
 }
 
-.feature-card-film:hover {
+.feature-card:hover {
     transform: translateY(-12px) scale(1.02);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-color);
+    border-color: var(--primary-color);
 }
 
-.feature-icon-film {
+.feature-icon {
     position: relative;
     transition: all 0.3s ease;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-.feature-icon-film:hover {
+.feature-icon:hover {
     transform: scale(1.1) rotate(5deg);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
 }
 
-/* 直播数据影视风格 */
-.live-stats-grid-film {
+/* 直播数据直播风格 */
+.live-stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
-.stat-card-film {
+.stat-card {
     position: relative;
     padding: 24px;
     background: rgba(0, 0, 0, 0.4);
@@ -478,76 +525,93 @@
     overflow: hidden;
 }
 
-.stat-card-film::before {
+.stat-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(90deg, var(--primary-color), #6366f1);
 }
 
-.stat-card-film:hover {
+.stat-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-color);
+    border-color: var(--primary-color);
 }
 
-.stat-number-film {
+.stat-number {
     font-size: 36px;
     font-weight: 800;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.stat-label-film {
+.stat-label {
     font-size: 14px;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* 章节标题影视风格 */
-.section-icon-film {
+/* 章节标题直播风格 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-title-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.section-icon {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
     border-radius: 8px;
     margin-right: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.section-title-film {
+.section-title {
     font-size: 24px;
     font-weight: 700;
-    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.section-more-film {
+.section-more {
     position: relative;
     transition: all 0.3s ease;
-    color: var(--accent-color);
+    color: var(--primary-color);
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.section-more-film:hover {
+.section-more:hover {
     color: var(--text-primary);
     transform: translateX(4px);
 }
 
-/* 直播播放页面影视风格 */
+/* 直播播放页面直播风格 */
 .live-play-hero {
     position: relative;
     padding: 40px 0;
@@ -565,7 +629,7 @@
     font-size: 48px;
     font-weight: 800;
     margin-bottom: 12px;
-    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #4f46e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -584,307 +648,6 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 0;
-}
-
-/* 直播信息卡片影视风格 */
-.live-info-card-film {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-}
-
-.live-info-card-film:hover {
-    box-shadow: 0 8px 24px rgba(255, 193, 7, 0.2);
-}
-
-.live-info-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 16px;
-}
-
-.live-title-film {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.live-anchor-film {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-}
-
-.live-stats-film {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stat-item-film {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease;
-    padding: 12px 20px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.stat-item-film:hover {
-    background: rgba(255, 193, 7, 0.1);
-    transform: translateY(-4px);
-}
-
-.stat-label-film {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.stat-value-film {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--accent-color);
-}
-
-/* 评论区影视风格 */
-.comment-section-film {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.comment-section-film:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 193, 7, 0.3);
-}
-
-.section-header-film {
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.comment-list-film {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 16px;
-    padding-right: 12px;
-}
-
-.comment-item-film {
-    padding: 16px;
-    margin-bottom: 12px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border-left: 4px solid var(--accent-color);
-}
-
-.comment-item-film:hover {
-    transform: translateX(4px);
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.comment-input-film {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
-.comment-input-film:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
-}
-
-.comment-submit-film {
-    padding: 0 24px;
-    transition: all 0.3s ease;
-}
-
-/* 礼物区影视风格 */
-.gift-section-film {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.gift-section-film:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 193, 7, 0.3);
-}
-
-.gift-panel-film {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.gift-item-film {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.gift-item-film:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
-    background: rgba(255, 193, 7, 0.1);
-}
-
-.gift-icon-film {
-    font-size: 32px;
-    margin-bottom: 8px;
-    display: block;
-    color: var(--accent-color);
-}
-
-.gift-name-film {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: var(--text-primary);
-}
-
-.gift-price-film {
-    display: block;
-    font-size: 12px;
-    color: var(--accent-color);
-}
-
-.gift-ranking-film {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 16px;
-}
-
-.ranking-item-film {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-    margin-bottom: 8px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.ranking-item-film:hover {
-    background: rgba(255, 193, 7, 0.1);
-}
-
-.ranking-item-film .rank-film {
-    font-weight: bold;
-    color: var(--accent-color);
-    width: 24px;
-}
-
-.ranking-item-film .username-film {
-    flex: 1;
-    color: var(--text-primary);
-}
-
-.ranking-item-film .total-film {
-    font-weight: bold;
-    color: var(--accent-color);
-}
-
-/* 弹幕区影视风格 */
-.danmaku-section-film {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.danmaku-section-film:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 193, 7, 0.3);
-}
-
-.danmaku-input-film {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-}
-
-.danmaku-input-film:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
-}
-
-.danmaku-submit-film {
-    padding: 0 24px;
-    transition: all 0.3s ease;
-}
-
-.viewer-diversity-film {
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 16px;
-}
-
-.diversity-item-film {
-    margin-bottom: 16px;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-}
-
-.diversity-name-film {
-    display: block;
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-}
-
-.diversity-count-film {
-    display: block;
-    font-size: 12px;
-    color: var(--accent-color);
-    margin-bottom: 8px;
-}
-
-.diversity-bar-film {
-    width: 100%;
-    height: 8px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.diversity-progress-film {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    border-radius: 4px;
-    transition: width 0.5s ease;
 }
 
 .live-player-container {
@@ -910,376 +673,25 @@
     border-radius: 12px;
 }
 
-/* 弹幕容器 */
-.danmaku-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 10;
-}
-
-.danmaku-item {
-    position: absolute;
-    white-space: nowrap;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    animation: danmaku 8s linear forwards;
-}
-/* 影视风格动画效果 */
-
-/* 电影胶片滚动效果 */
-@keyframes filmRoll {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 0 100%;
-    }
-}
-
-/* 镜头切换效果 */
-@keyframes cameraPan {
-    0% {
-        transform: scale(1) translateX(0);
-    }
-    50% {
-        transform: scale(1.1) translateX(-5%);
-    }
-    100% {
-        transform: scale(1) translateX(0);
-    }
-}
-
-/* 灯光闪烁效果 */
-@keyframes lightFlicker {
-    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
-        opacity: 1;
-    }
-    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
-        opacity: 0.8;
-    }
-}
-
-/* 电影放映效果 */
-@keyframes projectorStart {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) rotate(-5deg);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.05) rotate(2deg);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-    }
-}
-
-/* 字幕淡入效果 */
-@keyframes subtitleFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 电影胶片边框动画 */
-.film-border {
-    position: relative;
-    border: 8px solid #1a1a1a;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.film-border::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 10px,
-        rgba(0, 0, 0, 0.1) 10px,
-        rgba(0, 0, 0, 0.1) 11px
-    );
-    pointer-events: none;
-    animation: filmRoll 20s linear infinite;
-}
-
-.film-border:hover {
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
-    transform: scale(1.02);
-    animation: cameraPan 3s ease-in-out infinite;
-}
-
-/* 直播项动画 */
-.live-item-film {
-    position: relative;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    animation: projectorStart 0.8s ease-out;
-}
-
-.live-item-film:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-}
-
-/* 播放按钮动画 */
-.live-play-btn-film {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    border: 2px solid var(--accent-color);
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
-    animation: lightFlicker 3s ease-in-out infinite;
-}
-
-.live-play-btn-film:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 193, 7, 0.8);
-    background: rgba(255, 193, 7, 0.2);
-}
-
-/* 精选直播动画 */
-.featured-live-item-film {
-    position: relative;
-    transition: all 0.3s ease;
-    animation: projectorStart 1s ease-out;
-}
-
-.featured-live-item-film:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* 直播时间表动画 */
-.schedule-item-film {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    margin-bottom: 16px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    border-left: 4px solid var(--accent-color);
-    animation: subtitleFadeIn 0.6s ease-out;
-}
-
-.schedule-item-film:hover {
-    transform: translateX(8px);
-    background: rgba(0, 0, 0, 0.6);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-/* 统计卡片动画 */
-.stat-card-film {
-    position: relative;
-    padding: 24px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    animation: projectorStart 0.8s ease-out;
-}
-
-.stat-card-film:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-color);
-}
-
-/* 弹幕动画 */
-@keyframes danmaku {
-    from {
-        transform: translateX(100%);
-    }
-    to {
-        transform: translateX(-100%);
-    }
-}
-
-/* 礼物动画 */
-.gift-animation {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.gift-animation.show {
-    opacity: 1;
-}
-
-.gift-effect {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 1rem;
-    border-radius: 8px;
-    color: white;
-    text-align: center;
-}
-
-.super-gift {
-    animation: superGift 5s ease-in-out;
-}
-
-@keyframes superGift {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 1;
-    }
-}
-
-/* 连击效果 */
-.combo-effect {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 20;
-}
-
-.combo-effect.show {
-    opacity: 1;
-    animation: combo 2s ease-out;
-}
-
-@keyframes combo {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0;
-    }
-}
-
-/* 抽奖效果 */
-.lottery-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 30;
-}
-
-.lottery-container.show {
-    opacity: 1;
-}
-
-.lottery-container.win {
-    animation: win 1s ease-in-out;
-}
-
-@keyframes win {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-}
-
-/* 公告效果 */
-.announcement-container {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 20;
-}
-
-.announcement-item {
-    background: rgba(255, 69, 0, 0.9);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    animation: announcement 5s ease-in-out;
-}
-
-@keyframes announcement {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    10% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    90% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-}
-
-/* 直播信息卡片 */
+/* 直播信息卡片直播风格 */
 .live-info-card {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(79, 70, 229, 0.3);
     margin-bottom: 2rem;
     padding: 1.5rem;
     border-radius: 12px;
+}
+
+.live-info-card:hover {
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.2);
+}
+
+.live-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
 }
 
 .live-title {
@@ -1299,28 +711,44 @@
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: all 0.3s ease;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.stat-item:hover {
+    background: rgba(79, 70, 229, 0.1);
+    transform: translateY(-4px);
 }
 
 .stat-label {
     font-size: 14px;
     color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .stat-value {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
     color: var(--primary-color);
 }
 
-/* 评论区 */
+/* 评论区直播风格 */
 .comment-section {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     border-radius: 12px;
     height: 500px;
@@ -1328,17 +756,30 @@
     flex-direction: column;
 }
 
+.comment-section:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(79, 70, 229, 0.3);
+}
+
 .comment-list {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 1rem;
-    padding-right: 0.5rem;
+    margin-bottom: 16px;
+    padding-right: 12px;
 }
 
 .comment-item {
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 0.75rem;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary-color);
+}
+
+.comment-item:hover {
+    transform: translateX(4px);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .comment-item.user-comment {
@@ -1369,30 +810,30 @@
 
 .comment-input {
     flex: 1;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
+    padding: 12px;
+    border: 1px solid rgba(79, 70, 229, 0.3);
     border-radius: 8px;
-    background-color: var(--background-secondary);
+    background: rgba(0, 0, 0, 0.6);
     color: var(--text-primary);
-}
-
-.comment-submit {
-    padding: 0 1.5rem;
-    background: var(--primary-gradient);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.comment-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.comment-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
-/* 礼物区 */
+.comment-submit {
+    padding: 0 24px;
+    transition: all 0.3s ease;
+}
+
+/* 礼物区直播风格 */
 .gift-section {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     border-radius: 12px;
     height: 500px;
@@ -1400,18 +841,23 @@
     flex-direction: column;
 }
 
+.gift-section:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(79, 70, 229, 0.3);
+}
+
 .gift-panel {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 16px;
+    margin-bottom: 20px;
     flex: 1;
     overflow-y: auto;
 }
 
 .gift-item {
-    background-color: var(--background-secondary);
-    padding: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 16px;
     border-radius: 8px;
     text-align: center;
     cursor: pointer;
@@ -1421,21 +867,23 @@
 
 .gift-item:hover {
     border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+    background: rgba(79, 70, 229, 0.1);
 }
 
 .gift-icon {
-    font-size: 24px;
-    margin-bottom: 0.5rem;
+    font-size: 32px;
+    margin-bottom: 8px;
     display: block;
+    color: var(--primary-color);
 }
 
 .gift-name {
     display: block;
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin-bottom: 4px;
     color: var(--text-primary);
 }
 
@@ -1446,8 +894,8 @@
 }
 
 .gift-ranking {
-    border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 16px;
 }
 
 .gift-ranking h4 {
@@ -1458,14 +906,21 @@
 .ranking-item {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.ranking-item:hover {
+    background: rgba(79, 70, 229, 0.1);
 }
 
 .ranking-item .rank {
     font-weight: bold;
     color: var(--primary-color);
-    width: 20px;
+    width: 24px;
 }
 
 .ranking-item .username {
@@ -1475,16 +930,24 @@
 
 .ranking-item .total {
     font-weight: bold;
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
-/* 弹幕区 */
+/* 弹幕区直播风格 */
 .danmaku-section {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     border-radius: 12px;
     height: 500px;
     display: flex;
     flex-direction: column;
+}
+
+.danmaku-section:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(79, 70, 229, 0.3);
 }
 
 .danmaku-form {
@@ -1495,31 +958,29 @@
 
 .danmaku-input {
     flex: 1;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
+    padding: 12px;
+    border: 1px solid rgba(79, 70, 229, 0.3);
     border-radius: 8px;
-    background-color: var(--background-secondary);
+    background: rgba(0, 0, 0, 0.6);
     color: var(--text-primary);
-}
-
-.danmaku-submit {
-    padding: 0 1.5rem;
-    background: var(--primary-gradient);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.danmaku-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.danmaku-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.danmaku-submit {
+    padding: 0 24px;
+    transition: all 0.3s ease;
 }
 
 .viewer-diversity {
     flex: 1;
     overflow-y: auto;
+    margin-top: 16px;
 }
 
 .viewer-diversity h4 {
@@ -1528,36 +989,289 @@
 }
 
 .diversity-item {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
 }
 
 .diversity-name {
     display: block;
     font-size: 14px;
     color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    margin-bottom: 8px;
 }
 
 .diversity-count {
     display: block;
     font-size: 12px;
     color: var(--primary-color);
-    margin-bottom: 0.25rem;
+    margin-bottom: 8px;
 }
 
 .diversity-bar {
     width: 100%;
     height: 8px;
-    background-color: var(--background-secondary);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 4px;
     overflow: hidden;
 }
 
 .diversity-progress {
     height: 100%;
-    background: var(--primary-gradient);
+    background: linear-gradient(90deg, var(--primary-color), #6366f1);
     border-radius: 4px;
     transition: width 0.5s ease;
+}
+
+/* 弹幕容器 */
+.danmaku-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.danmaku-item {
+    position: absolute;
+    white-space: nowrap;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    animation: danmaku 8s linear forwards;
+}
+
+/* 礼物动画 */
+.gift-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gift-animation.show {
+    opacity: 1;
+}
+
+.gift-effect {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+}
+
+.super-gift {
+    animation: superGift 5s ease-in-out;
+}
+
+/* 连击效果 */
+.combo-effect {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #ef4444, #f87171);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+}
+
+.combo-effect.show {
+    opacity: 1;
+    animation: combo 2s ease-out;
+}
+
+/* 抽奖效果 */
+.lottery-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 30;
+}
+
+.lottery-container.show {
+    opacity: 1;
+}
+
+.lottery-container.win {
+    animation: win 1s ease-in-out;
+}
+
+/* 公告效果 */
+.announcement-container {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 20;
+}
+
+.announcement-item {
+    background: rgba(255, 69, 0, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    animation: announcement 5s ease-in-out;
+}
+
+/* 分页样式 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.page-item {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-item:hover {
+    background: rgba(79, 70, 229, 0.2);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.page-item.active {
+    background: linear-gradient(135deg, var(--primary-color), #6366f1);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* 筛选器样式 */
+.section-filter {
+    display: flex;
+    align-items: center;
+}
+
+.filter-select {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* 动画效果 */
+
+/* 弹幕动画 */
+@keyframes danmaku {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* 超级礼物动画 */
+@keyframes superGift {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* 连击动画 */
+@keyframes combo {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* 中奖动画 */
+@keyframes win {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* 公告动画 */
+@keyframes announcement {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* 浮动动画 */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
 }
 
 /* 响应式设计 */
@@ -1586,7 +1300,7 @@
         gap: 16px;
     }
     
-    .live-stats-grid-film {
+    .live-stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
@@ -1606,7 +1320,7 @@
         gap: 16px;
     }
     
-    .live-stats-film {
+    .live-stats {
         gap: 16px;
     }
     
@@ -1621,10 +1335,6 @@
     }
     
     .gift-panel {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .gift-panel-film {
         grid-template-columns: repeat(4, 1fr);
     }
 }
@@ -1649,7 +1359,7 @@
         gap: 12px;
     }
     
-    .live-stats-grid-film {
+    .live-stats-grid {
         grid-template-columns: 1fr;
         gap: 12px;
     }
@@ -1663,23 +1373,19 @@
         font-size: 14px;
     }
     
-    .live-title-film {
+    .live-title {
         font-size: 24px;
     }
     
-    .live-stats-film {
+    .live-stats {
         flex-wrap: wrap;
     }
     
-    .stat-item-film {
+    .stat-item {
         flex: 1 1 45%;
     }
     
     .gift-panel {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .gift-panel-film {
         grid-template-columns: repeat(3, 1fr);
     }
     
@@ -1755,8 +1461,8 @@ input:focus,
 textarea:focus,
 select:focus {
     outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -1772,13 +1478,13 @@ select:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(180deg, var(--primary-color), #6366f1);
     border-radius: 4px;
     transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+    background: linear-gradient(180deg, #6366f1, var(--primary-color));
     transform: scale(1.1);
 }
 
@@ -1787,11 +1493,11 @@ select:focus {
     display: inline-block;
     width: 32px;
     height: 32px;
-    border: 4px solid rgba(255, 193, 7, 0.3);
+    border: 4px solid rgba(79, 70, 229, 0.3);
     border-radius: 50%;
-    border-top-color: var(--accent-color);
+    border-top-color: var(--primary-color);
     animation: spin 1s linear infinite;
-    box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
 }
 
 @keyframes spin {
@@ -1801,29 +1507,29 @@ select:focus {
 }
 
 /* 微交互效果 */
-.live-item-film {
+.live-item {
     position: relative;
     transition: all 0.3s ease;
     overflow: hidden;
 }
 
-.live-item-film::before {
+.live-item::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+    background: linear-gradient(135deg, transparent, rgba(79, 70, 229, 0.1), transparent);
     transform: translateX(-100%);
     transition: transform 0.6s ease;
 }
 
-.live-item-film:hover::before {
+.live-item:hover::before {
     transform: translateX(100%);
 }
 
-/* 影视风格的页面过渡效果 */
+/* 页面过渡效果 */
 .page-transition {
     animation: pageFadeIn 0.8s ease-out;
 }
@@ -1839,15 +1545,15 @@ select:focus {
     }
 }
 
-/* 影视风格的按钮点击效果 */
-.btn-film {
+/* 按钮点击效果 */
+.btn {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
     border: 2px solid transparent;
 }
 
-.btn-film::after {
+.btn::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -1855,54 +1561,54 @@ select:focus {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 193, 7, 0.3);
+    background: rgba(79, 70, 229, 0.3);
     transform: translate(-50%, -50%);
     transition: width 0.6s ease, height 0.6s ease;
 }
 
-.btn-film:active::after {
+.btn:active::after {
     width: 300px;
     height: 300px;
 }
 
-/* 影视风格的悬停效果 */
-.schedule-item-film {
+/* 悬停效果 */
+.schedule-item {
     position: relative;
     transition: all 0.3s ease;
 }
 
-.schedule-item-film::before {
+.schedule-item::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     height: 100%;
     width: 4px;
-    background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
+    background: linear-gradient(180deg, var(--primary-color), #6366f1);
     transition: width 0.3s ease;
 }
 
-.schedule-item-film:hover::before {
+.schedule-item:hover::before {
     width: 8px;
 }
 
-/* 影视风格的文本效果 */
-.section-title-film {
+/* 文本效果 */
+.section-title {
     position: relative;
     display: inline-block;
 }
 
-.section-title-film::after {
+.section-title::after {
     content: '';
     position: absolute;
     bottom: -8px;
     left: 0;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent-color), transparent);
+    background: linear-gradient(90deg, var(--primary-color), transparent);
     transition: width 0.3s ease;
 }
 
-.section-title-film:hover::after {
+.section-title:hover::after {
     width: 100%;
 }

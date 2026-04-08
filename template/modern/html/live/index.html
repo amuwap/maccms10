@@ -1,167 +1,155 @@
 {include file="public/head.html"}
-            <!-- 直播页面头部横幅 - 影视风格 -->
+            <!-- 直播页面头部横幅 - 直播风格 -->
             <div class="live-hero-banner">
-                <div class="film-strip-top"></div>
                 <div class="hero-content">
-                    <div class="hero-film-reel animate-rotate"></div>
-                    <h1 class="hero-title animate-fade-in-up">无人直播</h1>
-                    <p class="hero-subtitle animate-fade-in-up-delay-1">24小时不间断精彩影视内容</p>
-                    <div class="hero-buttons animate-fade-in-up-delay-2">
-                        <a href="{:mac_url('live/index')}" class="btn btn-primary btn-film">立即观看</a>
-                        <a href="#schedule" class="btn btn-secondary btn-film">直播时间表</a>
+                    <h1 class="hero-title">无人直播</h1>
+                    <p class="hero-subtitle">24小时不间断精彩内容</p>
+                    <div class="hero-buttons">
+                        <a href="{:mac_url('live/index')}" class="btn btn-primary">立即观看</a>
+                        <a href="#schedule" class="btn btn-secondary">直播时间表</a>
                     </div>
                 </div>
                 <div class="hero-bg">
                     <div class="hero-gradient"></div>
-                    <div class="hero-overlay"></div>
-                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cinema%20movie%20theater%20screen%20with%20film%20reels%20and%20spotlights%20dark%20atmosphere%20professional%20cinematic%20lighting&image_size=landscape_16_9" alt="直播背景" class="hero-img" />
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20platform%20modern%20dark%20theme%20with%20live%20icons%20and%20streaming%20elements&image_size=landscape_16_9" alt="直播背景" class="hero-img" />
                 </div>
-                <div class="film-strip-bottom"></div>
             </div>
             
             <div class="container">
                 <!-- 直播分类导航 -->
-                <div class="live-category-nav glass-card animate-fade-in">
+                <div class="live-category-nav glass-card">
                     <div class="category-scroll">
-                        <a href="{:mac_url('live/index')}" class="category-item active category-item-film">全部</a>
-                        <a href="{:mac_url('live/index',['cat'=>'movie'])}" class="category-item category-item-film">电影</a>
-                        <a href="{:mac_url('live/index',['cat'=>'tv'])}" class="category-item category-item-film">电视剧</a>
-                        <a href="{:mac_url('live/index',['cat'=>'variety'])}" class="category-item category-item-film">综艺</a>
-                        <a href="{:mac_url('live/index',['cat'=>'anime'])}" class="category-item category-item-film">动漫</a>
-                        <a href="{:mac_url('live/index',['cat'=>'sports'])}" class="category-item category-item-film">体育</a>
-                        <a href="{:mac_url('live/index',['cat'=>'music'])}" class="category-item category-item-film">音乐</a>
-                        <a href="{:mac_url('live/index',['cat'=>'game'])}" class="category-item category-item-film">游戏</a>
+                        <a href="{:mac_url('live/index')}" class="category-item active">全部</a>
+                        <a href="{:mac_url('live/index',['cat'=>'game'])}" class="category-item">游戏</a>
+                        <a href="{:mac_url('live/index',['cat'=>'entertainment'])}" class="category-item">娱乐</a>
+                        <a href="{:mac_url('live/index',['cat'=>'music'])}" class="category-item">音乐</a>
+                        <a href="{:mac_url('live/index',['cat'=>'sports'])}" class="category-item">体育</a>
+                        <a href="{:mac_url('live/index',['cat'=>'tech'])}" class="category-item">科技</a>
+                        <a href="{:mac_url('live/index',['cat'=>'life'])}" class="category-item">生活</a>
+                        <a href="{:mac_url('live/index',['cat'=>'education'])}" class="category-item">教育</a>
                     </div>
                 </div>
                 
                 <!-- 直播推荐 -->
                 <div class="section">
-                    <div class="glass-card animate-fade-in">
+                    <div class="glass-card">
                         <div class="section-header">
                             <div class="section-title-wrap">
-                                <div class="section-icon section-icon-film">
+                                <div class="section-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                     </svg>
                                 </div>
-                                <h2 class="section-title section-title-film">热门直播间</h2>
+                                <h2 class="section-title">热门直播间</h2>
                             </div>
-                            <a href="{:mac_url('live/index')}" class="section-more section-more-film">
+                            <a href="{:mac_url('live/index')}" class="section-more">
                                 查看全部 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </a>
                         </div>
                         <div class="live-grid">
                             <!-- 直播项 1 -->
-                            <div class="live-item glass-card animate-scale-in live-item-film">
-                                <div class="film-border">
-                                    <div class="live-poster">
-                                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20cinema%20screen%20with%20action%20movie%20scene%20dark%20atmosphere%20cinematic%20lighting&image_size=landscape_16_9" alt="电影直播间" class="live-img" />
-                                        <div class="live-overlay">
-                                            <div class="live-play-btn live-play-btn-film">
-                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="live-status">
-                                                <span class="live-badge live-badge-hot live-badge-film">直播中</span>
-                                                <span class="live-viewers live-viewers-film">12,345 观看</span>
-                                            </div>
-                                            <div class="live-category-tag live-category-tag-film">电影</div>
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=game%20live%20streaming%20interface%20modern%20dark%20theme&image_size=landscape_16_9" alt="游戏直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
                                         </div>
+                                        <div class="live-status">
+                                            <span class="live-badge live-badge-hot">直播中</span>
+                                            <span class="live-viewers">12,345 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">游戏</div>
                                     </div>
                                 </div>
-                                <div class="live-info live-info-film">
-                                    <h3 class="live-title">动作电影剧场</h3>
-                                    <p class="live-desc">24小时不间断播放经典动作大片</p>
+                                <div class="live-info">
+                                    <h3 class="live-title">王者荣耀精彩对决</h3>
+                                    <p class="live-desc">职业选手精彩操作，高段位排位赛</p>
                                     <div class="live-meta">
-                                        <span class="live-anchor">主播：电影频道</span>
+                                        <span class="live-anchor">主播：游戏达人</span>
                                         <span class="live-views">12.3k 观看</span>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- 直播项 2 -->
-                            <div class="live-item glass-card animate-scale-in-delay-1 live-item-film">
-                                <div class="film-border">
-                                    <div class="live-poster">
-                                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tv%20series%20drama%20scene%20with%20actors%20emotional%20moment%20cinematic%20lighting&image_size=landscape_16_9" alt="电视剧直播间" class="live-img" />
-                                        <div class="live-overlay">
-                                            <div class="live-play-btn live-play-btn-film">
-                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="live-status">
-                                                <span class="live-badge live-badge-new live-badge-film">直播中</span>
-                                                <span class="live-viewers live-viewers-film">8,921 观看</span>
-                                            </div>
-                                            <div class="live-category-tag live-category-tag-film">电视剧</div>
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=entertainment%20live%20streaming%20show%20modern%20dark%20theme&image_size=landscape_16_9" alt="娱乐直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
                                         </div>
+                                        <div class="live-status">
+                                            <span class="live-badge live-badge-new">直播中</span>
+                                            <span class="live-viewers">8,921 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">娱乐</div>
                                     </div>
                                 </div>
-                                <div class="live-info live-info-film">
-                                    <h3 class="live-title">热门电视剧场</h3>
-                                    <p class="live-desc">最新热门电视剧轮播</p>
+                                <div class="live-info">
+                                    <h3 class="live-title">脱口秀现场</h3>
+                                    <p class="live-desc">搞笑段子，互动游戏</p>
                                     <div class="live-meta">
-                                        <span class="live-anchor">主播：电视剧频道</span>
+                                        <span class="live-anchor">主播：喜剧之王</span>
                                         <span class="live-views">8.9k 观看</span>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- 直播项 3 -->
-                            <div class="live-item glass-card animate-scale-in-delay-2 live-item-film">
-                                <div class="film-border">
-                                    <div class="live-poster">
-                                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=variety%20show%20stage%20with%20audience%20and%20hosts%20cinematic%20lighting&image_size=landscape_16_9" alt="综艺直播间" class="live-img" />
-                                        <div class="live-overlay">
-                                            <div class="live-play-btn live-play-btn-film">
-                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="live-status">
-                                                <span class="live-badge live-badge-film">直播中</span>
-                                                <span class="live-viewers live-viewers-film">6,543 观看</span>
-                                            </div>
-                                            <div class="live-category-tag live-category-tag-film">综艺</div>
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=music%20live%20concert%20streaming%20modern%20dark%20theme&image_size=landscape_16_9" alt="音乐直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
                                         </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">6,543 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">音乐</div>
                                     </div>
                                 </div>
-                                <div class="live-info live-info-film">
-                                    <h3 class="live-title">欢乐综艺秀</h3>
-                                    <p class="live-desc">精选综艺节目轮播</p>
+                                <div class="live-info">
+                                    <h3 class="live-title">流行歌曲翻唱</h3>
+                                    <p class="live-desc">热门歌曲现场演唱</p>
                                     <div class="live-meta">
-                                        <span class="live-anchor">主播：综艺频道</span>
+                                        <span class="live-anchor">主播：音乐才女</span>
                                         <span class="live-views">6.5k 观看</span>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- 直播项 4 -->
-                            <div class="live-item glass-card animate-scale-in-delay-3 live-item-film">
-                                <div class="film-border">
-                                    <div class="live-poster">
-                                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20animation%20colorful%20characters%20action%20scene%20cinematic%20lighting&image_size=landscape_16_9" alt="动漫直播间" class="live-img" />
-                                        <div class="live-overlay">
-                                            <div class="live-play-btn live-play-btn-film">
-                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="live-status">
-                                                <span class="live-badge live-badge-film">直播中</span>
-                                                <span class="live-viewers live-viewers-film">10,234 观看</span>
-                                            </div>
-                                            <div class="live-category-tag live-category-tag-film">动漫</div>
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20live%20streaming%20modern%20dark%20theme&image_size=landscape_16_9" alt="体育直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
                                         </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">10,234 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">体育</div>
                                     </div>
                                 </div>
-                                <div class="live-info live-info-film">
-                                    <h3 class="live-title">动漫天地</h3>
-                                    <p class="live-desc">经典动漫轮播</p>
+                                <div class="live-info">
+                                    <h3 class="live-title">NBA赛事解说</h3>
+                                    <p class="live-desc">实时赛事分析，精彩瞬间</p>
                                     <div class="live-meta">
-                                        <span class="live-anchor">主播：动漫频道</span>
+                                        <span class="live-anchor">主播：体育评论员</span>
                                         <span class="live-views">10.2k 观看</span>
                                     </div>
                                 </div>
@@ -172,44 +160,42 @@
                 
                 <!-- 精选直播 -->
                 <div class="section">
-                    <div class="glass-card animate-fade-in">
+                    <div class="glass-card">
                         <div class="section-header">
                             <div class="section-title-wrap">
-                                <div class="section-icon section-icon-film">
+                                <div class="section-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                                         <path d="M2 17l10 5 10-5"></path>
                                         <path d="M2 12l10 5 10-5"></path>
                                     </svg>
                                 </div>
-                                <h2 class="section-title section-title-film">精选直播</h2>
+                                <h2 class="section-title">精选直播</h2>
                             </div>
                         </div>
                         <div class="featured-live">
-                            <div class="featured-live-item glass-card featured-live-item-film">
-                                <div class="film-border film-border-large">
-                                    <div class="featured-live-content">
-                                        <div class="featured-live-poster">
-                                            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cinema%20premiere%20red%20carpet%20event%20glamorous%20cinematic%20lighting%20professional%20photography&image_size=landscape_16_9" alt="精选直播" class="featured-live-img" />
-                                            <div class="featured-live-overlay">
-                                                <div class="featured-live-badge featured-live-badge-film">精选推荐</div>
-                                                <div class="featured-live-play-btn featured-live-play-btn-film">
-                                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                                    </svg>
-                                                </div>
+                            <div class="featured-live-item glass-card">
+                                <div class="featured-live-content">
+                                    <div class="featured-live-poster">
+                                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=esports%20tournament%20live%20streaming%20modern%20dark%20theme&image_size=landscape_16_9" alt="精选直播" class="featured-live-img" />
+                                        <div class="featured-live-overlay">
+                                            <div class="featured-live-badge">精选推荐</div>
+                                            <div class="featured-live-play-btn">
+                                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                                </svg>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="featured-live-info featured-live-info-film">
-                                    <h3 class="featured-live-title">电影节直播</h3>
-                                    <p class="featured-live-desc">实时直播电影节开幕式和红毯仪式，带你感受电影的魅力与星光</p>
+                                <div class="featured-live-info">
+                                    <h3 class="featured-live-title">电竞 tournament 总决赛</h3>
+                                    <p class="featured-live-desc">顶级战队巅峰对决，见证冠军诞生</p>
                                     <div class="featured-live-meta">
                                         <span class="featured-live-time">2026-04-08 19:30 开始</span>
                                         <span class="featured-live-viewers">32,456 人已预约</span>
                                     </div>
-                                    <a href="{:mac_url('live/play')}" class="btn btn-primary btn-film">预约观看</a>
+                                    <a href="{:mac_url('live/play')}" class="btn btn-primary">预约观看</a>
                                 </div>
                             </div>
                         </div>
@@ -218,75 +204,75 @@
                 
                 <!-- 直播时间表 -->
                 <div id="schedule" class="section">
-                    <div class="glass-card animate-fade-in">
+                    <div class="glass-card">
                         <div class="section-header">
                             <div class="section-title-wrap">
-                                <div class="section-icon section-icon-film">
+                                <div class="section-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                 </div>
-                                <h2 class="section-title section-title-film">今日直播时间表</h2>
+                                <h2 class="section-title">今日直播时间表</h2>
                             </div>
                         </div>
-                        <div class="live-schedule live-schedule-film">
-                            <div class="schedule-item schedule-item-featured schedule-item-film">
-                                <div class="schedule-time schedule-time-film">00:00 - 06:00</div>
-                                <div class="schedule-content schedule-content-film">
-                                    <h4>深夜电影档</h4>
-                                    <p>经典老电影轮播</p>
+                        <div class="live-schedule">
+                            <div class="schedule-item schedule-item-featured">
+                                <div class="schedule-time">00:00 - 06:00</div>
+                                <div class="schedule-content">
+                                    <h4>深夜游戏档</h4>
+                                    <p>热门游戏直播</p>
                                     <div class="schedule-tags">
-                                        <span class="schedule-tag schedule-tag-film">动作</span>
-                                        <span class="schedule-tag schedule-tag-film">剧情</span>
-                                        <span class="schedule-tag schedule-tag-film">悬疑</span>
+                                        <span class="schedule-tag">游戏</span>
+                                        <span class="schedule-tag">竞技</span>
+                                        <span class="schedule-tag">MOBA</span>
                                     </div>
                                 </div>
                                 <div class="schedule-status">
-                                    <span class="status-badge status-badge-film">即将开始</span>
+                                    <span class="status-badge">即将开始</span>
                                 </div>
                             </div>
-                            <div class="schedule-item schedule-item-film">
-                                <div class="schedule-time schedule-time-film">06:00 - 12:00</div>
-                                <div class="schedule-content schedule-content-film">
-                                    <h4>早间剧场</h4>
-                                    <p>热门电视剧</p>
+                            <div class="schedule-item">
+                                <div class="schedule-time">06:00 - 12:00</div>
+                                <div class="schedule-content">
+                                    <h4>早间娱乐</h4>
+                                    <p>轻松脱口秀</p>
                                     <div class="schedule-tags">
-                                        <span class="schedule-tag schedule-tag-film">都市</span>
-                                        <span class="schedule-tag schedule-tag-film">情感</span>
+                                        <span class="schedule-tag">娱乐</span>
+                                        <span class="schedule-tag">脱口秀</span>
                                     </div>
                                 </div>
                                 <div class="schedule-status">
-                                    <span class="status-badge status-badge-film">即将开始</span>
+                                    <span class="status-badge">即将开始</span>
                                 </div>
                             </div>
-                            <div class="schedule-item schedule-item-film">
-                                <div class="schedule-time schedule-time-film">12:00 - 18:00</div>
-                                <div class="schedule-content schedule-content-film">
-                                    <h4>午间综艺</h4>
-                                    <p>精选综艺节目</p>
+                            <div class="schedule-item">
+                                <div class="schedule-time">12:00 - 18:00</div>
+                                <div class="schedule-content">
+                                    <h4>午间音乐</h4>
+                                    <p>流行歌曲演唱</p>
                                     <div class="schedule-tags">
-                                        <span class="schedule-tag schedule-tag-film">娱乐</span>
-                                        <span class="schedule-tag schedule-tag-film">真人秀</span>
+                                        <span class="schedule-tag">音乐</span>
+                                        <span class="schedule-tag">演唱</span>
                                     </div>
                                 </div>
                                 <div class="schedule-status">
-                                    <span class="status-badge status-badge-film">即将开始</span>
+                                    <span class="status-badge">即将开始</span>
                                 </div>
                             </div>
-                            <div class="schedule-item schedule-item-featured schedule-item-film">
-                                <div class="schedule-time schedule-time-film">18:00 - 24:00</div>
-                                <div class="schedule-content schedule-content-film">
+                            <div class="schedule-item schedule-item-featured">
+                                <div class="schedule-time">18:00 - 24:00</div>
+                                <div class="schedule-content">
                                     <h4>黄金时段</h4>
-                                    <p>最新电影大片</p>
+                                    <p>电竞 tournament 总决赛</p>
                                     <div class="schedule-tags">
-                                        <span class="schedule-tag schedule-tag-film">大片</span>
-                                        <span class="schedule-tag schedule-tag-film">新片</span>
-                                        <span class="schedule-tag schedule-tag-film">3D</span>
+                                        <span class="schedule-tag">电竞</span>
+                                        <span class="schedule-tag">总决赛</span>
+                                        <span class="schedule-tag">直播</span>
                                     </div>
                                 </div>
                                 <div class="schedule-status">
-                                    <span class="status-badge status-badge-hot status-badge-film">热门推荐</span>
+                                    <span class="status-badge status-badge-hot">热门推荐</span>
                                 </div>
                             </div>
                         </div>
@@ -295,10 +281,10 @@
                 
                 <!-- 直播特色 -->
                 <div class="section">
-                    <div class="glass-card animate-fade-in">
+                    <div class="glass-card">
                         <div class="section-header">
                             <div class="section-title-wrap">
-                                <div class="section-icon section-icon-film">
+                                <div class="section-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
                                         <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
@@ -307,12 +293,12 @@
                                         <line x1="14" y1="1" x2="14" y2="4"></line>
                                     </svg>
                                 </div>
-                                <h2 class="section-title section-title-film">直播特色</h2>
+                                <h2 class="section-title">直播特色</h2>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
-                            <div class="feature-card feature-card-film text-center p-6 transform hover:scale-105 transition-all duration-300">
-                                <div class="feature-icon feature-icon-film mx-auto w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <div class="feature-card text-center p-6 transform hover:scale-105 transition-all duration-300">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4 shadow-lg">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                     </svg>
@@ -320,8 +306,8 @@
                                 <h3 class="text-xl font-semibold mb-2">24小时直播</h3>
                                 <p class="text-secondary">全天候不间断播放，随时观看</p>
                             </div>
-                            <div class="feature-card feature-card-film text-center p-6 transform hover:scale-105 transition-all duration-300">
-                                <div class="feature-icon feature-icon-film mx-auto w-16 h-16 bg-gradient-to-br from-success to-info rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <div class="feature-card text-center p-6 transform hover:scale-105 transition-all duration-300">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-success to-info rounded-full flex items-center justify-center mb-4 shadow-lg">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                                     </svg>
@@ -329,8 +315,8 @@
                                 <h3 class="text-xl font-semibold mb-2">高清画质</h3>
                                 <p class="text-secondary">全高清画质，带给你极致视觉体验</p>
                             </div>
-                            <div class="feature-card feature-card-film text-center p-6 transform hover:scale-105 transition-all duration-300">
-                                <div class="feature-icon feature-icon-film mx-auto w-16 h-16 bg-gradient-to-br from-accent to-warning rounded-full flex items-center justify-center mb-4 shadow-lg">
+                            <div class="feature-card text-center p-6 transform hover:scale-105 transition-all duration-300">
+                                <div class="feature-icon mx-auto w-16 h-16 bg-gradient-to-br from-accent to-warning rounded-full flex items-center justify-center mb-4 shadow-lg">
                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                                         <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path>
                                     </svg>
@@ -344,35 +330,35 @@
                 
                 <!-- 直播统计 -->
                 <div class="section">
-                    <div class="glass-card animate-fade-in">
+                    <div class="glass-card">
                         <div class="section-header">
                             <div class="section-title-wrap">
-                                <div class="section-icon section-icon-film">
+                                <div class="section-icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                                         <line x1="8" y1="21" x2="16" y2="21"></line>
                                         <line x1="12" y1="17" x2="12" y2="21"></line>
                                     </svg>
                                 </div>
-                                <h2 class="section-title section-title-film">直播数据</h2>
+                                <h2 class="section-title">直播数据</h2>
                             </div>
                         </div>
-                        <div class="live-stats-grid live-stats-grid-film">
-                            <div class="stat-card stat-card-film">
-                                <div class="stat-number stat-number-film">128</div>
-                                <div class="stat-label stat-label-film">活跃直播间</div>
+                        <div class="live-stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">128</div>
+                                <div class="stat-label">活跃直播间</div>
                             </div>
-                            <div class="stat-card stat-card-film">
-                                <div class="stat-number stat-number-film">256,789</div>
-                                <div class="stat-label stat-label-film">累计观看人数</div>
+                            <div class="stat-card">
+                                <div class="stat-number">256,789</div>
+                                <div class="stat-label">累计观看人数</div>
                             </div>
-                            <div class="stat-card stat-card-film">
-                                <div class="stat-number stat-number-film">15,432</div>
-                                <div class="stat-label stat-label-film">同时在线人数</div>
+                            <div class="stat-card">
+                                <div class="stat-number">15,432</div>
+                                <div class="stat-label">同时在线人数</div>
                             </div>
-                            <div class="stat-card stat-card-film">
-                                <div class="stat-number stat-number-film">98%</div>
-                                <div class="stat-label stat-label-film">用户满意度</div>
+                            <div class="stat-card">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">用户满意度</div>
                             </div>
                         </div>
                     </div>

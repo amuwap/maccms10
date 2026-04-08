@@ -1,57 +1,53 @@
 {include file="public/head.html"}
             <div class="live-play-hero">
-                <div class="film-strip-top"></div>
                 <div class="live-play-hero-content">
                     <h1 class="live-play-hero-title">{$live_info.live_name|default='直播标题'}</h1>
                     <p class="live-play-hero-subtitle">主播：{$live_info.live_anchor|default='未知主播'}</p>
                 </div>
-                <div class="film-strip-bottom"></div>
             </div>
             <div class="container">
                 <!-- 直播播放页面 -->
                 <div class="live-play-page">
                     <div class="glass-card live-player-container">
-                        <div class="film-border film-border-large">
-                            <div class="live-player-wrapper">
-                                <video class="live-player" controls autoplay playsinline>
-                                    <source src="{$live_info.live_mp4_url|default=''}" type="video/mp4">
-                                    您的浏览器不支持视频播放
-                                </video>
-                                <div class="danmaku-container"></div>
-                                <div class="gift-animation"></div>
-                                <div class="combo-effect"></div>
-                                <div class="lottery-container"></div>
-                                <div class="announcement-container"></div>
-                            </div>
+                        <div class="live-player-wrapper">
+                            <video class="live-player" controls autoplay playsinline>
+                                <source src="{$live_info.live_mp4_url|default=''}" type="video/mp4">
+                                您的浏览器不支持视频播放
+                            </video>
+                            <div class="danmaku-container"></div>
+                            <div class="gift-animation"></div>
+                            <div class="combo-effect"></div>
+                            <div class="lottery-container"></div>
+                            <div class="announcement-container"></div>
                         </div>
                     </div>
                     
                     <!-- 直播信息 -->
-                    <div class="glass-card live-info-card live-info-card-film">
+                    <div class="glass-card live-info-card">
                         <div class="live-info-header">
-                            <h1 class="live-title live-title-film">{$live_info.live_name|default='直播标题'}</h1>
+                            <h1 class="live-title">{$live_info.live_name|default='直播标题'}</h1>
                             <div class="live-info-actions">
-                                <button class="btn btn-film btn-primary">关注</button>
-                                <button class="btn btn-film btn-secondary">分享</button>
+                                <button class="btn btn-primary">关注</button>
+                                <button class="btn btn-secondary">分享</button>
                             </div>
                         </div>
-                        <p class="live-anchor live-anchor-film">主播：{$live_info.live_anchor|default='未知主播'}</p>
-                        <div class="live-stats live-stats-film">
-                            <div class="stat-item stat-item-film">
-                                <span class="stat-label stat-label-film">观看人数</span>
-                                <span class="stat-value stat-value-film viewer-count">0</span>
+                        <p class="live-anchor">主播：{$live_info.live_anchor|default='未知主播'}</p>
+                        <div class="live-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">观看人数</span>
+                                <span class="stat-value viewer-count">0</span>
                             </div>
-                            <div class="stat-item stat-item-film">
-                                <span class="stat-label stat-label-film">点赞</span>
-                                <span class="stat-value stat-value-film like-count">0</span>
+                            <div class="stat-item">
+                                <span class="stat-label">点赞</span>
+                                <span class="stat-value like-count">0</span>
                             </div>
-                            <div class="stat-item stat-item-film">
-                                <span class="stat-label stat-label-film">评论</span>
-                                <span class="stat-value stat-value-film comment-count">0</span>
+                            <div class="stat-item">
+                                <span class="stat-label">评论</span>
+                                <span class="stat-value comment-count">0</span>
                             </div>
-                            <div class="stat-item stat-item-film">
-                                <span class="stat-label stat-label-film">礼物</span>
-                                <span class="stat-value stat-value-film gift-count">0</span>
+                            <div class="stat-item">
+                                <span class="stat-label">礼物</span>
+                                <span class="stat-value gift-count">0</span>
                             </div>
                         </div>
                     </div>
@@ -59,39 +55,39 @@
                     <!-- 互动区域 -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <!-- 评论区 -->
-                        <div class="glass-card comment-section comment-section-film">
-                            <div class="section-header section-header-film">
-                                <h3 class="section-title-film">评论区</h3>
+                        <div class="glass-card comment-section">
+                            <div class="section-header">
+                                <h3 class="section-title">评论区</h3>
                             </div>
-                            <div class="comment-list comment-list-film"></div>
-                            <form class="comment-form comment-form-film">
-                                <input type="text" placeholder="发表评论..." class="comment-input comment-input-film">
-                                <button type="submit" class="comment-submit comment-submit-film btn-film">发送</button>
+                            <div class="comment-list"></div>
+                            <form class="comment-form">
+                                <input type="text" placeholder="发表评论..." class="comment-input">
+                                <button type="submit" class="comment-submit btn">发送</button>
                             </form>
                         </div>
                         
                         <!-- 礼物区 -->
-                        <div class="glass-card gift-section gift-section-film">
-                            <div class="section-header section-header-film">
-                                <h3 class="section-title-film">礼物</h3>
+                        <div class="glass-card gift-section">
+                            <div class="section-header">
+                                <h3 class="section-title">礼物</h3>
                             </div>
-                            <div class="gift-panel gift-panel-film"></div>
-                            <div class="gift-ranking gift-ranking-film">
-                                <h4 class="section-title-film">礼物排行</h4>
+                            <div class="gift-panel"></div>
+                            <div class="gift-ranking">
+                                <h4 class="section-title">礼物排行</h4>
                             </div>
                         </div>
                         
                         <!-- 弹幕区 -->
-                        <div class="glass-card danmaku-section danmaku-section-film">
-                            <div class="section-header section-header-film">
-                                <h3 class="section-title-film">弹幕</h3>
+                        <div class="glass-card danmaku-section">
+                            <div class="section-header">
+                                <h3 class="section-title">弹幕</h3>
                             </div>
-                            <form class="danmaku-form danmaku-form-film">
-                                <input type="text" placeholder="发送弹幕..." class="danmaku-input danmaku-input-film">
-                                <button type="submit" class="danmaku-submit danmaku-submit-film btn-film">发送</button>
+                            <form class="danmaku-form">
+                                <input type="text" placeholder="发送弹幕..." class="danmaku-input">
+                                <button type="submit" class="danmaku-submit btn">发送</button>
                             </form>
-                            <div class="viewer-diversity viewer-diversity-film">
-                                <h4 class="section-title-film">观众分布</h4>
+                            <div class="viewer-diversity">
+                                <h4 class="section-title">观众分布</h4>
                             </div>
                         </div>
                     </div>

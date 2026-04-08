@@ -1,0 +1,333 @@
+{include file="public/head.html"}
+            <!-- 直播分类页面头部 -->
+            <div class="live-hero-banner">
+                <div class="hero-content">
+                    <h1 class="hero-title">直播分类</h1>
+                    <p class="hero-subtitle">选择您感兴趣的直播类型</p>
+                </div>
+                <div class="hero-bg">
+                    <div class="hero-gradient"></div>
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=live%20streaming%20categories%20modern%20dark%20theme%20grid%20layout&image_size=landscape_16_9" alt="直播分类背景" class="hero-img" />
+                </div>
+            </div>
+            
+            <div class="container">
+                <!-- 直播分类导航 -->
+                <div class="live-category-nav glass-card">
+                    <div class="category-scroll">
+                        <a href="{:mac_url('live/category',['cat'=>'all'])}" class="category-item active">全部</a>
+                        <a href="{:mac_url('live/category',['cat'=>'game'])}" class="category-item">游戏</a>
+                        <a href="{:mac_url('live/category',['cat'=>'entertainment'])}" class="category-item">娱乐</a>
+                        <a href="{:mac_url('live/category',['cat'=>'music'])}" class="category-item">音乐</a>
+                        <a href="{:mac_url('live/category',['cat'=>'sports'])}" class="category-item">体育</a>
+                        <a href="{:mac_url('live/category',['cat'=>'tech'])}" class="category-item">科技</a>
+                        <a href="{:mac_url('live/category',['cat'=>'life'])}" class="category-item">生活</a>
+                        <a href="{:mac_url('live/category',['cat'=>'education'])}" class="category-item">教育</a>
+                    </div>
+                </div>
+                
+                <!-- 分类直播列表 -->
+                <div class="section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">游戏直播</h2>
+                            </div>
+                            <div class="section-filter">
+                                <select class="filter-select">
+                                    <option value="hot">热门</option>
+                                    <option value="new">最新</option>
+                                    <option value="viewers">观看人数</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="live-grid">
+                            <!-- 直播项 1 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=game%20live%20streaming%20MOBA%20game%20modern%20dark%20theme&image_size=landscape_16_9" alt="游戏直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge live-badge-hot">直播中</span>
+                                            <span class="live-viewers">12,345 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">游戏</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">王者荣耀精彩对决</h3>
+                                    <p class="live-desc">职业选手精彩操作，高段位排位赛</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：游戏达人</span>
+                                        <span class="live-views">12.3k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 2 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=game%20live%20streaming%20FPS%20game%20modern%20dark%20theme&image_size=landscape_16_9" alt="游戏直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge live-badge-new">直播中</span>
+                                            <span class="live-viewers">8,921 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">游戏</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">CSGO精彩集锦</h3>
+                                    <p class="live-desc">职业比赛精彩瞬间，技巧教学</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：FPS大神</span>
+                                        <span class="live-views">8.9k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 3 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=game%20live%20streaming%20strategy%20game%20modern%20dark%20theme&image_size=landscape_16_9" alt="游戏直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">6,543 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">游戏</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">英雄联盟排位赛</h3>
+                                    <p class="live-desc">钻石段位排位赛，技巧分享</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：LOL大师</span>
+                                        <span class="live-views">6.5k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 直播项 4 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=game%20live%20streaming%20mobile%20game%20modern%20dark%20theme&image_size=landscape_16_9" alt="游戏直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">10,234 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">游戏</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">和平精英吃鸡</h3>
+                                    <p class="live-desc">四排组队，吃鸡教学</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：吃鸡王者</span>
+                                        <span class="live-views">10.2k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 分页 -->
+                        <div class="pagination">
+                            <a href="#" class="page-item">上一页</a>
+                            <a href="#" class="page-item active">1</a>
+                            <a href="#" class="page-item">2</a>
+                            <a href="#" class="page-item">3</a>
+                            <a href="#" class="page-item">下一页</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 分类推荐 -->
+                <div class="section">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <div class="section-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                        <path d="M2 17l10 5 10-5"></path>
+                                        <path d="M2 12l10 5 10-5"></path>
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">猜你喜欢</h2>
+                            </div>
+                        </div>
+                        <div class="live-grid">
+                            <!-- 推荐直播项 1 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=entertainment%20live%20streaming%20talk%20show%20modern%20dark%20theme&image_size=landscape_16_9" alt="娱乐直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">5,678 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">娱乐</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">脱口秀现场</h3>
+                                    <p class="live-desc">搞笑段子，互动游戏</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：喜剧之王</span>
+                                        <span class="live-views">5.7k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 推荐直播项 2 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=music%20live%20streaming%20concert%20modern%20dark%20theme&image_size=landscape_16_9" alt="音乐直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">7,890 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">音乐</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">流行歌曲翻唱</h3>
+                                    <p class="live-desc">热门歌曲现场演唱</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：音乐才女</span>
+                                        <span class="live-views">7.9k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 推荐直播项 3 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sports%20live%20streaming%20basketball%20modern%20dark%20theme&image_size=landscape_16_9" alt="体育直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">9,123 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">体育</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">NBA赛事解说</h3>
+                                    <p class="live-desc">实时赛事分析，精彩瞬间</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：体育评论员</span>
+                                        <span class="live-views">9.1k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 推荐直播项 4 -->
+                            <div class="live-item glass-card">
+                                <div class="live-poster">
+                                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tech%20live%20streaming%20review%20modern%20dark%20theme&image_size=landscape_16_9" alt="科技直播间" class="live-img" />
+                                    <div class="live-overlay">
+                                        <div class="live-play-btn">
+                                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                        </div>
+                                        <div class="live-status">
+                                            <span class="live-badge">直播中</span>
+                                            <span class="live-viewers">4,567 观看</span>
+                                        </div>
+                                        <div class="live-category-tag">科技</div>
+                                    </div>
+                                </div>
+                                <div class="live-info">
+                                    <h3 class="live-title">科技产品评测</h3>
+                                    <p class="live-desc">最新科技产品开箱评测</p>
+                                    <div class="live-meta">
+                                        <span class="live-anchor">主播：科技达人</span>
+                                        <span class="live-views">4.6k 观看</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // 直播分类页面交互
+                $(document).ready(function() {
+                    // 直播项悬停效果
+                    $('.live-item').on('mouseenter', function() {
+                        $(this).addClass('animate-float');
+                        $(this).find('.live-play-btn').css('transform', 'scale(1.1)');
+                    }).on('mouseleave', function() {
+                        $(this).removeClass('animate-float');
+                        $(this).find('.live-play-btn').css('transform', 'scale(1)');
+                    });
+                    
+                    // 分类切换
+                    $('.category-item').on('click', function(e) {
+                        e.preventDefault();
+                        $('.category-item').removeClass('active');
+                        $(this).addClass('active');
+                        // 这里可以添加分类切换的逻辑
+                    });
+                    
+                    // 直播播放
+                    $('.live-play-btn').on('click', function() {
+                        const liveTitle = $(this).closest('.live-item').find('.live-title').text();
+                        // 这里可以添加直播播放的逻辑
+                        alert('正在打开直播：' + liveTitle);
+                    });
+                    
+                    // 分页点击
+                    $('.page-item').on('click', function(e) {
+                        e.preventDefault();
+                        $('.page-item').removeClass('active');
+                        $(this).addClass('active');
+                        // 这里可以添加分页逻辑
+                    });
+                });
+            </script>
+{include file="public/foot.html"}

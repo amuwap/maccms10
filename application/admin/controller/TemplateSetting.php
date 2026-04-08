@@ -11,7 +11,7 @@ class TemplateSetting extends Base
 
     public function index()
     {
-        $config = config('maccms.template');
+        $config = include APP_PATH . 'extra/template.php';
         
         // 获取所有模板目录
         $templates = [];
@@ -44,7 +44,7 @@ class TemplateSetting extends Base
         ];
         
         // 写入配置文件
-        $configFile = CONF_PATH . 'template.php';
+        $configFile = APP_PATH . 'extra/template.php';
         $configContent = "<?php\nreturn " . var_export($templateConfig, true) . ";\n";
         file_put_contents($configFile, $configContent);
         

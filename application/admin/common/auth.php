@@ -177,6 +177,13 @@ return array(
 
     )),
 
+    '13' => array('name' => 'AI内容', 'icon' => 'xe621', 'sub' => array(
+        '131' => array("show"=>1,'name' => 'AI内容管理', 'controller' => 'aiContent',		'action' => 'index'),
+        '13101' => array("show"=>0,'name' => '--批量生成内容', 'controller' => 'aiContent',		'action' => 'batchGenerate'),
+        '13102' => array("show"=>0,'name' => '--生成状态', 'controller' => 'aiContent',		'action' => 'status'),
+        '13103' => array("show"=>0,'name' => '--AI设置', 'controller' => 'aiContent',		'action' => 'setting'),
+    )),
+
     '7' => array('name' => '模版', 'icon' => 'xe72d', 'sub' => array(
         '71' => array("show"=>1,'name' => '模板管理', 'controller' => 'template',		'action' => 'index'),
         '7101' => array("show"=>0,'name' => '--模板信息维护', 'controller' => 'template',		'action' => 'info'),

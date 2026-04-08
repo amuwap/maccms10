@@ -608,6 +608,69 @@ class AiService
         return $result;
     }
 
+    /**
+     * 生成AI评论
+     * @param string $vod_name 影视名称
+     * @param array $options 选项
+     * @return array
+     */
+    public function generateComments($vod_name, $count = 5, $options = [])
+    {
+        $comments = [];
+        $type_name = isset($options['type_name']) ? $options['type_name'] : '';
+        $content = isset($options['vod_content']) ? $options['vod_content'] : '';
+        
+        for ($i = 0; $i < $count; $i++) {
+            $prompt = $this->buildCommentPrompt($vod_name, $type_name, $content);
+            $localOptions = $options;
+            $localOptions['use_cache'] = false;
+            
+            $result = $this->generateContent($prompt, 'comment', $localOptions);
+            if ($result['code'] == 1) {
+                $comments[] = [
+                    'content' => $result['data'],
+                    'created_at' => time()
+                ];
+            }
+        }
+        
+        if (!empty($comments)) {
+            return ['code' => 1, 'comments' => $comments];
+        }
+        return ['code' => 0, 'msg' => '未生成评论'];
+    }
+
+    /**
+     * 构建评论提示词
+     * @param string $vod_name 影视名称
+     * @param string $type_name 类型名称
+     * @param string $content 影视内容
+     * @return string
+     */
+    public function buildCommentPrompt($vod_name, $type_name = '', $content = '')
+    {
+        $prompt = "请为影视作品《{$vod_name}》生成一条真实、自然的用户评论。";
+        
+        if ($type_name) {
+            $prompt .= "\n类型：{$type_name}";
+        }
+        
+        if ($content) {
+            $prompt .= "\n简介：{$content}";
+        }
+        
+        $prompt .= "\n\n要求：";
+        $prompt .= "\n1. 语言口语化，符合普通观众的评论风格";
+        $prompt .= "\n2. 表达真实的观影感受";
+        $prompt .= "\n3. 可以包含具体的情节或演员表现";
+        $prompt .= "\n4. 长度50-200字";
+        $prompt .= "\n5. 不要使用专业影评术语";
+        $prompt .= "\n6. 避免剧透关键剧情";
+        
+        $prompt .= "\n\n请直接返回评论内容，不要添加其他说明。";
+        return $prompt;
+    }
+
     public function batchGenerate($vod_ids, $types = ['intro'], $options = [])
     {
         $results = [];
@@ -665,6 +728,15 @@ class AiService
                         $localOptions['vod_content'] = $vod_info['vod_content'];
                         $vod_results['tags'] = $this->generateTags(
                             $vod_info['vod_name'],
+                            $localOptions
+                        );
+                        break;
+                    case 'comments':
+                        $localOptions['type_name'] = isset($vod_info['type']['type_name']) ? $vod_info['type']['type_name'] : '';
+                        $localOptions['vod_content'] = $vod_info['vod_content'];
+                        $vod_results['comments'] = $this->generateComments(
+                            $vod_info['vod_name'],
+                            5,
                             $localOptions
                         );
                         break;

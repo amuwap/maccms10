@@ -599,15 +599,27 @@ class Vod extends Base {
             $where=[];
             $where['vod_id'] = ['eq',$data['vod_id']];
             $res = $this->allowField(true)->where($where)->update($data);
+            $vod_id = $data['vod_id'];
         }
         else{
             $data['vod_time_add'] = time();
             $data['vod_time'] = time();
-            $res = $this->allowField(true)->insert($data);
+            $vod_id = $this->allowField(true)->insertGetId($data);
+            $res = $vod_id;
         }
         if(false === $res){
             return ['code'=>1002,'msg'=>'保存失败：'.$this->getError() ];
         }
+        
+        // 自动生成AI内容
+        try {
+            $generator = new \app\common\util\AutoContentGenerator();
+            $generator->generateContentForVod($vod_id);
+        } catch (\Exception $e) {
+            // 记录错误但不影响保存操作
+            \think\Log::error('自动生成AI内容失败: ' . $e->getMessage());
+        }
+        
         return ['code'=>1,'msg'=>'保存成功'];
     }
 

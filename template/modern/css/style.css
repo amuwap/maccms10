@@ -1793,20 +1793,120 @@ input, textarea, select {
     }
 }
 
-.fade-in-up {
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes hover {
+    0% {
+        transform: translateY(0);
+        box-shadow: var(--shadow-lg);
+    }
+    100% {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+    }
+}
+
+/* 动画类 */
+.animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
 }
 
-.fade-in {
+.animate-fade-in {
     animation: fadeIn 0.4s ease-out;
 }
 
-.scale-in {
+.animate-scale-in {
     animation: scaleIn 0.4s ease-out;
 }
 
-.slide-in-right {
+.animate-slide-in-right {
     animation: slideInRight 0.4s ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+    animation: bounceIn 0.6s ease-out;
+}
+
+.animate-rotate {
+    animation: rotate 2s linear infinite;
+}
+
+.animate-fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* 延迟动画类 */
+.animate-fade-in-up-delay-1 {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.animate-fade-in-up-delay-2 {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.animate-fade-in-up-delay-3 {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.animate-fade-in-up-delay-4 {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+.animate-fade-in-up-delay-5 {
+    animation: fadeInUp 0.6s ease-out 0.5s both;
 }
 
 /* 加载动画 */
@@ -2068,6 +2168,16 @@ input, textarea, select {
 
 .w-full { width: 100%; }
 .h-full { height: 100%; }
+
+/* 变换和过渡 */
+.transform { transition: all var(--transition-normal); }
+.scale-105 { transform: scale(1.05); }
+.-translate-y-2 { transform: translateY(-8px); }
+.ring-2 { box-shadow: 0 0 0 2px currentColor; }
+.ring-primary\/50 { --tw-ring-color: rgba(59, 130, 246, 0.5); }
+
+/* 阴影 */
+.shadow-xl { box-shadow: var(--shadow-xl); }
 
 /* 网格布局 */
 .grid { display: grid; }

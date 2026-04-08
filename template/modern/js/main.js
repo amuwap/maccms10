@@ -44,15 +44,36 @@ function initAnimations() {
     });
     
     // 观察所有需要动画的元素
-    document.querySelectorAll('.content-item, .person-card, .search-result-card, .art-item').forEach(el => {
+    document.querySelectorAll('.content-item, .person-card, .search-result-card, .art-item, .feature-card, .cast-card, .favs-item, .plays-item').forEach(el => {
         observer.observe(el);
     });
     
     // 鼠标悬停效果
-    $('.content-item').on('mouseenter', function() {
+    $('.content-item, .person-card, .search-result-card, .art-item, .feature-card, .cast-card, .favs-item, .plays-item').on('mouseenter', function() {
         $(this).addClass('animate-float');
     }).on('mouseleave', function() {
         $(this).removeClass('animate-float');
+    });
+    
+    // 按钮悬停效果
+    $('.btn').on('mouseenter', function() {
+        $(this).addClass('scale-105');
+    }).on('mouseleave', function() {
+        $(this).removeClass('scale-105');
+    });
+    
+    // 卡片悬停效果
+    $('.glass-card').on('mouseenter', function() {
+        $(this).addClass('shadow-xl transform -translate-y-2');
+    }).on('mouseleave', function() {
+        $(this).removeClass('shadow-xl transform -translate-y-2');
+    });
+    
+    // 输入框聚焦效果
+    $('input, textarea').on('focus', function() {
+        $(this).addClass('ring-2 ring-primary/50');
+    }).on('blur', function() {
+        $(this).removeClass('ring-2 ring-primary/50');
     });
 }
 

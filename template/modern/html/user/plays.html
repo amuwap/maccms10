@@ -1,25 +1,38 @@
 {include file="user/head.html"}
-                    <div class="glass-card user-content">
+                    <div class="glass-card user-content animate-fade-in-up">
                         <div class="content-header">
-                            <h2>播放历史</h2>
+                            <h2>📺 播放历史</h2>
                             <div class="header-actions">
-                                <button class="btn btn-secondary" id="btnDel">删除选中</button>
-                                <button class="btn btn-secondary" id="btnClear">清空全部</button>
+                                <button class="btn btn-secondary" id="btnDel">
+                                    <span class="btn-text">删除选中</span>
+                                    <span class="btn-loading">
+                                        <i class="loading-spinner"></i>
+                                    </span>
+                                </button>
+                                <button class="btn btn-secondary" id="btnClear">
+                                    <span class="btn-text">清空全部</span>
+                                    <span class="btn-loading">
+                                        <i class="loading-spinner"></i>
+                                    </span>
+                                </button>
                             </div>
                         </div>
                         <div class="plays-list">
-                            {volist name="list" id="vo"}
-                            <div class="plays-item glass-card">
+                            {volist name="list" id="vo" offset="0" length="10"}
+                            <div class="plays-item glass-card animate-fade-in-up" style="animation-delay: {$i * 0.1}s">
                                 <div class="plays-checkbox">
                                     <input type="checkbox" name="ids[]" value="{$vo.ulog_id}" class="checkbox" />
                                 </div>
                                 <div class="plays-poster">
-                                    <a href="{$vo.data.link}">
-                                        <img src="{$vo.data.pic|mac_url_img}" alt="{$vo.data.name}" />
+                                    <a href="{$vo.data.link}" class="poster-link">
+                                        <img src="{$vo.data.pic|mac_url_img}" alt="{$vo.data.name}" class="poster-img" />
+                                        <div class="poster-overlay">
+                                            <span class="play-icon">▶</span>
+                                        </div>
                                     </a>
                                 </div>
                                 <div class="plays-info">
-                                    <h3><a href="{$vo.data.link}">{$vo.data.name}</a></h3>
+                                    <h3><a href="{$vo.data.link}" class="title-link">{$vo.data.name}</a></h3>
                                     <p class="plays-meta">
                                         {$vo.data.type.type_name} · 
                                         第{$vo.ulog_rid}集 · 
@@ -27,19 +40,25 @@
                                     </p>
                                 </div>
                                 <div class="plays-actions">
-                                    <a href="{$vo.data.link}" class="btn btn-primary btn-small">继续播放</a>
-                                    <a href="javascript:;" onclick="delData({$vo.ulog_id},0)" class="btn btn-danger btn-small">删除</a>
+                                    <a href="{$vo.data.link}" class="btn btn-primary btn-small">
+                                        <span class="btn-text">继续播放</span>
+                                    </a>
+                                    <a href="javascript:;" onclick="delData({$vo.ulog_id},0)" class="btn btn-danger btn-small">
+                                        <span class="btn-text">删除</span>
+                                    </a>
                                 </div>
                             </div>
                             {/volist}
                         </div>
                         {if condition="!$list"}
-                        <div class="empty-state">
-                            <i class="layui-icon layui-icon-video"></i>
-                            <p>暂无播放记录</p>
+                        <div class="empty-state animate-fade-in-up">
+                            <div class="empty-icon">🎬</div>
+                            <h3>暂无播放记录</h3>
+                            <p>您还没有观看过任何内容</p>
+                            <a href="{:mac_url('vod/index')}" class="btn btn-primary">去发现内容</a>
                         </div>
                         {/if}
-                        <div class="pagination">
+                        <div class="pagination animate-fade-in-up">
                             {$__PAGING__.page_content}
                         </div>
                     </div>
@@ -50,11 +69,22 @@
                                 icon: 3,
                                 title: '提示'
                             }, function(index) {
+                                // 显示加载状态
+                                if (all == 1) {
+                                    $('#btnClear').addClass('loading');
+                                } else {
+                                    $('#btnDel').addClass('loading');
+                                }
+                                
                                 $.post("{:mac_url('user/ulog_del')}", {
                                     ids: ids,
                                     type: 4,
                                     all: all
                                 }, function(data) {
+                                    // 隐藏加载状态
+                                    $('#btnClear').removeClass('loading');
+                                    $('#btnDel').removeClass('loading');
+                                    
                                     if (data.code == '1') {
                                         layer.msg('删除成功', {icon: 1});
                                         setTimeout(function() {
@@ -82,6 +112,13 @@
                         
                         $('#btnClear').click(function() {
                             delData('', 1);
+                        });
+                        
+                        // 为播放历史项添加悬停效果
+                        $('.plays-item').hover(function() {
+                            $(this).addClass('hover');
+                        }, function() {
+                            $(this).removeClass('hover');
                         });
                     </script>
 {include file="user/foot.html"}

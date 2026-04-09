@@ -1,0 +1,51 @@
+{include file="public/head.html"}
+<div class="container">
+    <div class="user-dashboard">
+        <div class="dashboard-header">
+            <h1 class="page-title">求片记录</h1>
+            <p class="page-subtitle">查看您的求片历史和处理状态</p>
+        </div>
+        
+        <div class="glass-card">
+            <div class="table-responsive">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>求片时间</th>
+                            <th>影片名称</th>
+                            <th>求片内容</th>
+                            <th>处理状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td>{$vo.create_time|date='Y-m-d H:i:s'}</td>
+                            <td>{$vo.request_name}</td>
+                            <td>{$vo.request_content}</td>
+                            <td>
+                                {switch name="vo.request_status"}
+                                    {case value="0"}<span class="status-pending">处理中</span>{/case}
+                                    {case value="1"}<span class="status-success">已处理</span>{/case}
+                                    {case value="2"}<span class="status-failed">未找到</span>{/case}
+                                    {default}<span class="status-pending">处理中</span>{/default}
+                                {/switch}
+                            </td>
+                        </tr>
+                        {/volist}
+                        {if empty($list)}
+                        <tr>
+                            <td colspan="4" class="text-center">暂无求片记录</td>
+                        </tr>
+                        {/if}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination">
+                {$__PAGING__}
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/foot.html"}

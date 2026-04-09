@@ -72,9 +72,73 @@
                             <div class="section-header">
                                 <h3 class="section-title">礼物</h3>
                             </div>
-                            <div class="gift-panel"></div>
+                            <div class="gift-panel">
+                                <div class="gift-grid">
+                                    <div class="gift-item" data-gift-id="1" data-gift-price="10">
+                                        <div class="gift-icon">🎁</div>
+                                        <div class="gift-name">礼物盒</div>
+                                        <div class="gift-price">10 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="2" data-gift-price="20">
+                                        <div class="gift-icon">❤️</div>
+                                        <div class="gift-name">爱心</div>
+                                        <div class="gift-price">20 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="3" data-gift-price="50">
+                                        <div class="gift-icon">🚀</div>
+                                        <div class="gift-name">火箭</div>
+                                        <div class="gift-price">50 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="4" data-gift-price="100">
+                                        <div class="gift-icon">🏆</div>
+                                        <div class="gift-name">奖杯</div>
+                                        <div class="gift-price">100 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="5" data-gift-price="200">
+                                        <div class="gift-icon">🚗</div>
+                                        <div class="gift-name">跑车</div>
+                                        <div class="gift-price">200 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="6" data-gift-price="500">
+                                        <div class="gift-icon">🏠</div>
+                                        <div class="gift-name">别墅</div>
+                                        <div class="gift-price">500 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="7" data-gift-price="1000">
+                                        <div class="gift-icon">💎</div>
+                                        <div class="gift-name">钻石</div>
+                                        <div class="gift-price">1000 积分</div>
+                                    </div>
+                                    <div class="gift-item" data-gift-id="8" data-gift-price="2000">
+                                        <div class="gift-icon">👑</div>
+                                        <div class="gift-name">皇冠</div>
+                                        <div class="gift-price">2000 积分</div>
+                                    </div>
+                                </div>
+                                <div class="gift-send-area">
+                                    <input type="number" class="gift-num" value="1" min="1">
+                                    <button class="btn btn-primary gift-send-btn">赠送</button>
+                                </div>
+                            </div>
                             <div class="gift-ranking">
                                 <h4 class="section-title">礼物排行</h4>
+                                <div class="ranking-list">
+                                    <div class="ranking-item">
+                                        <span class="rank">1</span>
+                                        <span class="user">用户12345</span>
+                                        <span class="amount">5000 积分</span>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <span class="rank">2</span>
+                                        <span class="user">游戏迷</span>
+                                        <span class="amount">3000 积分</span>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <span class="rank">3</span>
+                                        <span class="user">新观众</span>
+                                        <span class="amount">1000 积分</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -101,6 +165,9 @@
                     if (liveId) {
                         initFakeLive(liveId, '.live-play-page');
                     }
+                    
+                    // 初始化礼物系统
+                    initGiftSystem();
                 });
                 
                 // 自动发送弹幕
@@ -119,6 +186,82 @@
                             }, interval);
                         }
                     }
+                }
+                
+                // 礼物系统
+                function initGiftSystem() {
+                    let selectedGift = null;
+                    
+                    // 礼物选择
+                    document.querySelectorAll('.gift-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            // 移除其他礼物的选中状态
+                            document.querySelectorAll('.gift-item').forEach(gift => {
+                                gift.classList.remove('active');
+                            });
+                            // 添加当前礼物的选中状态
+                            this.classList.add('active');
+                            selectedGift = this;
+                        });
+                    });
+                    
+                    // 发送礼物
+                    document.querySelector('.gift-send-btn').addEventListener('click', function() {
+                        if (!selectedGift) {
+                            alert('请选择一个礼物');
+                            return;
+                        }
+                        
+                        const giftId = selectedGift.dataset.giftId;
+                        const giftPrice = selectedGift.dataset.giftPrice;
+                        const giftName = selectedGift.querySelector('.gift-name').textContent;
+                        const giftNum = document.querySelector('.gift-num').value;
+                        
+                        // 模拟发送礼物
+                        sendGift(giftId, giftName, giftPrice, giftNum);
+                    });
+                }
+                
+                // 发送礼物
+                function sendGift(giftId, giftName, giftPrice, giftNum) {
+                    // 显示礼物动画
+                    showGiftAnimation(giftName, giftNum);
+                    
+                    // 更新礼物数量
+                    const giftCountElement = document.querySelector('.gift-count');
+                    const currentCount = parseInt(giftCountElement.textContent) || 0;
+                    giftCountElement.textContent = currentCount + parseInt(giftNum);
+                    
+                    // 模拟礼物发送成功
+                    setTimeout(() => {
+                        alert(`礼物发送成功！\n礼物：${giftName}\n数量：${giftNum}\n价格：${parseInt(giftPrice) * parseInt(giftNum)} 积分`);
+                    }, 1000);
+                }
+                
+                // 显示礼物动画
+                function showGiftAnimation(giftName, giftNum) {
+                    const giftAnimation = document.querySelector('.gift-animation');
+                    
+                    // 创建礼物动画元素
+                    const giftEffect = document.createElement('div');
+                    giftEffect.className = 'gift-effect';
+                    giftEffect.innerHTML = `
+                        <div>礼物：${giftName}</div>
+                        <div>数量：${giftNum}</div>
+                        <div class="super-gift">感谢支持！</div>
+                    `;
+                    
+                    // 清空之前的动画
+                    giftAnimation.innerHTML = '';
+                    giftAnimation.appendChild(giftEffect);
+                    
+                    // 显示动画
+                    giftAnimation.classList.add('show');
+                    
+                    // 3秒后隐藏动画
+                    setTimeout(() => {
+                        giftAnimation.classList.remove('show');
+                    }, 3000);
                 }
                 
                 // 发送弹幕

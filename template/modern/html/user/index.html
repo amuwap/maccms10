@@ -46,6 +46,24 @@
                                     </svg>
                                     安全设置
                                 </button>
+                                <button class="tab-nav-item" data-tab="request">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    求片
+                                </button>
+                                <button class="tab-nav-item" data-tab="share">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="18" cy="5" r="3"/>
+                                        <circle cx="6" cy="12" r="3"/>
+                                        <circle cx="18" cy="19" r="3"/>
+                                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                    </svg>
+                                    分享记录
+                                </button>
                             </div>
                             
                             <div class="tabs-content">
@@ -218,11 +236,149 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="tab-panel" id="request">
+                                    <div class="request-section">
+                                        <h3 class="section-title">我要求片</h3>
+                                        <p class="section-description">如果您找不到想看的影片，可以在这里提交求片请求</p>
+                                        <form class="request-form" onsubmit="event.preventDefault(); submitRequest();">
+                                            <div class="form-group">
+                                                <label class="form-label">影片名称</label>
+                                                <input type="text" id="request_name" class="form-input" placeholder="请输入影片名称" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">求片内容</label>
+                                                <textarea id="request_content" class="form-textarea" placeholder="请描述您的求片需求，例如：影片类型、年份、演员等信息" rows="4" required></textarea>
+                                            </div>
+                                            <div class="form-actions">
+                                                <button type="submit" class="btn btn-primary btn-lg">提交求片</button>
+                                            </div>
+                                        </form>
+                                        
+                                        <div class="request-history">
+                                            <h3 class="section-title">我的求片历史</h3>
+                                            <div class="request-list">
+                                                <!-- 求片历史记录将通过AJAX加载 -->
+                                                <div class="request-item">
+                                                    <h4>示例影片</h4>
+                                                    <p>希望能够添加这部影片，非常想看</p>
+                                                    <span class="request-time">2026-04-08 12:30</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-panel" id="share">
+                                    <div class="share-section">
+                                        <h3 class="section-title">分享记录</h3>
+                                        <p class="section-description">查看您的分享记录和获得的奖励</p>
+                                        <div class="share-list">
+                                            <!-- 分享记录将通过AJAX加载 -->
+                                            <div class="share-item">
+                                                <div class="share-info">
+                                                    <h4>影片名称</h4>
+                                                    <p>分享到：系统分享</p>
+                                                    <span class="share-time">2026-04-08 12:30</span>
+                                                </div>
+                                                <div class="share-reward">
+                                                    <span class="reward-points">+10 积分</span>
+                                                </div>
+                                            </div>
+                                            <div class="share-item">
+                                                <div class="share-info">
+                                                    <h4>另一部影片</h4>
+                                                    <p>分享到：剪贴板</p>
+                                                    <span class="share-time">2026-04-07 18:45</span>
+                                                </div>
+                                                <div class="share-reward">
+                                                    <span class="reward-points">+10 积分</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="share-stats">
+                                            <h3 class="section-title">分享统计</h3>
+                                            <div class="stats-grid">
+                                                <div class="stat-card">
+                                                    <div class="stat-value">12</div>
+                                                    <div class="stat-label">总分享次数</div>
+                                                </div>
+                                                <div class="stat-card">
+                                                    <div class="stat-value">120</div>
+                                                    <div class="stat-label">获得积分</div>
+                                                </div>
+                                                <div class="stat-card">
+                                                    <div class="stat-value">5</div>
+                                                    <div class="stat-label">今日分享</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <script>
+                        function submitRequest() {
+                            const requestName = document.getElementById('request_name').value;
+                            const requestContent = document.getElementById('request_content').value;
+                            
+                            if (requestName && requestContent) {
+                                $.ajax({
+                                    url: '{:mac_url("vod/request_film")}',
+                                    type: 'post',
+                                    data: {request_name: requestName, request_content: requestContent},
+                                    success: function(res) {
+                                        alert(res.msg);
+                                        if (res.code == 1) {
+                                            // 清空表单
+                                            document.getElementById('request_name').value = '';
+                                            document.getElementById('request_content').value = '';
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                        // 加载分享记录
+                        function loadShareRecords() {
+                            $.ajax({
+                                url: '{:mac_url("user/share_records")}',
+                                type: 'get',
+                                success: function(res) {
+                                    if (res.code == 1 && res.list) {
+                                        const shareList = document.querySelector('.share-list');
+                                        shareList.innerHTML = '';
+                                        
+                                        res.list.forEach(item => {
+                                            const shareItem = document.createElement('div');
+                                            shareItem.className = 'share-item';
+                                            shareItem.innerHTML = `
+                                                <div class="share-info">
+                                                    <h4>${item.content_name}</h4>
+                                                    <p>分享到：${item.share_platform}</p>
+                                                    <span class="share-time">${item.share_time}</span>
+                                                </div>
+                                                <div class="share-reward">
+                                                    <span class="reward-points">+${item.reward} 积分</span>
+                                                </div>
+                                            `;
+                                            shareList.appendChild(shareItem);
+                                        });
+                                    }
+                                }
+                            });
+                        }
+
+                        // 当切换到分享记录标签时加载数据
+                        $('.tab-nav-item').on('click', function() {
+                            const tab = $(this).data('tab');
+                            if (tab === 'share') {
+                                loadShareRecords();
+                            }
+                        });
                         $('.tab-nav-item').on('click', function() {
                             const tab = $(this).data('tab');
                             $('.tab-nav-item').removeClass('active');

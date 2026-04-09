@@ -1,0 +1,50 @@
+{include file="public/head.html"}
+<div class="container">
+    <div class="user-dashboard">
+        <div class="dashboard-header">
+            <h1 class="page-title">分享记录</h1>
+            <p class="page-subtitle">查看您的分享历史和获得的奖励</p>
+        </div>
+        
+        <div class="glass-card">
+            <div class="table-responsive">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>分享时间</th>
+                            <th>分享内容</th>
+                            <th>分享平台</th>
+                            <th>获得奖励</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td>{$vo.log_time|date='Y-m-d H:i:s'}</td>
+                            <td>{$vo.vod_name|default='未知内容'}</td>
+                            <td>
+                                {switch name="vo.log_remark"}
+                                    {case value="system"}系统分享{/case}
+                                    {case value="clipboard"}复制链接{/case}
+                                    {default}{$vo.log_remark}{/default}
+                                {/switch}
+                            </td>
+                            <td class="text-green">+{$vo.log_points} 积分</td>
+                        </tr>
+                        {/volist}
+                        {if empty($list)}
+                        <tr>
+                            <td colspan="4" class="text-center">暂无分享记录</td>
+                        </tr>
+                        {/if}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination">
+                {$__PAGING__}
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/foot.html"}

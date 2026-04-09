@@ -1,0 +1,432 @@
+{include file="public/head.html"}
+<style>
+.live-player-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: #000;
+    margin-bottom: 15px;
+}
+.live-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.live-player-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+}
+.live-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.live-player-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.live-player-status {
+    background: #ff6b6b;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.live-player-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.live-player-viewers {
+    font-size: 14px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.live-player-actions {
+    display: flex;
+    gap: 10px;
+}
+.live-action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+.live-action-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+.live-info-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.live-info-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.live-anchor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.live-anchor-info {
+    flex: 1;
+}
+.live-anchor-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+.live-anchor-fans {
+    font-size: 12px;
+    color: #666;
+}
+.live-follow-btn {
+    background: #ff6b6b;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    border: none;
+}
+
+.live-description {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+.live-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.live-tag {
+    background: #f0f0f0;
+    color: #666;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.live-gift-section {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.live-gift-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.live-gift-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+.live-gift-send {
+    background: #ff6b6b;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    border: none;
+}
+.live-gift-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.live-gift-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+.live-gift-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.live-gift-name {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 3px;
+}
+.live-gift-price {
+    font-size: 10px;
+    color: #ff6b6b;
+}
+
+.live-chat-section {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.live-chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.live-chat-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+.live-chat-clear {
+    font-size: 12px;
+    color: #666;
+}
+.live-chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+.live-chat-message {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.live-chat-user {
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+}
+.live-chat-content {
+    color: #666;
+}
+.live-chat-input {
+    display: flex;
+    gap: 10px;
+}
+.live-chat-text {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.live-chat-send {
+    background: #ff6b6b;
+    color: white;
+    padding: 0 16px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+}
+</style>
+<div class="live-player-container">
+    <video class="live-player" autoplay muted playsinline>
+        <source src="" type="video/mp4">
+        您的浏览器不支持视频播放
+    </video>
+    <div class="live-player-overlay">
+        <div class="live-player-header">
+            <h2 class="live-player-title">王者荣耀精彩对决</h2>
+            <span class="live-player-status">直播中</span>
+        </div>
+        <div class="live-player-footer">
+            <span class="live-player-viewers">12,345 观看</span>
+            <div class="live-player-actions">
+                <button class="live-action-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+                <button class="live-action-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </button>
+                <button class="live-action-btn">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 直播信息卡片 -->
+    <div class="live-info-card">
+        <div class="live-info-header">
+            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20gamer%20avatar%20modern%20style&image_size=square" alt="主播头像" class="live-anchor-avatar" />
+            <div class="live-anchor-info">
+                <h3 class="live-anchor-name">游戏达人</h3>
+                <p class="live-anchor-fans">128,000 粉丝</p>
+            </div>
+            <button class="live-follow-btn">关注</button>
+        </div>
+        <p class="live-description">欢迎来到王者荣耀直播间，今天为大家带来精彩的排位赛直播，喜欢的朋友记得点关注哦！</p>
+        <div class="live-tags">
+            <span class="live-tag">王者荣耀</span>
+            <span class="live-tag">游戏</span>
+            <span class="live-tag">排位赛</span>
+            <span class="live-tag">娱乐</span>
+        </div>
+    </div>
+    
+    <!-- 礼物系统 -->
+    <div class="live-gift-section">
+        <div class="live-gift-header">
+            <h3 class="live-gift-title">赠送礼物</h3>
+            <button class="live-gift-send">赠送</button>
+        </div>
+        <div class="live-gift-grid">
+            <div class="live-gift-item">
+                <div class="live-gift-icon">🎁</div>
+                <div class="live-gift-name">礼物盒</div>
+                <div class="live-gift-price">10 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">❤️</div>
+                <div class="live-gift-name">爱心</div>
+                <div class="live-gift-price">20 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">🚀</div>
+                <div class="live-gift-name">火箭</div>
+                <div class="live-gift-price">50 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">🏆</div>
+                <div class="live-gift-name">奖杯</div>
+                <div class="live-gift-price">100 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">🚗</div>
+                <div class="live-gift-name">跑车</div>
+                <div class="live-gift-price">200 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">🏠</div>
+                <div class="live-gift-name">别墅</div>
+                <div class="live-gift-price">500 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">💎</div>
+                <div class="live-gift-name">钻石</div>
+                <div class="live-gift-price">1000 积分</div>
+            </div>
+            <div class="live-gift-item">
+                <div class="live-gift-icon">👑</div>
+                <div class="live-gift-name">皇冠</div>
+                <div class="live-gift-price">2000 积分</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 聊天系统 -->
+    <div class="live-chat-section">
+        <div class="live-chat-header">
+            <h3 class="live-chat-title">聊天互动</h3>
+            <span class="live-chat-clear">清空</span>
+        </div>
+        <div class="live-chat-messages">
+            <div class="live-chat-message">
+                <span class="live-chat-user">观众12345:</span>
+                <span class="live-chat-content">主播好厉害！</span>
+            </div>
+            <div class="live-chat-message">
+                <span class="live-chat-user">游戏迷:</span>
+                <span class="live-chat-content">这个操作太精彩了</span>
+            </div>
+            <div class="live-chat-message">
+                <span class="live-chat-user">新观众:</span>
+                <span class="live-chat-content">第一次看直播，主播很棒</span>
+            </div>
+        </div>
+        <div class="live-chat-input">
+            <input type="text" class="live-chat-text" placeholder="发送消息..." />
+            <button class="live-chat-send">发送</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // 模拟直播流
+        const video = document.querySelector('.live-player');
+        // 实际项目中这里会设置真实的直播流地址
+        
+        // 礼物点击事件
+        $('.live-gift-item').on('click', function() {
+            const giftName = $(this).find('.live-gift-name').text();
+            const giftPrice = $(this).find('.live-gift-price').text();
+            alert(`选择了礼物: ${giftName} (${giftPrice})`);
+        });
+        
+        // 发送礼物
+        $('.live-gift-send').on('click', function() {
+            alert('礼物发送成功！');
+        });
+        
+        // 发送消息
+        $('.live-chat-send').on('click', function() {
+            const message = $('.live-chat-text').val().trim();
+            if (message) {
+                const chatMessage = `
+                    <div class="live-chat-message">
+                        <span class="live-chat-user">我:</span>
+                        <span class="live-chat-content">${message}</span>
+                    </div>
+                `;
+                $('.live-chat-messages').append(chatMessage);
+                $('.live-chat-text').val('');
+                // 滚动到底部
+                $('.live-chat-messages').scrollTop($('.live-chat-messages')[0].scrollHeight);
+            }
+        });
+        
+        // 关注按钮
+        $('.live-follow-btn').on('click', function() {
+            const btn = $(this);
+            if (btn.text() === '关注') {
+                btn.text('已关注');
+                btn.css('background', '#999');
+                alert('关注成功！');
+            } else {
+                btn.text('关注');
+                btn.css('background', '#ff6b6b');
+                alert('已取消关注');
+            }
+        });
+    });
+</script>
+{include file="public/foot.html"}

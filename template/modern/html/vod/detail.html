@@ -113,15 +113,23 @@
                                         <span>{$config.frontend.btn_text.like|default='点赞'}</span>
                                     </button>
                                     <button class="action-btn animate-fade-in-delay-4" onclick="shareContent()">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="18" cy="5" r="3"/>
-                                            <circle cx="6" cy="12" r="3"/>
-                                            <circle cx="18" cy="19" r="3"/>
-                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                                        </svg>
-                                        <span>{$config.frontend.btn_text.share|default='分享'}</span>
-                                    </button>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="18" cy="5" r="3"/>
+                                        <circle cx="6" cy="12" r="3"/>
+                                        <circle cx="18" cy="19" r="3"/>
+                                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                    </svg>
+                                    <span>{$config.frontend.btn_text.share|default='分享'}</span>
+                                </button>
+                                <button class="action-btn animate-fade-in-delay-5" onclick="reportError({$vo.vod_id})">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="12" y1="8" x2="12" y2="12"/>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                    </svg>
+                                    <span>报错</span>
+                                </button>
                                 </div>
                                 
                                 {if $config.frontend.vod_detail.show_plot|default=true}
@@ -292,14 +300,87 @@
                 }
 
                 function shareContent() {
+                    // 显示分享选项
+                    const shareOptions = {
+                        title: '{$vo.vod_name}',
+                        text: '推荐一部好影片：{$vo.vod_name}',
+                        url: window.location.href
+                    };
+                    
                     if (navigator.share) {
-                        navigator.share({
-                            title: '{$vo.vod_name}',
-                            url: window.location.href
-                        });
+                        navigator.share(shareOptions)
+                            .then(() => {
+                                // 分享成功，记录分享并给予奖励
+                                recordShare('system');
+                            })
+                            .catch((error) => {
+                                console.log('分享失败:', error);
+                            });
                     } else {
-                        navigator.clipboard.writeText(window.location.href);
-                        alert('链接已复制到剪贴板');
+                        // 复制链接到剪贴板
+                        navigator.clipboard.writeText(window.location.href)
+                            .then(() => {
+                                alert('链接已复制到剪贴板');
+                                // 记录分享并给予奖励
+                                recordShare('clipboard');
+                            })
+                            .catch((error) => {
+                                console.log('复制失败:', error);
+                            });
+                    }
+                }
+
+                function recordShare(platform) {
+                    $.ajax({
+                        url: '{:mac_url("vod/share")}',
+                        type: 'post',
+                        data: {
+                            vod_id: {$vo.vod_id},
+                            share_platform: platform
+                        },
+                        success: function(res) {
+                            if (res.code == 1) {
+                                // 显示奖励提示
+                                if (res.data && res.data.reward) {
+                                    alert('分享成功！获得奖励：' + res.data.reward + ' 积分');
+                                } else {
+                                    alert('分享成功！');
+                                }
+                            } else {
+                                alert(res.msg);
+                            }
+                        }
+                    });
+                }
+
+                function reportError(vodId) {
+                    const errorContent = prompt('请描述您遇到的播放问题：');
+                    if (errorContent) {
+                        $.ajax({
+                            url: '{:mac_url("vod/report_error")}',
+                            type: 'post',
+                            data: {vod_id: vodId, error_content: errorContent},
+                            success: function(res) {
+                                alert(res.msg);
+                            }
+                        });
+                    }
+                }
+
+                function requestFilm() {
+                    const filmName = prompt('请输入您想要的影片名称：');
+                    if (filmName) {
+                        const filmContent = prompt('请描述您的求片需求：');
+                        if (filmContent) {
+                            $.ajax({
+                                url: '{:mac_url("vod/request_film")}',
+                                type: 'post',
+                                data: {request_name: filmName, request_content: filmContent},
+                                success: function(res) {
+                                    alert(res.msg);
+                                }
+                            });
+                        }
                     }
                 }
             </script>

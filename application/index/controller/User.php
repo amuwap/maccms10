@@ -965,6 +965,46 @@ class User extends Base
         return $this->fetch('user/gbook');
     }
 
+    // 分享记录
+    public function shares()
+    {
+        $param = input();
+        $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
+        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+
+        $where = [];
+        $where['user_id'] = $GLOBALS['user']['user_id'];
+        $order = 'share_id desc';
+        $res = model('ShareReward')->listData($where, $order, $param['page'], $param['limit']);
+
+        $this->assign('param',$param);
+        $this->assign('list', $res['list']);
+        $this->assign('title', '分享记录');
+        $pages = mac_page_param($res['total'], $param['limit'], $param['page'], url('user/shares', ['page' => 'PAGELINK']));
+        $this->assign('__PAGING__', $pages);
+        return $this->fetch('user/shares');
+    }
+
+    // 求片记录
+    public function requests()
+    {
+        $param = input();
+        $param['page'] = intval($param['page']) < 1 ? 1 : intval($param['page']);
+        $param['limit'] = intval($param['limit']) < 20 ? 20 : intval($param['limit']);
+
+        $where = [];
+        $where['user_id'] = $GLOBALS['user']['user_id'];
+        $order = 'request_id desc';
+        $res = model('RequestFilm')->listData($where, $order, $param['page'], $param['limit']);
+
+        $this->assign('param',$param);
+        $this->assign('list', $res['list']);
+        $this->assign('title', '求片记录');
+        $pages = mac_page_param($res['total'], $param['limit'], $param['page'], url('user/requests', ['page' => 'PAGELINK']));
+        $this->assign('__PAGING__', $pages);
+        return $this->fetch('user/requests');
+    }
+
     public function visit()
     {
         $param = input();

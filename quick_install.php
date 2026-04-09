@@ -140,6 +140,28 @@ EOF;
         
         file_put_contents(APP_PATH . 'database.php', $config_content);
         
+        // 设置目录权限
+        $directories = [
+            APP_PATH,
+            APP_PATH . 'data/',
+            APP_PATH . 'data/config/',
+            APP_PATH . 'data/backup/',
+            APP_PATH . 'data/update/',
+            APP_PATH . 'data/install/',
+            __DIR__ . '/runtime/',
+            __DIR__ . '/runtime/cache/',
+            __DIR__ . '/runtime/log/',
+            __DIR__ . '/runtime/temp/',
+            __DIR__ . '/upload/'
+        ];
+        
+        foreach ($directories as $directory) {
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            chmod($directory, 0755);
+        }
+        
         // 创建安装锁文件
         file_put_contents(APP_PATH . 'data/install/install.lock', date('Y-m-d H:i:s'));
         
@@ -152,6 +174,7 @@ EOF;
         echo '<p><strong>管理员密码：</strong>' . $admin_password . '</p>';
         echo '<p><strong>数据库名称：</strong>' . $database . '</p>';
         echo '<p><strong>数据表前缀：</strong>' . $prefix . '</p>';
+        echo '<p>系统已自动设置目录权限，现在可以正常使用了！</p>';
         echo '<p>请及时修改默认管理员密码，以保证系统安全！</p>';
         echo '<p><a href="index.php">访问首页</a> | <a href="admin.php">进入后台</a></p>';
         

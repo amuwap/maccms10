@@ -34,7 +34,7 @@ define('IN_FILE',$in_file);
 define('api', 'api');
 
 if(!is_file('./application/data/install/install.lock')) {
-    header("Location: ./install.php");
+    header("Location: ./quick_install.php");
     exit;
 }
 // 定义mb_check_encoding()函数的替代实现，避免依赖mbstring扩展

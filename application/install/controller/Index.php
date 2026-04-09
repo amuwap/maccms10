@@ -112,7 +112,14 @@ class Index extends Controller
             try{
                 $db_connect->execute('select version()');
             }catch(\Exception $e){
-                $this->error('数据库连接失败，请检查数据库配置！');
+                $error_msg = $e->getMessage();
+                if(strpos($error_msg, 'Access denied') !== false){
+                    $this->error('数据库连接失败：' . $error_msg . '<br>请检查数据库账号密码是否正确，以及该账号是否有足够的权限');
+                } elseif(strpos($error_msg, 'Connection refused') !== false){
+                    $this->error('数据库连接失败：' . $error_msg . '<br>请检查MySQL服务是否启动，以及服务器地址和端口是否正确');
+                } else {
+                    $this->error('数据库连接失败：' . $error_msg);
+                }
             }
 
             // 生成数据库配置文件

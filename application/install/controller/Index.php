@@ -15,8 +15,14 @@ class Index extends Controller
     public function index($step = 0)
     {
         switch ($step) {
-            case 2:
+            case 1:
                 session('install_error', false);
+                return self::step1();
+                break;
+            case 2:
+                if (session('install_error')) {
+                    return $this->error('环境检测未通过，不能进行下一步操作！');
+                }
                 return self::step2();
                 break;
             case 3:
@@ -24,18 +30,6 @@ class Index extends Controller
                     return $this->error('环境检测未通过，不能进行下一步操作！');
                 }
                 return self::step3();
-                break;
-            case 4:
-                if (session('install_error')) {
-                    return $this->error('环境检测未通过，不能进行下一步操作！');
-                }
-                return self::step4();
-                break;
-            case 5:
-                if (session('install_error')) {
-                    return $this->error('初始失败！');
-                }
-                return self::step5();
                 break;
             
             default:
@@ -46,10 +40,10 @@ class Index extends Controller
     }
 
     /**
-     * 第二步：环境检测
+     * 第一步：环境检测
      * @return mixed
      */
-    private function step2()
+    private function step1()
     {
         $data = [];
         $data['env'] = self::checkNnv();
@@ -60,10 +54,10 @@ class Index extends Controller
     }
     
     /**
-     * 第三步：初始化配置
+     * 第二步：数据库配置
      * @return mixed
      */
-    private function step3()
+    private function step2()
     {
         $install_dir = $_SERVER["SCRIPT_NAME"];
         $install_dir = mac_substring($install_dir, strripos($install_dir, "/")+1);
@@ -72,17 +66,34 @@ class Index extends Controller
     }
     
     /**
-     * 第四步：执行安装
+     * 第三步：执行安装
      * @return mixed
      */
-    private function step4()
+    private function step3()
     {
         if ($this->request->isPost()) {
+            // 数据库配置
+            $db_data = [
+                'hostname' => input('post.hostname'),
+                'hostport' => input('post.hostport'),
+                'database' => input('post.database'),
+                'username' => input('post.username'),
+                'password' => input('post.password'),
+                'prefix' => input('post.prefix'),
+                'cover' => input('post.cover'),
+                'type' => 'mysql'
+            ];
+            
+            // 管理员配置
+            $account = input('post.account');
+            $password = input('post.password_admin');
+            $install_dir = input('post.install_dir');
+            
+            // 验证数据库配置
             if (!is_writable(APP_PATH.'database.php')) {
                 return $this->error('[app/database.php]无读写权限！');
             }
-            $data = input('post.');
-            $data['type'] = 'mysql';
+            
             $rule = [
                 'hostname|服务器地址' => 'require',
                 'hostport|数据库端口' => 'require|number',
@@ -91,34 +102,45 @@ class Index extends Controller
                 'prefix|数据库前缀' => 'require|regex:^[a-z0-9]{1,20}[_]{1}',
                 'cover|覆盖数据库' => 'require|in:0,1',
             ];
-            $validate = $this->validate($data, $rule);
+            $validate = $this->validate($db_data, $rule);
             if (true !== $validate) {
                 return $this->error($validate);
             }
-            $cover = $data['cover'];
-            unset($data['cover']);
-            $config = include APP_PATH.'database.php';
-            foreach ($data as $k => $v) {
-                if (array_key_exists($k, $config) === false) {
-                    return $this->error('参数'.$k.'不存在！');
-                }
+            
+            // 验证管理员配置
+            if (empty($account) || empty($password)) {
+                return $this->error('请填写管理账号和密码！');
             }
+            
+            $admin_rule = [
+                'account|管理员账号' => 'require|alphaNum',
+                'password|管理员密码' => 'require|length:6,20',
+            ];
+            $admin_validate = $this->validate(['account' => $account, 'password' => $password], $admin_rule);
+            if (true !== $admin_validate) {
+                return $this->error($admin_validate);
+            }
+            
+            $cover = $db_data['cover'];
+            unset($db_data['cover']);
+            
             // 不存在的数据库会导致连接失败
-            $database = $data['database'];
-            unset($data['database']);
+            $database = $db_data['database'];
+            unset($db_data['database']);
+            
             // 创建数据库连接
-            $db_connect = Db::connect($data);
+            $db_connect = Db::connect($db_data);
+            
             // 检测数据库连接
             try{
                 $db_connect->execute('select version()');
             }catch(\Exception $e){
-                $this->error('数据库连接失败，请检查数据库配置！');
+                return $this->error('数据库连接失败，请检查数据库配置！');
             }
 
             // 生成数据库配置文件
-            $data['database'] = $database;
-            self::mkDatabase($data);
-
+            $db_data['database'] = $database;
+            self::mkDatabase($db_data);
 
             // 不覆盖检测是否已存在数据库
             if (!$cover) {
@@ -127,103 +149,74 @@ class Index extends Controller
                     $this->success('该数据库已存在，可直接安装。如需覆盖，请选择覆盖数据库！','');
                 }
             }
+            
             // 创建数据库（使用utf8mb4字符集，支持emoji）
             if (!$db_connect->execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")) {
                 return $this->error($db_connect->getError());
             }
 
-
-            return $this->success('数据库连接成功', '');
-        } else {
-            return $this->error('非法访问');
-        }
-    }
-    
-    /**
-     * 第五步：数据库安装
-     * @return mixed
-     */
-    private function step5()
-    {
-        $account = input('post.account');
-        $password = input('post.password');
-        $install_dir = input('post.install_dir');
-
-        $config = include APP_PATH.'database.php';
-        if (empty($config['hostname']) || empty($config['database']) || empty($config['username'])) {
-            return $this->error('请先点击测试数据库连接！');
-        }
-        if (empty($account) || empty($password)) {
-            return $this->error('请填写管理账号和密码！');
-        }
-
-        $rule = [
-            'account|管理员账号' => 'require|alphaNum',
-            'password|管理员密码' => 'require|length:6,20',
-        ];
-        $validate = $this->validate(['account' => $account, 'password' => $password], $rule);
-        if (true !== $validate) {
-            return $this->error($validate);
-        }
-        if(empty($install_dir)) {
-            $install_dir='/';
-        }
-        $config_new = config('maccms');
-        $config_new['app']['cache_flag'] = substr(md5(time()),0,10);
-
-        $config_new['api']['vod']['status'] = 0;
-        $config_new['api']['art']['status'] = 0;
-
-        $config_new['interface']['status'] = 0;
-        $config_new['interface']['pass'] = mac_get_rndstr(16);
-        $config_new['site']['install_dir'] = $install_dir;
-        
-        // 更新程序配置文件
-        $res = mac_arr2file(APP_PATH . 'extra/maccms.php', $config_new);
-		if ($res === false) {
-			return $this->error('配置文件保存失败，请重试!');
-		}
-		
-        // 导入系统初始数据库结构
-        // 导入SQL
-        $sql_files = [
-            APP_PATH.'install/sql/install.sql',
-            APP_PATH.'install/sql/extend.sql',
-            APP_PATH.'install/sql/new_types.sql'
-        ];
-        
-        foreach ($sql_files as $sql_file) {
-            if (file_exists($sql_file)) {
-                $sql = file_get_contents($sql_file);
-                $sql_list = mac_parse_sql($sql, 0, ['mac_' => $config['prefix']]);
-                if ($sql_list) {
-                    $sql_list = array_filter($sql_list);
-                    foreach ($sql_list as $v) {
-                        try {
-                            Db::execute($v);
-                        } catch(\Exception $e) {
-                            return $this->error('导入SQL失败，请检查'.basename($sql_file).'的语句是否正确。'. $e);
+            // 更新程序配置文件
+            if(empty($install_dir)) {
+                $install_dir='/';
+            }
+            $config_new = config('maccms');
+            $config_new['app']['cache_flag'] = substr(md5(time()),0,10);
+            $config_new['api']['vod']['status'] = 0;
+            $config_new['api']['art']['status'] = 0;
+            $config_new['interface']['status'] = 0;
+            $config_new['interface']['pass'] = mac_get_rndstr(16);
+            $config_new['site']['install_dir'] = $install_dir;
+            
+            $res = mac_arr2file(APP_PATH . 'extra/maccms.php', $config_new);
+		    if ($res === false) {
+			    return $this->error('配置文件保存失败，请重试!');
+		    }
+			
+            // 导入系统初始数据库结构
+            $sql_files = [
+                APP_PATH.'install/sql/install.sql',
+                APP_PATH.'install/sql/extend.sql',
+                APP_PATH.'install/sql/new_types.sql'
+            ];
+            
+            foreach ($sql_files as $sql_file) {
+                if (file_exists($sql_file)) {
+                    $sql = file_get_contents($sql_file);
+                    $sql_list = mac_parse_sql($sql, 0, ['mac_' => $db_data['prefix']]);
+                    if ($sql_list) {
+                        $sql_list = array_filter($sql_list);
+                        foreach ($sql_list as $v) {
+                            try {
+                                Db::execute($v);
+                            } catch(\Exception $e) {
+                                return $this->error('导入SQL失败，请检查'.basename($sql_file).'的语句是否正确。'. $e);
+                            }
                         }
                     }
                 }
             }
-        }
-        // 注册管理员账号
-        $data = [
-            'admin_name' => $account,
-            'admin_pwd' => $password,
-            'admin_status' =>1,
-        ];
-        $res = model('Admin')->saveData($data);
-        if ($res['code'] != 1) {
-            return $this->error('管理员账号设置失败:'.$res['msg']);
-        }
-        file_put_contents(APP_PATH.'data/install/install.lock', date('Y-m-d H:i:s'));
+            
+            // 注册管理员账号
+            $admin_data = [
+                'admin_name' => $account,
+                'admin_pwd' => $password,
+                'admin_status' =>1,
+            ];
+            $res = model('Admin')->saveData($admin_data);
+            if ($res['code'] != 1) {
+                return $this->error('管理员账号设置失败:'.$res['msg']);
+            }
+            
+            // 创建安装锁文件
+            file_put_contents(APP_PATH.'data/install/install.lock', date('Y-m-d H:i:s'));
 
-        // 获取站点根目录
-        $root_dir = request()->baseFile();
-        $root_dir  = preg_replace(['/install.php$/'], [''], $root_dir);
-        return $this->success('系统安装成功，欢迎您使用苹果CMS建站', $root_dir.'admin.php');
+            // 获取站点根目录
+            $root_dir = request()->baseFile();
+            $root_dir  = preg_replace(['/install.php$/'], [''], $root_dir);
+            return $this->success('系统安装成功，欢迎您使用苹果CMS建站', $root_dir.'admin.php');
+        } else {
+            return $this->error('非法访问');
+        }
     }
     
     /**

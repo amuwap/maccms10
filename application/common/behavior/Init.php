@@ -58,14 +58,14 @@ class Init
         $GLOBALS['config'] = $config;
         $GLOBALS['http_type'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 
-        if(ENTRANCE=='index'){
+        if(defined('ENTRANCE') && ENTRANCE=='index'){
             config('dispatch_success_tmpl','public/jump');
             config('dispatch_error_tmpl','public/jump');
         }
 
         config('template.view_path', 'template/' . $TMP_TEMPLATEDIR .'/' . $TMP_HTMLDIR .'/');
 
-        if(ENTRANCE=='admin'){
+        if(defined('ENTRANCE') && ENTRANCE=='admin'){
             if(!file_exists('./template/' . $TMP_TEMPLATEDIR .'/' . $TMP_HTMLDIR .'/')){
                 config('template.view_path','');
             }

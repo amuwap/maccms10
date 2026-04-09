@@ -94,7 +94,7 @@ class All extends Controller
 
     protected function label_user()
     {
-        if(ENTRANCE != 'index'){
+        if(!defined('ENTRANCE') || ENTRANCE != 'index'){
             return;
         }
         $user_id = intval(cookie('user_id'));

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775675362;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775675362;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775675362;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775675362;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:41:"template/default_pc/html/index/index.html";i:1775737045;s:55:"/workspace/template/default_pc/html/public/include.html";i:1775737045;s:52:"/workspace/template/default_pc/html/public/head.html";i:1775737045;s:52:"/workspace/template/default_pc/html/public/foot.html";i:1775737045;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -14,6 +14,7 @@
 <script src="<?php echo $maccms['path_tpl']; ?>js/jquery.superslide.js"></script>
 <script src="<?php echo $maccms['path_tpl']; ?>js/jquery.lazyload.js"></script>
 <script src="<?php echo $maccms['path_tpl']; ?>js/jquery.base.js"></script>
+<script src="<?php echo $maccms['path_tpl']; ?>js/animations.js"></script>
 <script>var maccms={"path":"","mid":"<?php echo $maccms['mid']; ?>","aid":"<?php echo $maccms['aid']; ?>","url":"<?php echo $maccms['site_url']; ?>","wapurl":"<?php echo $maccms['site_wapurl']; ?>","mob_status":"<?php echo $maccms['mob_status']; ?>"};</script>
 <script src="<?php echo $maccms['path']; ?>static/js/home.js"></script>
 <script></script>
@@ -49,31 +50,63 @@
 
 <!-- 英雄区 -->
 <?php $__TAG__ = '{"num":"1","level":"9","order":"desc","by":"time","id":"vo","key":"key"}';$__LIST__ = model("Vod")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($key % 2 );++$key;?>
-<section class="hero">
-    <img src="<?php echo mac_url_img($vo['vod_pic_slide']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="hero-background"/>
-    <div class="hero-content fade-in">
-        <div class="hero-badges">
-            <span class="hero-badge"><?php echo $vo['vod_year']; ?></span>
-            <span class="hero-badge"><?php echo $vo['vod_area']; ?></span>
-            <span class="hero-badge"><?php echo $vo['vod_lang']; ?></span>
-            <span class="hero-badge"><?php echo $vo['vod_remarks']; ?></span>
+<section class="hero-section">
+    <div class="hero-wrapper">
+        <div class="hero-bg-layer">
+            <img src="<?php echo mac_url_img($vo['vod_pic_slide']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="hero-bg-image"/>
+            <div class="hero-overlay"></div>
         </div>
-        <h1 class="hero-title"><?php echo $vo['vod_name']; ?></h1>
-        <p class="hero-subtitle"><?php echo mb_substr($vo['vod_blurb'],0,150); ?>...</p>
-        <div class="hero-actions">
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn hero-btn-primary">
-                <i class="fas fa-play"></i>
-                立即观看
-            </a>
-            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn hero-btn-secondary">
-                <i class="fas fa-info-circle"></i>
-                了解详情
-            </a>
-        </div>
-        <div class="hero-search mt-6">
-            <div class="relative">
-                <input type="text" class="search-input" placeholder="搜索电影、电视剧、综艺..." id="search-input">
-                <button class="search-button" id="search-button">搜索</button>
+        <div class="hero-content-wrapper">
+            <div class="container">
+                <div class="hero-main">
+                    <div class="hero-visual">
+                        <div class="hero-poster">
+                            <img src="<?php echo mac_url_img($vo['vod_pic']); ?>" alt="<?php echo $vo['vod_name']; ?>" class="hero-poster-img">
+                        </div>
+                    </div>
+                    <div class="hero-info">
+                        <div class="hero-meta">
+                            <span class="hero-tag hero-tag-primary"><?php echo $vo['vod_remarks']; ?></span>
+                            <span class="hero-tag"><?php echo $vo['vod_year']; ?></span>
+                            <span class="hero-tag"><?php echo $vo['vod_area']; ?></span>
+                            <span class="hero-tag"><?php echo $vo['vod_lang']; ?></span>
+                        </div>
+                        <h1 class="hero-main-title"><?php echo $vo['vod_name']; ?></h1>
+                        <div class="hero-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-score"><?php echo $vo['vod_score']; ?></span>
+                            <span class="rating-label">评分</span>
+                        </div>
+                        <p class="hero-description"><?php echo mb_substr($vo['vod_blurb'],0,200); ?>...</p>
+                        <div class="hero-actions-wrapper">
+                            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn-cta hero-btn-cta-primary">
+                                <span class="btn-icon"><i class="fas fa-play"></i></span>
+                                <span class="btn-text">立即观看</span>
+                            </a>
+                            <a href="<?php echo mac_url_vod_detail($vo); ?>" class="hero-btn-cta hero-btn-cta-secondary">
+                                <span class="btn-icon"><i class="fas fa-info-circle"></i></span>
+                                <span class="btn-text">详细信息</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-search-wrapper">
+                    <div class="search-box">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input-modern" placeholder="搜索电影、电视剧、综艺、动漫..." id="search-input">
+                        </div>
+                        <button class="search-button-modern" id="search-button">
+                            <span>搜索</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -82,21 +115,36 @@
 
 <!-- 分类导航 -->
 <section class="container mt-8">
-    <div class="grid grid-cols-5 gap-6 mb-12">
+    <h2 class="section-title">
+        分类导航
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
         <?php $__TAG__ = '{"ids":"1,2,3,4","order":"asc","by":"sort","id":"vo1","key":"key1"}';$__LIST__ = model("Type")->listCacheData($__TAG__); if(is_array($__LIST__['list']) || $__LIST__['list'] instanceof \think\Collection || $__LIST__['list'] instanceof \think\Paginator): $key1 = 0; $__LIST__ = $__LIST__['list'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo1): $mod = ($key1 % 2 );++$key1;?>
         <a href="<?php echo mac_url_type($vo1); ?>" class="category-card">
-            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=<?php echo $vo1['type_name']; ?>%20category%20banner%20cinema%20dark%20theme&image_size=landscape_16_9" alt="<?php echo $vo1['type_name']; ?>" class="w-full h-full object-cover">
-            <div class="category-overlay">
+            <div class="category-image-container">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=<?php echo $vo1['type_name']; ?>%20category%20banner%20cinema%20dark%20theme&image_size=landscape_16_9" alt="<?php echo $vo1['type_name']; ?>" class="category-image">
+                <div class="category-gradient"></div>
+            </div>
+            <div class="category-content">
                 <h3 class="category-title"><?php echo $vo1['type_name']; ?></h3>
                 <p class="category-subtitle">浏览全部<?php echo $vo1['type_name']; ?></p>
+                <div class="category-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
             </div>
         </a>
         <?php endforeach; endif; else: echo "" ;endif; ?>
         <a href="<?php echo mac_url('label/rank'); ?>" class="category-card">
-            <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20ranking%20leaderboard%20cinema%20dark%20theme&image_size=landscape_16_9" alt="影视排行榜" class="w-full h-full object-cover">
-            <div class="category-overlay">
+            <div class="category-image-container">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=movie%20ranking%20leaderboard%20cinema%20dark%20theme&image_size=landscape_16_9" alt="影视排行榜" class="category-image">
+                <div class="category-gradient"></div>
+            </div>
+            <div class="category-content">
                 <h3 class="category-title">影视排行榜</h3>
                 <p class="category-subtitle">查看热门排行</p>
+                <div class="category-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
             </div>
         </a>
     </div>

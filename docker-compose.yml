@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  # Web服务器
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    restart: always
+
+  # MySQL数据库
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: maccms10
+      MYSQL_USER: maccms
+      MYSQL_PASSWORD: maccms123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  mysql_data:

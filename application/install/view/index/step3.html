@@ -63,7 +63,7 @@
             <div class="layui-form-mid layui-word-aux">请先点击 【测试数据连接】 再安装</div>
         </div>
     </form>
-    <form class="layui-form layui-form-pane" action="?step=3" method="post">
+    <form class="layui-form layui-form-pane" action="?step=5" method="post">
         <input type="hidden" name="install_dir" value="{$install_dir}">
         <fieldset class="layui-elem-field layui-field-title">
             <legend>管理账号设置</legend>
@@ -78,7 +78,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">管理员密码</label>
             <div class="layui-input-inline w200">
-                <input type="password" class="layui-input" name="password_admin" lay-verify="title" value="admin123">
+                <input type="password" class="layui-input" name="password" lay-verify="title" value="admin123">
             </div>
             <div class="layui-form-mid layui-word-aux">保证密码最少6位</div>
         </div>
@@ -107,7 +107,7 @@ layui.define(['element', 'form'], function(exports) {
         layer.msg('数据提交中...',{time:500000});
         $.ajax({
             type: "POST",
-            url: '?step=3',
+            url: _form.attr('action'),
             data: _form.serialize(),
             dataType:'json',
             success: function(res) {

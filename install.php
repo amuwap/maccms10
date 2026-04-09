@@ -11,6 +11,8 @@
 define('APP_PATH', __DIR__ . '/application/');
 // 定义项目路径
 define('ROOT_PATH', __DIR__ . '/');
+// 定义入口类型
+define('ENTRANCE', 'install');
 
 // 检查是否已安装
 if (file_exists(APP_PATH . 'data/install/install.lock')) {

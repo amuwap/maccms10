@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- 作 者：阿木，Amu5.Com，QQ：46552292，amu5 -->
 <html>
 <head>
     <meta charset="utf-8">
@@ -24,142 +25,76 @@
     </nav>
 </section>
 
-<!-- 影片详情 -->
-<section class="container mb-8">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <!-- 左侧海报 -->
-        <div class="lg:col-span-1">
-            <div class="relative group rounded-xl overflow-hidden shadow-2xl transform transition-all duration-300 hover:scale-[1.02] hover:shadow-accent/20">
-                <div class="aspect-[2/3] relative overflow-hidden">
-                    <img src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <div class="p-4 text-white">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-yellow-400 font-bold">{$obj.vod_score}</span>
-                                <span class="text-sm opacity-80">评分</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-background-light p-4">
-                    <h1 class="text-xl font-bold mb-3 line-clamp-2">{$obj.vod_name}</h1>
-                    <div class="mb-4">
-                        <span class="inline-block px-3 py-1 bg-accent-color text-white rounded-full text-sm font-medium transition-all hover:bg-primary">{$obj.vod_version}</span>
-                    </div>
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-text-light">评分：</span>
-                            <span class="font-medium">{$obj.vod_score}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-text-light">访问量：</span>
-                            <span class="mac_hits hits" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-type="hits"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- 影片详情 amu5 -->
+<section class="container mb-12">
+    <div class="detail-wrapper">
+        <div class="detail-bg-layer">
+            <img src="{:mac_url_img($obj.vod_pic_slide|default=$obj.vod_pic)}" alt="{$obj.vod_name}" class="detail-bg-image">
+            <div class="detail-overlay"></div>
         </div>
-        
-        <!-- 右侧信息 -->
-        <div class="lg:col-span-3">
-            <div class="bg-background-light rounded-xl p-6 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6">{$obj.vod_name}</h2>
-                
-                <!-- 基本信息 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div class="space-y-3">
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">主演：</span>
-                            <span>{$obj.vod_actor|mac_url_create='actor'}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">导演：</span>
-                            <span>{$obj.vod_director|mac_url_create='director'}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">语言：</span>
-                            <span>{$obj.vod_lang|mac_url_create='lang'}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">地区：</span>
-                            <span>{$obj.vod_area|mac_url_create='area'}</span>
-                        </p>
-                    </div>
-                    <div class="space-y-3">
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">时间：</span>
-                            <span>{$obj.vod_time|date='Y-m-d',###}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">年份：</span>
-                            <span>{$obj.vod_year|mac_url_create='year'}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">类型：</span>
-                            <span>{$obj.vod_class|mac_url_create='class'}</span>
-                        </p>
-                        <p class="flex items-start">
-                            <span class="text-text-light w-20 flex-shrink-0">状态：</span>
-                            <span>{$obj.vod_status}</span>
-                        </p>
+        <div class="detail-content-wrapper">
+            <div class="detail-main">
+                <div class="detail-poster-wrapper">
+                    <div class="detail-poster-container">
+                        <img src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" class="detail-poster-img">
                     </div>
                 </div>
-                
-                <!-- 剧情简介 -->
-                <div class="mb-8">
-                    <h3 class="text-lg font-bold mb-4 flex items-center">
-                        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
-                        剧情简介
-                    </h3>
-                    <p class="text-text-secondary leading-relaxed">{$obj.vod_blurb}</p>
-                    {if condition="$obj.vod_content neq ''"}
-                    <a href="#juqing" class="text-accent-color hover:text-primary mt-3 inline-flex items-center transition-colors duration-300">
-                        查看详细剧情
-                        <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </a>
-                    {/if}
-                </div>
-                
-                <!-- 操作按钮 -->
-                <div class="flex flex-wrap gap-3 mb-8">
-                    <a href="javascript:MAC.Desktop('{$obj.vod_name}')" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                        保存到桌面
-                    </a>
-                    <a href="javascript:void(0);" onclick="MAC.Fav(location.href,document.name);" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
-                        </svg>
-                        收藏到浏览器
-                    </a>
-                    <a href="javascript:void(0);" class="mac_ulog btn btn-primary hover:bg-primary/80 transition-colors duration-300" data-type="2" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                        收藏影片
-                    </a>
-                </div>
-                
-                <!-- 分享 -->
-                <div>
-                    <h3 class="text-lg font-bold mb-4 flex items-center">
-                        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
-                        分享
-                    </h3>
-                    <div class="flex gap-4">
-                        <a href="#" class="text-accent-color hover:text-primary transition-colors duration-300">
-                            <span class="w-10 h-10 flex items-center justify-center border border-border-color rounded-full hover:border-accent-color hover:bg-accent-color/5 transition-all duration-300">微信</span>
+                <div class="detail-info-wrapper">
+                    <div class="detail-meta-tags">
+                        <span class="detail-tag detail-tag-primary">{$obj.vod_remarks|default=$obj.vod_version}</span>
+                        <span class="detail-tag">{$obj.vod_year}</span>
+                        <span class="detail-tag">{$obj.vod_area}</span>
+                        <span class="detail-tag">{$obj.vod_lang}</span>
+                    </div>
+                    <h1 class="detail-title">{$obj.vod_name}</h1>
+                    <div class="detail-rating">
+                        <div class="detail-rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="detail-rating-score">{$obj.vod_score}</span>
+                        <span class="detail-rating-label">评分</span>
+                        <span class="detail-hits">
+                            <i class="fas fa-eye"></i>
+                            <span class="mac_hits hits" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-type="hits"></span>
+                            次观看
+                        </span>
+                    </div>
+                    <p class="detail-description">{$obj.vod_blurb}</p>
+                    <div class="detail-actions">
+                        <a href="{:mac_url_vod_play($obj)}" class="detail-btn detail-btn-primary">
+                            <span class="detail-btn-icon"><i class="fas fa-play"></i></span>
+                            <span class="detail-btn-text">立即播放</span>
                         </a>
-                        <a href="#" class="text-accent-color hover:text-primary transition-colors duration-300">
-                            <span class="w-10 h-10 flex items-center justify-center border border-border-color rounded-full hover:border-accent-color hover:bg-accent-color/5 transition-all duration-300">微博</span>
+                        <a href="javascript:void(0);" class="mac_ulog detail-btn detail-btn-secondary" data-type="2" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}">
+                            <span class="detail-btn-icon"><i class="fas fa-heart"></i></span>
+                            <span class="detail-btn-text">收藏影片</span>
                         </a>
-                        <a href="#" class="text-accent-color hover:text-primary transition-colors duration-300">
-                            <span class="w-10 h-10 flex items-center justify-center border border-border-color rounded-full hover:border-accent-color hover:bg-accent-color/5 transition-all duration-300">QQ</span>
-                        </a>
+                    </div>
+                    <div class="detail-info-grid">
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">主演：</span>
+                            <span class="detail-info-value">{$obj.vod_actor|mac_url_create='actor'}</span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">导演：</span>
+                            <span class="detail-info-value">{$obj.vod_director|mac_url_create='director'}</span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">类型：</span>
+                            <span class="detail-info-value">{$obj.vod_class|mac_url_create='class'}</span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">更新：</span>
+                            <span class="detail-info-value">{$obj.vod_time|date='Y-m-d',###}</span>
+                        </div>
+                        <div class="detail-info-item">
+                            <span class="detail-info-label">状态：</span>
+                            <span class="detail-info-value">{$obj.vod_status}</span>
+                        </div>
                     </div>
                 </div>
             </div>

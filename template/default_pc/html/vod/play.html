@@ -1,8 +1,9 @@
 <!doctype html>
+<!-- 作 者：阿木，Amu5.Com，QQ：46552292，amu5 -->
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width = device-width ,initial-scale = 1,minimum-scale = 1,maximum-scale = 1,user-scalable =no,"/>.
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>{if condition="isset($config['frontend']['page_title']['vod_play']) and !empty($config['frontend']['page_title']['vod_play'])"}{$config['frontend']['page_title']['vod_play']|raw}{else}在线播放{$obj.vod_name} {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']} - 高清资源{/if} - {$maccms.site_name}</title>
     <meta name="keywords" content="{if condition="isset($config['frontend']['seo']['vod_play']['key']) and !empty($config['frontend']['seo']['vod_play']['key'])"}{$config['frontend']['seo']['vod_play']['key']|raw}{else}{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍{/if}" />
     <meta name="description" content="{if condition="isset($config['frontend']['seo']['vod_play']['des']) and !empty($config['frontend']['seo']['vod_play']['des'])"}{$config['frontend']['seo']['vod_play']['des']|raw}{else}{$obj.vod_name}{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}免费在线观看,{$obj.vod_name}剧情介绍{/if}" />
@@ -28,56 +29,44 @@
     </nav>
 </section>
 
-<!-- 播放器 -->
-<section class="container mb-8">
-    <div class="bg-background-light rounded-xl p-6 shadow-lg">
-        <h2 class="text-2xl font-bold mb-6 flex items-center">
-            <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
-            {$obj.vod_name} - {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}
-        </h2>
-        <div class="bg-primary-color rounded-xl overflow-hidden shadow-xl">
-            <div id="bofang_box" class="aspect-w-16 aspect-h-9">
+<!-- 播放器 amu5 -->
+<section class="container mb-12">
+    <div class="player-wrapper">
+        <div class="player-header">
+            <h1 class="player-title">{$obj.vod_name} - {$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</h1>
+            <div class="player-controls">
+                <a href="{$obj.player_info.link_pre}" class="player-control-btn">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>上一集</span>
+                </a>
+                <a href="{$obj.player_info.link_next}" class="player-control-btn">
+                    <span>下一集</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="javascript:;" onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href,'{$obj.vod_id}')" class="player-control-btn">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>报错</span>
+                </a>
+            </div>
+        </div>
+        <div class="player-container">
+            <div id="bofang_box">
                 {$player_data}
                 {$player_js}
             </div>
         </div>
-        <div class="flex flex-wrap justify-between items-center mt-6 gap-4">
-            <div class="flex gap-3">
-                <a href="{$obj.player_info.link_pre}" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                    上一集
-                </a>
-                <a href="{$obj.player_info.link_next}" class="btn btn-secondary hover:bg-secondary/80 transition-colors duration-300">
-                    下一集
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </a>
-            </div>
-            <a href="javascript:;" onclick="MAC.Gbook.Report('编号【{$obj.vod_id}】名称【{$obj.vod_name}】不能观看请检查修复，页面地址' + location.href,'{$obj.vod_id}')" class="text-accent-color hover:text-primary transition-colors duration-300 flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                报错
-            </a>
-        </div>
     </div>
 </section>
 
-<!-- 选集列表 -->
-<section class="container mb-8">
-    <h2 class="text-2xl font-bold mb-6 flex items-center">
-        <span class="w-1 h-6 bg-accent-color mr-3 rounded-full"></span>
-        选集
-    </h2>
+<!-- 选集列表 amu5 -->
+<section class="container mb-12">
+    <h2 class="section-header">选集</h2>
     {maccms:foreach name="obj.vod_play_list" id="vo"}
-    <div class="bg-background-light rounded-xl p-6 shadow-lg mb-6">
-        <h3 class="text-lg font-bold mb-5">{$vo.player_info.show}</h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+    <div class="playlist-card">
+        <h3 class="playlist-title">{$vo.player_info.show}</h3>
+        <div class="episode-grid">
             {maccms:foreach name="vo.urls" id="vo2" key="key2"}
-            <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="px-4 py-2 border border-border-color rounded-md text-center hover:bg-accent-color hover:text-white transition-all duration-300 transform hover:scale-105 hover:shadow-md {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}bg-accent-color text-white{/if}">
+            <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" class="episode-item {if condition="$param.sid eq $vo.sid && $param.nid eq $vo2.nid"}active{/if}">
                 {$vo2.name}
             </a>
             {/maccms:foreach}

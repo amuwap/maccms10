@@ -13,36 +13,63 @@
 
 <!-- 英雄区 -->
 {maccms:vod num="1" level="9" order="desc" by="time"}
-<section class="hero">
-    <div class="hero-background-container">
-        <img src="{$vo.vod_pic_slide|mac_url_img}" alt="{$vo.vod_name}" class="hero-background"/>
-        <div class="hero-gradient"></div>
-    </div>
-    <div class="hero-content container">
-        <div class="hero-content-inner">
-            <div class="hero-badges">
-                <span class="hero-badge">{$vo.vod_year}</span>
-                <span class="hero-badge">{$vo.vod_area}</span>
-                <span class="hero-badge">{$vo.vod_lang}</span>
-                <span class="hero-badge">{$vo.vod_remarks}</span>
-            </div>
-            <h1 class="hero-title">{$vo.vod_name}</h1>
-            <p class="hero-subtitle">{$vo.vod_blurb|mb_substr=0,150}...</p>
-            <div class="hero-actions">
-                <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-primary">
-                    <i class="fas fa-play"></i>
-                    立即观看
-                </a>
-                <a href="{:mac_url_vod_detail($vo)}" class="hero-btn hero-btn-secondary">
-                    <i class="fas fa-info-circle"></i>
-                    了解详情
-                </a>
-            </div>
+<section class="hero-section">
+    <div class="hero-wrapper">
+        <div class="hero-bg-layer">
+            <img src="{$vo.vod_pic_slide|mac_url_img}" alt="{$vo.vod_name}" class="hero-bg-image"/>
+            <div class="hero-overlay"></div>
         </div>
-        <div class="hero-search">
-            <div class="relative">
-                <input type="text" class="search-input" placeholder="搜索电影、电视剧、综艺..." id="search-input">
-                <button class="search-button" id="search-button">搜索</button>
+        <div class="hero-content-wrapper">
+            <div class="container">
+                <div class="hero-main">
+                    <div class="hero-visual">
+                        <div class="hero-poster">
+                            <img src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" class="hero-poster-img">
+                        </div>
+                    </div>
+                    <div class="hero-info">
+                        <div class="hero-meta">
+                            <span class="hero-tag hero-tag-primary">{$vo.vod_remarks}</span>
+                            <span class="hero-tag">{$vo.vod_year}</span>
+                            <span class="hero-tag">{$vo.vod_area}</span>
+                            <span class="hero-tag">{$vo.vod_lang}</span>
+                        </div>
+                        <h1 class="hero-main-title">{$vo.vod_name}</h1>
+                        <div class="hero-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-score">{$vo.vod_score}</span>
+                            <span class="rating-label">评分</span>
+                        </div>
+                        <p class="hero-description">{$vo.vod_blurb|mb_substr=0,200}...</p>
+                        <div class="hero-actions-wrapper">
+                            <a href="{:mac_url_vod_detail($vo)}" class="hero-btn-cta hero-btn-cta-primary">
+                                <span class="btn-icon"><i class="fas fa-play"></i></span>
+                                <span class="btn-text">立即观看</span>
+                            </a>
+                            <a href="{:mac_url_vod_detail($vo)}" class="hero-btn-cta hero-btn-cta-secondary">
+                                <span class="btn-icon"><i class="fas fa-info-circle"></i></span>
+                                <span class="btn-text">详细信息</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-search-wrapper">
+                    <div class="search-box">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input-modern" placeholder="搜索电影、电视剧、综艺、动漫..." id="search-input">
+                        </div>
+                        <button class="search-button-modern" id="search-button">
+                            <span>搜索</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

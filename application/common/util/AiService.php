@@ -218,16 +218,19 @@ class AiService
     {
         $provider = $this->config['config_provider'];
         $systemPrompt = isset($options['system_prompt']) ? $options['system_prompt'] : $this->getDefaultSystemPrompt();
+        
+        // 获取自定义参数
+        $modelParams = isset($options['model_params']) ? $options['model_params'] : [];
 
         switch ($provider) {
             case 'claude':
                 return [
-                    'model' => $this->config['config_model'],
+                    'model' => $modelParams['model'] ?? $this->config['config_model'],
                     'messages' => [
                         ['role' => 'user', 'content' => $prompt]
                     ],
-                    'max_tokens' => intval($this->config['config_max_tokens']),
-                    'temperature' => floatval($this->config['config_temperature'])
+                    'max_tokens' => intval($modelParams['max_tokens'] ?? $this->config['config_max_tokens']),
+                    'temperature' => floatval($modelParams['temperature'] ?? $this->config['config_temperature'])
                 ];
             
             case 'ernie':
@@ -245,11 +248,13 @@ class AiService
                 $messages[] = ['role' => 'user', 'content' => $prompt];
 
                 return [
-                    'model' => $this->config['config_model'],
+                    'model' => $modelParams['model'] ?? $this->config['config_model'],
                     'messages' => $messages,
-                    'temperature' => floatval($this->config['config_temperature']),
-                    'max_tokens' => intval($this->config['config_max_tokens']),
-                    'top_p' => isset($options['top_p']) ? floatval($options['top_p']) : 0.9
+                    'temperature' => floatval($modelParams['temperature'] ?? $this->config['config_temperature']),
+                    'max_tokens' => intval($modelParams['max_tokens'] ?? $this->config['config_max_tokens']),
+                    'top_p' => floatval($modelParams['top_p'] ?? (isset($options['top_p']) ? $options['top_p'] : 0.9)),
+                    'frequency_penalty' => floatval($modelParams['frequency_penalty'] ?? 0),
+                    'presence_penalty' => floatval($modelParams['presence_penalty'] ?? 0)
                 ];
         }
     }

@@ -1,4 +1,11 @@
 <?php
+/**
+ * AI服务类
+ * 作者：阿木
+ * 网址：Amu5.Com
+ * QQ：46552292
+ * 功能：提供AI内容生成、模型管理、连接测试等功能
+ */
 namespace app\common\util;
 
 use think\Cache;
@@ -6,13 +13,23 @@ use think\Log;
 
 class AiService
 {
+    // 配置信息
     protected $config;
+    // 缓存前缀
     protected $cachePrefix = 'ai_service_';
+    // 最大重试次数
     protected $maxRetryCount = 3;
+    // 重试延迟(秒)
     protected $retryDelay = 2;
+    // 是否开启流式响应
     protected $isStreaming = false;
+    // 流式回调函数
     protected $streamCallback = null;
 
+    /**
+     * 构造函数
+     * @param array $config AI配置信息，如果为null则自动获取激活的配置
+     */
     public function __construct($config = null)
     {
         if ($config) {
@@ -22,12 +39,24 @@ class AiService
         }
     }
 
+    /**
+     * 设置流式响应
+     * @param bool $streaming 是否开启流式响应
+     * @param callable $callback 流式回调函数，接收生成的内容片段
+     */
     public function setStreaming($streaming, $callback = null)
     {
         $this->isStreaming = $streaming;
         $this->streamCallback = $callback;
     }
 
+    /**
+     * 生成AI内容
+     * @param string $prompt 提示词
+     * @param string $type 内容类型
+     * @param array $options 选项
+     * @return array 生成结果，包含code、msg和data字段
+     */
     public function generateContent($prompt, $type = 'blurb', $options = [])
     {
         if (!$this->config) {
@@ -65,6 +94,12 @@ class AiService
         }
     }
 
+    /**
+     * 带重试机制的API调用
+     * @param string $prompt 提示词
+     * @param array $options 选项
+     * @return array API调用结果
+     */
     protected function callApiWithRetry($prompt, $options = [])
     {
         $retryCount = isset($options['max_retries']) ? $options['max_retries'] : $this->maxRetryCount;
@@ -92,6 +127,12 @@ class AiService
         return $lastError;
     }
 
+    /**
+     * 调用AI API
+     * @param string $prompt 提示词
+     * @param array $options 选项
+     * @return array API调用结果
+     */
     protected function callApi($prompt, $options = [])
     {
         $apiUrl = $this->config['config_api_url'];
@@ -111,6 +152,7 @@ class AiService
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, isset($options['timeout']) ? $options['timeout'] : 120);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -118,16 +160,32 @@ class AiService
         curl_close($ch);
 
         if ($error) {
-            return ['code' => 1004, 'msg' => 'CURL错误: ' . $error];
+            Log::error('AI API CURL错误: ' . $error . ' - URL: ' . $apiUrl);
+            return ['code' => 1004, 'msg' => '网络连接错误: ' . $error];
         }
 
         if ($httpCode != 200) {
-            return ['code' => 1005, 'msg' => 'API返回错误: HTTP ' . $httpCode . ' - ' . $response];
+            Log::error('AI API返回错误: HTTP ' . $httpCode . ' - ' . $response . ' - URL: ' . $apiUrl);
+            $errorMsg = 'API返回错误: HTTP ' . $httpCode;
+            // 尝试解析错误信息
+            try {
+                $errorData = json_decode($response, true);
+                if (isset($errorData['error']['message'])) {
+                    $errorMsg .= ' - ' . $errorData['error']['message'];
+                }
+            } catch (Exception $e) {
+                // 解析失败，使用原始响应
+            }
+            return ['code' => 1005, 'msg' => $errorMsg];
         }
 
         return $this->parseResponse($response);
     }
 
+    /**
+     * 构建请求头
+     * @return array 请求头数组
+     */
     protected function buildHeaders()
     {
         $headers = ['Content-Type: application/json'];
@@ -150,6 +208,12 @@ class AiService
         return $headers;
     }
 
+    /**
+     * 构建请求数据
+     * @param string $prompt 提示词
+     * @param array $options 选项
+     * @return array 请求数据
+     */
     protected function buildRequestData($prompt, $options = [])
     {
         $provider = $this->config['config_provider'];
@@ -190,6 +254,11 @@ class AiService
         }
     }
 
+    /**
+     * 解析API响应
+     * @param string $response API响应内容
+     * @return array 解析结果
+     */
     protected function parseResponse($response)
     {
         $result = json_decode($response, true);
@@ -217,6 +286,10 @@ class AiService
         return ['code' => 1006, 'msg' => 'API返回格式错误', 'data' => $result];
     }
 
+    /**
+     * 获取百度AccessToken
+     * @return string|null AccessToken
+     */
     protected function getBaiduAccessToken()
     {
         $apiKey = $this->config['config_api_key'];
@@ -251,6 +324,11 @@ class AiService
         return null;
     }
 
+    /**
+     * 获取默认API URL
+     * @param string $provider 提供商名称
+     * @return string API URL
+     */
     protected function getDefaultApiUrl($provider)
     {
         $urls = [
@@ -266,16 +344,39 @@ class AiService
         return isset($urls[$provider]) ? $urls[$provider] : $urls['openai'];
     }
 
+    /**
+     * 获取默认系统提示词
+     * @return string 系统提示词
+     */
     protected function getDefaultSystemPrompt()
     {
-        return "你是一个专业的影视内容创作助手，擅长生成高质量的影视简介、演员信息、影评和分集剧情。请用中文回复，保持内容客观真实，语言流畅优美。";
+        return "你是一个专业的影视内容创作助手，擅长生成高质量的影视简介、演员信息、影评和分集剧情。请用中文回复，保持内容客观真实，语言流畅优美。
+
+要求：
+1. 内容专业准确，符合影视行业标准
+2. 语言生动有趣，吸引观众
+3. 保持客观中立的评价
+4. 避免剧透关键剧情
+5. 生成的内容要有层次感和逻辑性
+6. 针对不同类型的影视作品，调整语言风格和专业度";
     }
 
+    /**
+     * 获取缓存键
+     * @param string $prompt 提示词
+     * @param string $type 内容类型
+     * @return string 缓存键
+     */
     protected function getCacheKey($prompt, $type)
     {
         return $this->cachePrefix . $type . '_' . md5($prompt . json_encode($this->config));
     }
 
+    /**
+     * 清除缓存
+     * @param string $type 内容类型，为null则清除所有缓存
+     * @return array 清除结果
+     */
     public function clearCache($type = null)
     {
         if ($type) {
@@ -288,14 +389,26 @@ class AiService
         return ['code' => 1, 'msg' => '缓存清除成功'];
     }
 
+    /**
+     * 构建影视简介提示词
+     * @param string $vodName 影视名称
+     * @param string $typeName 类型名称
+     * @param string $actor 演员
+     * @param string $director 导演
+     * @param string $year 年份
+     * @param string $area 地区
+     * @return string 提示词
+     */
     public function buildVodBlurbPrompt($vodName, $typeName = '', $actor = '', $director = '', $year = '', $area = '')
     {
         $prompt = "请为影视作品《{$vodName}》生成一份专业、吸引人的简介，300-600字。";
         $prompt .= "\n\n要求：";
-        $prompt .= "\n1. 突出作品的核心卖点和特色";
-        $prompt .= "\n2. 语言生动有趣，吸引观众";
-        $prompt .= "\n3. 不要剧透关键剧情";
-        $prompt .= "\n4. 保持客观中立的评价";
+        $prompt .= "\n1. 突出作品的核心卖点和特色，包括独特的剧情设定、视觉风格或艺术价值";
+        $prompt .= "\n2. 语言生动有趣，吸引观众，使用符合作品类型的语言风格";
+        $prompt .= "\n3. 不要剧透关键剧情，只介绍基本设定和主要冲突";
+        $prompt .= "\n4. 保持客观中立的评价，同时展现作品的吸引力";
+        $prompt .= "\n5. 结构清晰，层次分明，先介绍基本信息，再深入剧情亮点";
+        $prompt .= "\n6. 适当加入对演员表演或导演风格的简要评价";
         
         $infoParts = [];
         if ($typeName) $infoParts[] = "类型：{$typeName}";
@@ -312,12 +425,25 @@ class AiService
         return $prompt;
     }
 
+    /**
+     * 构建演员信息提示词
+     * @param string $actorName 演员名称
+     * @param string $vodName 影视名称
+     * @return string 提示词
+     */
     public function buildActorInfoPrompt($actorName, $vodName = '')
     {
         $prompt = "请为演员{$actorName}生成详细的个人资料。";
         if ($vodName) {
             $prompt .= "\n该演员出演过影视作品《{$vodName}》。";
         }
+        $prompt .= "\n\n要求：";
+        $prompt .= "\n1. 提供详细准确的个人信息，包括基本资料、教育背景、演艺经历等";
+        $prompt .= "\n2. 详细介绍其代表作品和获奖情况";
+        $prompt .= "\n3. 分析其表演风格和艺术特色";
+        $prompt .= "\n4. 内容客观真实，语言流畅专业";
+        $prompt .= "\n5. 详细介绍部分控制在300-600字";
+        
         $prompt .= "\n\n请按以下格式返回JSON数据，确保JSON格式正确：
 {
     \"name\": \"姓名\",
@@ -329,13 +455,19 @@ class AiService
     \"starsign\": \"星座\",
     \"school\": \"毕业院校\",
     \"works\": \"代表作品(多个用逗号分隔)\",
-    \"content\": \"详细介绍(200-500字)\",
+    \"content\": \"详细介绍(300-600字)\",
     \"awards\": \"获奖情况\",
-    \"career\": \"演艺经历\"
-}";
+    \"career\": \"演艺经历\"}";
         return $prompt;
     }
 
+    /**
+     * 构建影评提示词
+     * @param string $vodName 影视名称
+     * @param string $typeName 类型名称
+     * @param string $score 评分
+     * @return string 提示词
+     */
     public function buildReviewPrompt($vodName, $typeName = '', $score = '')
     {
         $prompt = "请为影视作品《{$vodName}》写一篇专业、有深度的影评文章，800-1500字。";
@@ -345,20 +477,29 @@ class AiService
         }
         
         $prompt .= "\n\n要求：";
-        $prompt .= "\n1. 从剧情、演技、导演手法、视听语言等多角度分析";
-        $prompt .= "\n2. 有个人观点和见解，但保持客观";
-        $prompt .= "\n3. 不要过度剧透核心剧情";
-        $prompt .= "\n4. 结构清晰，逻辑严谨";
-        $prompt .= "\n5. 语言优美，可读性强";
+        $prompt .= "\n1. 从剧情、演技、导演手法、视听语言、主题深度等多角度分析";
+        $prompt .= "\n2. 有个人观点和见解，但保持客观，提供具体的例子支持观点";
+        $prompt .= "\n3. 不要过度剧透核心剧情，只使用必要的情节来支持分析";
+        $prompt .= "\n4. 结构清晰，逻辑严谨，包括引人入胜的开头、详细的分析和有力的结论";
+        $prompt .= "\n5. 语言优美，可读性强，避免使用过于专业的术语，让普通观众也能理解";
+        $prompt .= "\n6. 适当与同类型作品进行比较，突出这部作品的独特之处";
+        $prompt .= "\n7. 分析作品的社会意义或艺术价值，提升影评的深度";
         
         if ($score) {
-            $prompt .= "\n6. 参考评分：{$score}分";
+            $prompt .= "\n8. 参考评分：{$score}分，在影评中体现这个评分的合理性";
         }
         
         $prompt .= "\n\n请直接返回影评内容，包含标题和正文。标题格式：《作品名》：你的标题";
         return $prompt;
     }
 
+    /**
+     * 构建剧情提示词
+     * @param string $vodName 影视名称
+     * @param int $totalEpisodes 总集数
+     * @param int $currentEpisode 当前集数，0表示所有集数
+     * @return string 提示词
+     */
     public function buildPlotPrompt($vodName, $totalEpisodes = 1, $currentEpisode = 0)
     {
         $prompt = "请为影视作品《{$vodName}》生成分集剧情介绍。";
@@ -374,10 +515,13 @@ class AiService
         }
         
         $prompt .= "\n\n要求：";
-        $prompt .= "\n1. 每集剧情150-400字";
-        $prompt .= "\n2. 情节连贯，逻辑清晰";
-        $prompt .= "\n3. 突出每集的关键情节和转折";
-        $prompt .= "\n4. 语言简洁明了";
+        $prompt .= "\n1. 每集剧情150-400字，内容丰富详细";
+        $prompt .= "\n2. 情节连贯，逻辑清晰，每集之间过渡自然";
+        $prompt .= "\n3. 突出每集的关键情节、冲突和转折点";
+        $prompt .= "\n4. 语言简洁明了，符合影视叙事风格";
+        $prompt .= "\n5. 为每集生成一个吸引人的标题，概括本集核心内容";
+        $prompt .= "\n6. 保持剧情的合理性和连贯性，避免前后矛盾";
+        $prompt .= "\n7. 适当加入角色发展和情感变化的描写";
         
         $prompt .= "\n\n请按以下格式返回JSON数组：
 [
@@ -393,6 +537,14 @@ class AiService
         return $prompt;
     }
 
+    /**
+     * 构建评分提示词
+     * @param string $vodName 影视名称
+     * @param string $typeName 类型名称
+     * @param string $actor 演员
+     * @param string $director 导演
+     * @return string 提示词
+     */
     public function buildScorePrompt($vodName, $typeName = '', $actor = '', $director = '')
     {
         $prompt = "请为影视作品《{$vodName}》进行综合评分。";
@@ -419,6 +571,13 @@ class AiService
         return $prompt;
     }
 
+    /**
+     * 构建角色信息提示词
+     * @param string $actorName 演员名称
+     * @param string $vodName 影视名称
+     * @param string $roleName 角色名称
+     * @return string 提示词
+     */
     public function buildRolePrompt($actorName, $vodName, $roleName = '')
     {
         $prompt = "请为演员{$actorName}在影视作品《{$vodName}》中饰演的角色生成详细资料。";
@@ -438,6 +597,13 @@ class AiService
         return $prompt;
     }
 
+    /**
+     * 构建标签提示词
+     * @param string $vodName 影视名称
+     * @param string $typeName 类型名称
+     * @param string $content 影视内容
+     * @return string 提示词
+     */
     public function buildTagsPrompt($vodName, $typeName = '', $content = '')
     {
         $prompt = "请为影视作品《{$vodName}》生成合适的标签。";
@@ -446,15 +612,24 @@ class AiService
         if ($content) $prompt .= "\n简介：{$content}";
         
         $prompt .= "\n\n要求：";
-        $prompt .= "\n1. 生成5-15个标签";
-        $prompt .= "\n2. 标签要准确反映作品特色";
-        $prompt .= "\n3. 包含类型、主题、风格等维度";
-        $prompt .= "\n4. 用逗号分隔";
+        $prompt .= "\n1. 生成8-15个标签，覆盖多个维度";
+        $prompt .= "\n2. 标签要准确反映作品特色和核心元素";
+        $prompt .= "\n3. 包含以下维度：类型、主题、风格、情感、叙事手法、视觉特色、演员阵容、导演风格等";
+        $prompt .= "\n4. 标签要具体明确，避免过于宽泛的词汇";
+        $prompt .= "\n5. 考虑目标受众，生成能吸引潜在观众的标签";
+        $prompt .= "\n6. 用逗号分隔，不要添加其他说明";
         
         $prompt .= "\n\n请直接返回标签，用逗号分隔，不要其他内容。";
         return $prompt;
     }
 
+    /**
+     * 生成影视简介
+     * @param string $vod_name 影视名称
+     * @param int $type_id 类型ID
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateIntro($vod_name, $type_id, $options = [])
     {
         $type_info = model('Type')->get($type_id);
@@ -511,6 +686,13 @@ class AiService
         return $content;
     }
 
+    /**
+     * 生成演员信息
+     * @param string $vod_name 影视名称
+     * @param string $actor_names 演员名称列表，逗号分隔
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateActors($vod_name, $actor_names = '', $options = [])
     {
         $actors = explode(',', $actor_names);
@@ -566,6 +748,13 @@ class AiService
         return ['code' => 0, 'msg' => '未生成演员信息', 'errors' => $errors];
     }
 
+    /**
+     * 生成影评
+     * @param string $vod_name 影视名称
+     * @param int $count 生成数量
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateReviews($vod_name, $count = 3, $options = [])
     {
         $reviews = [];
@@ -610,6 +799,13 @@ class AiService
         return ['code' => 0, 'msg' => '未生成影评'];
     }
 
+    /**
+     * 生成分集剧情
+     * @param string $vod_name 影视名称
+     * @param int $total_episodes 总集数
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateEpisodes($vod_name, $total_episodes = 10, $options = [])
     {
         $vod_info = isset($options['vod_info']) ? $options['vod_info'] : [];
@@ -642,6 +838,12 @@ class AiService
         return $result;
     }
 
+    /**
+     * 生成评分
+     * @param string $vod_name 影视名称
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateScore($vod_name, $options = [])
     {
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
@@ -673,6 +875,12 @@ class AiService
         return $result;
     }
 
+    /**
+     * 生成标签
+     * @param string $vod_name 影视名称
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function generateTags($vod_name, $options = [])
     {
         $type_name = isset($options['type_name']) ? $options['type_name'] : '';
@@ -702,10 +910,11 @@ class AiService
     }
 
     /**
-     * 生成AI评论
+     * 生成评论
      * @param string $vod_name 影视名称
+     * @param int $count 生成数量
      * @param array $options 选项
-     * @return array
+     * @return array 生成结果
      */
     public function generateComments($vod_name, $count = 5, $options = [])
     {
@@ -765,17 +974,26 @@ class AiService
         }
         
         $prompt .= "\n\n要求：";
-        $prompt .= "\n1. 语言口语化，符合普通观众的评论风格";
-        $prompt .= "\n2. 表达真实的观影感受";
-        $prompt .= "\n3. 可以包含具体的情节或演员表现";
-        $prompt .= "\n4. 长度50-200字";
-        $prompt .= "\n5. 不要使用专业影评术语";
-        $prompt .= "\n6. 避免剧透关键剧情";
+        $prompt .= "\n1. 语言口语化，符合普通观众的评论风格，使用真实的口语表达";
+        $prompt .= "\n2. 表达真实的观影感受，包含具体的情感反应";
+        $prompt .= "\n3. 可以包含具体的情节、演员表现或技术细节，但避免剧透关键剧情";
+        $prompt .= "\n4. 长度50-200字，结构自然，有开头和结尾";
+        $prompt .= "\n5. 不要使用专业影评术语，用普通观众的视角评论";
+        $prompt .= "\n6. 可以包含一些个人观影体验或与其他作品的简单比较";
+        $prompt .= "\n7. 评论风格要多样化，有的偏向感性，有的偏向理性，有的幽默风趣";
+        $prompt .= "\n8. 避免过于笼统的评价，要有具体的内容支持观点";
         
         $prompt .= "\n\n请直接返回评论内容，不要添加其他说明。";
         return $prompt;
     }
 
+    /**
+     * 批量生成内容
+     * @param array $vod_ids 影视ID列表
+     * @param array $types 生成类型列表
+     * @param array $options 选项
+     * @return array 生成结果
+     */
     public function batchGenerate($vod_ids, $types = ['intro'], $options = [])
     {
         $results = [];
@@ -854,6 +1072,13 @@ class AiService
         return ['code' => 1, 'results' => $results];
     }
 
+    /**
+     * 创建异步任务
+     * @param string $prompt 提示词
+     * @param string $type 内容类型
+     * @param array $options 选项
+     * @return array 任务创建结果
+     */
     protected function createAsyncTask($prompt, $type, $options = [])
     {
         try {
@@ -879,6 +1104,11 @@ class AiService
         }
     }
 
+    /**
+     * 执行异步任务
+     * @param string $taskId 任务ID
+     * @return bool 执行结果
+     */
     protected function executeAsyncTask($taskId)
     {
         try {
@@ -917,6 +1147,11 @@ class AiService
         }
     }
 
+    /**
+     * 获取异步任务结果
+     * @param string $taskId 任务ID
+     * @return array 任务结果
+     */
     public function getAsyncTaskResult($taskId)
     {
         $task = model('AiTask')->where(['task_id' => $taskId])->find();
@@ -943,6 +1178,12 @@ class AiService
         return $result;
     }
 
+    /**
+     * 流式调用AI API
+     * @param string $prompt 提示词
+     * @param array $options 选项
+     * @return array API调用结果
+     */
     protected function callApiWithStream($prompt, $options = [])
     {
         $apiUrl = $this->config['config_api_url'];
@@ -1005,6 +1246,11 @@ class AiService
         return ['code' => 1, 'data' => trim($fullContent)];
     }
 
+    /**
+     * 解析流式响应块
+     * @param array $json 响应块数据
+     * @return string 解析后的内容
+     */
     protected function parseStreamChunk($json)
     {
         $provider = $this->config['config_provider'];
@@ -1028,6 +1274,10 @@ class AiService
         return '';
     }
 
+    /**
+     * 列出可用的模型
+     * @return array 可用模型列表
+     */
     public function listAvailableModels()
     {
         $models = [
@@ -1060,6 +1310,11 @@ class AiService
         return ['code' => 1, 'models' => $models];
     }
 
+    /**
+     * 测试AI连接
+     * @param array $options 选项
+     * @return array 测试结果
+     */
     public function testConnection($options = [])
     {
         if (!$this->config) {

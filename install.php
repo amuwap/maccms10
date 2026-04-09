@@ -1,42 +1,23 @@
 <?php
-/*
-'软件名称：苹果CMS
-'开发作者：MagicBlack  QQ：479025  官方网站：http://www.maccms.com/
-'--------------------------------------------------------
-'适用本程序需遵循 CC BY-ND 许可协议
-'这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用；
-'不允许对程序代码以任何形式任何目的的再发布。
-'--------------------------------------------------------
-*/
-header('Content-Type:text/html;charset=utf-8');
-// 检测PHP环境
-if(version_compare(PHP_VERSION,'5.5.0','<'))  die('PHP版本过低，最少需要PHP5.5，请升级PHP版本！');
-//超时时间
-@ini_set('max_execution_time', '0');
-//内存限制 取消内存限制
-@ini_set("memory_limit",'-1');
-// 定义应用目录
-define('ROOT_PATH', __DIR__ . '/');
-define('APP_PATH', __DIR__ . '/application/');
-define('MAC_COMM', __DIR__.'/application/common/common/');
-define('MAC_HOME_COMM', __DIR__.'/application/index/common/');
-define('MAC_ADMIN_COMM', __DIR__.'/application/admin/common/');
-define('MAC_START_TIME', microtime(true) );
-define('BIND_MODULE', 'install');
-define('ENTRANCE', 'install');
-$in_file = rtrim($_SERVER['SCRIPT_NAME'],'/');
-if(substr($in_file,strlen($in_file)-4)!=='.php'){
-    $in_file = substr($in_file,0,strpos($in_file,'.php')) .'.php';
-}
-define('IN_FILE',$in_file);
-if(is_file('./application/data/install/install.lock')) {
-	echo '如需重新安装请删除/application/data/install/install.lock文件';
-	exit;
-}
+/**
+ * 苹果CMS一键安装程序
+ * 作者：阿木
+ * 网址：Amu5.Com
+ * QQ：46552292
+ * 兼容：PHP 7.4-8.5，MySQL 5.7-8.0
+ */
 
-if(!is_writable('./runtime')) {
-	echo '请开启[runtime]文件夹的读写权限';
-	exit;
+// 定义应用目录
+define('APP_PATH', __DIR__ . '/application/');
+// 定义项目路径
+define('ROOT_PATH', __DIR__ . '/');
+
+// 检查是否已安装
+if (file_exists(APP_PATH . 'data/install/install.lock')) {
+    echo '<h1>系统已安装</h1>';
+    echo '<p>如需重新安装，请删除 ' . APP_PATH . 'data/install/install.lock 文件</p>';
+    echo '<p><a href="index.php">访问首页</a> | <a href="admin.php">进入后台</a></p>';
+    exit;
 }
 
 // 加载框架引导文件

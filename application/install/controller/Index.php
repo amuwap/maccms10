@@ -1,4 +1,11 @@
 <?php
+/**
+ * 安装控制器
+ * 作者：阿木
+ * 网址：Amu5.Com
+ * QQ：46552292
+ * 功能：提供苹果CMS系统的自动安装功能
+ */
 namespace app\install\controller;
 use think\Controller;
 use think\Db;
@@ -120,8 +127,8 @@ class Index extends Controller
                     $this->success('该数据库已存在，可直接安装。如需覆盖，请选择覆盖数据库！','');
                 }
             }
-            // 创建数据库
-            if (!$db_connect->execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8")) {
+            // 创建数据库（使用utf8mb4字符集，支持emoji）
+            if (!$db_connect->execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")) {
                 return $this->error($db_connect->getError());
             }
 
@@ -227,14 +234,19 @@ class Index extends Controller
     {
         $items = [
             'os'      => ['操作系统', '不限制', 'Windows/Unix', PHP_OS, 'ok'],
-            'php'     => ['PHP版本', '5.5', '5.5及以上', PHP_VERSION, 'ok'],
+            'php'     => ['PHP版本', '7.4', '7.4-8.5', PHP_VERSION, 'ok'],
             'gd'      => ['GD库', '2.0', '2.0及以上', '未知', 'ok'],
-
+            'mysql'   => ['MySQL支持', '5.7', '5.7-8.0', '检测中', 'ok'],
         ];
-        if ($items['php'][3] < $items['php'][1]) {
+        
+        // PHP版本检测（7.4-8.5）
+        if (version_compare(PHP_VERSION, '7.4.0', '<')) {
             $items['php'][4] = 'no';
             session('install_error', true);
+        } elseif (version_compare(PHP_VERSION, '8.5.0', '>')) {
+            $items['php'][4] = 'warning';
         }
+        
         $tmp = function_exists('gd_info') ? gd_info() : [];
         if (empty($tmp['GD Version'])) {
             $items['gd'][3] = '未安装';
@@ -242,6 +254,27 @@ class Index extends Controller
             session('install_error', true);
         } else {
             $items['gd'][3] = $tmp['GD Version'];
+        }
+        
+        // MySQL版本检测
+        try {
+            $config = include APP_PATH.'database.php';
+            if (!empty($config['hostname'])) {
+                $db_connect = Db::connect($config);
+                $result = $db_connect->query('select version() as ver');
+                if ($result) {
+                    $mysql_version = $result[0]['ver'];
+                    $items['mysql'][3] = $mysql_version;
+                    if (version_compare($mysql_version, '5.7.0', '<')) {
+                        $items['mysql'][4] = 'no';
+                        session('install_error', true);
+                    } elseif (version_compare($mysql_version, '8.0.0', '>')) {
+                        $items['mysql'][4] = 'warning';
+                    }
+                }
+            }
+        } catch(\Exception $e) {
+            $items['mysql'][3] = '未连接';
         }
 
         return $items;
@@ -323,21 +356,22 @@ class Index extends Controller
     
     /**
      * 生成数据库配置文件
+     * 作者：阿木
+     * 网址：Amu5.Com
+     * QQ：46552292
      * @return array
      */
     private function mkDatabase(array $data)
     {
         $code = <<<INFO
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+/**
+ * 数据库配置文件
+ * 作者：阿木
+ * 网址：Amu5.Com
+ * QQ：46552292
+ * 兼容：PHP 7.4-8.5，MySQL 5.7-8.0
+ */
 return [
     // 数据库类型
     'type'            => 'mysql',
@@ -355,8 +389,8 @@ return [
     'dsn'             => '',
     // 数据库连接参数
     'params'          => [],
-    // 数据库编码默认采用utf8
-    'charset'         => 'utf8',
+    // 数据库编码默认采用utf8mb4（支持emoji）
+    'charset'         => 'utf8mb4',
     // 数据库表前缀
     'prefix'          => '{$data['prefix']}',
     // 数据库调试模式

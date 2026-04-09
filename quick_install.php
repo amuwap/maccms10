@@ -53,13 +53,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         APP_PATH . 'data/config/',
         APP_PATH . 'data/backup/',
         APP_PATH . 'data/update/',
-        APP_PATH . 'runtime/',
-        APP_PATH . 'upload/'
+        APP_PATH . 'data/install/',
+        __DIR__ . '/runtime/',
+        __DIR__ . '/runtime/cache/',
+        __DIR__ . '/runtime/log/',
+        __DIR__ . '/runtime/temp/',
+        __DIR__ . '/upload/'
     ];
     
     foreach ($required_dirs as $dir) {
+        // 检查目录是否存在，如果不存在则创建
+        if (!is_dir($dir)) {
+            if (!mkdir($dir, 0755, true)) {
+                $errors[] = '创建目录失败：' . $dir;
+                continue;
+            }
+        }
+        // 检查目录是否可写
         if (!is_writable($dir)) {
-            $errors[] = '目录不可写：' . $dir;
+            // 尝试设置权限
+            if (!chmod($dir, 0755)) {
+                $errors[] = '目录不可写：' . $dir;
+            }
         }
     }
     

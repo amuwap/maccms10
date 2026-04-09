@@ -256,26 +256,10 @@ class Index extends Controller
             $items['gd'][3] = $tmp['GD Version'];
         }
         
-        // MySQL版本检测
-        try {
-            $config = include APP_PATH.'database.php';
-            if (!empty($config['hostname'])) {
-                $db_connect = Db::connect($config);
-                $result = $db_connect->query('select version() as ver');
-                if ($result) {
-                    $mysql_version = $result[0]['ver'];
-                    $items['mysql'][3] = $mysql_version;
-                    if (version_compare($mysql_version, '5.7.0', '<')) {
-                        $items['mysql'][4] = 'no';
-                        session('install_error', true);
-                    } elseif (version_compare($mysql_version, '8.0.0', '>')) {
-                        $items['mysql'][4] = 'warning';
-                    }
-                }
-            }
-        } catch(\Exception $e) {
-            $items['mysql'][3] = '未连接';
-        }
+        // MySQL版本检测 - 跳过连接测试，在用户输入密码后再测试
+        // 因为此时用户还没有设置数据库密码，连接会失败
+        $items['mysql'][3] = '待测试';
+        $items['mysql'][4] = 'ok';
 
         return $items;
     }
